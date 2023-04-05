@@ -2,7 +2,7 @@
 #       osm_handle_business_info.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2018 by Richard Fobes at SolutionsCreative.com
+#  (c) Copyright 2014-2018 by Richard Fobes at NewsHereNow.com
 
 
 #  Usage in Linux environment:
@@ -19,18 +19,18 @@ $slash_or_backslash = "\\" ;  # windows
 #--------------------------------------------------
 #  Specify the input and output filenames.
 
-$path_to_OSM_files = "" ;
-$input_filename = $path_to_OSM_files . 'output_business_info_all_nodes_ways_relations.txt' ;
-$output_filename_frequency_counts = $path_to_OSM_files . 'output_business_frequency_count_exceeded.txt' ;
-$output_filename_filtered_business_info = $path_to_OSM_files . 'output_businesses_filtered.txt' ;
-$output_filename_promo_businesses_info = $path_to_OSM_files . 'output_businesses_filtered_promo_type.txt' ;
-$output_filename_links = $path_to_OSM_files . 'output_businesses_links.txt' ;
+$input_filename = 'output_business_info_all_nodes_ways_relations.txt' ;
+$output_filename_frequency_counts = 'output_business_frequency_count_exceeded.txt' ;
+$output_filename_filtered_business_info = 'output_businesses_filtered.txt' ;
+$output_filename_promo_businesses_info = 'output_businesses_filtered_promo_type.txt' ;
+$output_filename_links = 'output_businesses_links.txt' ;
 
 
 #--------------------------------------------------
 #  Specify how many businesses can have the same
 #  domain name, and how many can have the same
-#  name.
+#  business name, and the maximum length of a
+#  website URL.
 
 $threshold_count_for_domain_name = 7 ;
 $threshold_count_for_business_name = 20 ;
@@ -40,17 +40,8 @@ $maximum_allowed_length_of_website_url = 140 ;
 #--------------------------------------------------
 #  Examples of input lines:
 #
-#  type node:
 #    b 10508875000 09983816599 n271078 Acres_Down_Farm shop_tea no_web
-#
-#  type way:
 #    b 10454676590 08772863862 w291415817 Annie_Bloom&#39;s_Books shop_books www.annieblooms.com
-#    b w562318836 links_n5421117836_n5421117837_n5421117838_n5421117839_n5421117836_ Salort shop_car_repair no_web
-#    b w444840241 links_n4423039809_n4423039810_n4423039811_n4423039812_n4423039809_ Independence_Diner amenity_restaurant no_web
-#
-#  type relation:
-#    b r159453 links_w36434319_w36434320_ Ristorante_Albergo_Al_Ponte amenity_restaurant no_web
-#    b r9963357 links_w717935848_w717935846_ Restaurante_Rango_Mineiro amenity_restaurant no_web
 
 
 #--------------------------------------------------
@@ -94,10 +85,12 @@ $yes_if_default_business_type{ "biergarten" } = "yes" ;
 $yes_if_default_business_type{ "pastry" } = "yes" ;
 $yes_if_default_business_type{ "tea_shop" } = "yes" ;
 
-#  Include independent alternatives to Amazon and Home Depot
+#  Include independent alternatives to Amazon, Starbucks, Home Depot
 
 $yes_if_default_business_type{ "bookstore" } = "yes" ;
 $yes_if_default_business_type{ "hardware" } = "yes" ;
+$yes_if_default_business_type{ "doityourself" } = "yes" ;
+$yes_if_default_business_type{ "coffee_shop" } = "yes" ;
 
 
 #--------------------------------------------------
@@ -161,13 +154,6 @@ open( INFILE , "<" . $input_filename ) ;
 
 
 #--------------------------------------------------
-#  For output files, specify no read or write
-#  permissions for non-owner.
-
-umask( 0077 ) ;
-
-
-#--------------------------------------------------
 #  Read each line in the file.
 
 while( $input_line = <INFILE> )
@@ -207,12 +193,13 @@ while( $input_line = <INFILE> )
 #--------------------------------------------------
 #  Recognize the next business-info line.
 
-    if ( $input_line =~ /^b (([0-9]+ [0-9]+ n[0-9]+)|([rw][0-9]+ links[^ ]+)) ([^ ]+) ([^ ]+) ([^ ]+)/ )
+    if ( $input_line =~ /^b? *([0-9]+ [0-9]+) ([nwr][0-9]+) ([^ ]+) ([^ ]+) ([^ ]+)/ )
     {
         $location_info = $1 ;
-        $business_name = $4 ;
-        $business_type = $5 ;
-        $website_url = $6 ;
+        $business_id = $2 ;
+        $business_name = $3 ;
+        $business_type = $4 ;
+        $website_url = $5 ;
 
 
 #--------------------------------------------------
@@ -325,7 +312,7 @@ while( $input_line = <INFILE> )
 #  This code may not correctly handle Unicode
 #  characters.
 
-#  According to StackOverflow:
+#  Domain name patterns according to StackOverflow:
 
 # ^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$
 
@@ -418,19 +405,11 @@ foreach $count ( sort {$b <=> $a} keys( %business_names_at_count ) )
 
 
 #--------------------------------------------------
-#  Create the output files that contains the filtered
-#  list of business info.
+#  Create the output files that will contain the
+#  filtered list of business info.
 
 open( OUT_FILE , ">" . $output_filename_filtered_business_info ) ;
-open( OUT_SPECIAL_FILE , ">" . $output_filename_promo_businesses_info ) ;
-
-
-#--------------------------------------------------
-#  Create the output files that contains the
-#  list of links that associate ways with nodes
-#  and associate relations with ways and nodes.
-
-open( OUT_LINKSFILE , ">" . $output_filename_links ) ;
+open( OUT_FILE_PROMO_TYPE , ">" . $output_filename_promo_businesses_info ) ;
 
 
 #--------------------------------------------------
@@ -441,25 +420,40 @@ open( INFILE , "<" . $input_filename ) ;
 while( $input_line = <INFILE> )
 {
     chomp( $input_line ) ;
-
-    if ( $input_line =~ /^b (([0-9]+ [0-9]+ n[0-9]+)|([rw][0-9]+ links[^ ]+)) ([^ ]+) ([^ ]+) ([^ ]+)/ )
+    if ( $input_line =~ /^b? *([0-9]+ [0-9]+) ([nwr][0-9]+) ([^ ]+) ([^ ]+) ([^ ]+)/ )
     {
         $location_info = $1 ;
-        $business_name = $4 ;
-        $business_type = $5 ;
-        $website_url = $6 ;
-        $business_name =~ s/&#46;/\./g ;
-        $business_name =~ s/&58;/:/g ;
-        $yes_or_no_write_this_business = "yes" ;
+        $business_id = $2 ;
+        $business_name = $3 ;
+        $business_type = $4 ;
+        $website_url = $5 ;
 
 
 #--------------------------------------------------
-#  Filter out businesses with specific domain names.
+#  Again, convert a "full stop" into a period, and
+#  convert Unicode 58 into ":" character.
 
-        if ( $website_url =~ /((facebook)|(google)|(starbucks)|(mcdonalds)|(olivegarden)|(homedepot)|(dunkin)|(timhortons)|(pizzahut)|(outbacksteakhouse))/i )
+        $business_name =~ s/&#46;/\./g ;
+        $business_name =~ s/&#58;/:/g ;
+        $website_url =~ s/&#46;/\./g ;
+        $website_url =~ s/&#58;/:/g ;
+#        $website_url =~ s/&58;/:/g ;
+
+
+#--------------------------------------------------
+#  Filter out businesses with specific domain
+#  names.  Also ignore URLs that point to Google
+#  or Facebook.
+
+        $yes_or_no_write_this_business = "yes" ;
+        if ( $website_url =~ /((starbucks)|(mcdonalds)|(olivegarden)|(homedepot)|(dunkin)|(timhortons)|(pizzahut)|(outbacksteakhouse))/i )
         {
             $website_url = "no_web" ;
-            $yes_or_no_write_this_business = "yes" ;
+            $yes_or_no_write_this_business = "no" ;
+        }
+        if ( $website_url =~ /((facebook)|(google))/i )
+        {
+            $website_url = "no_web" ;
         }
 
 
@@ -469,8 +463,6 @@ while( $input_line = <INFILE> )
 #  Ignore acehardware.com domain names, but do not
 #  filter out those businesses.
 
-        $website_url =~ s/&#46;/\./g ;
-        $website_url =~ s/&58;/:/g ;
         if ( $website_url =~ /acehardware\.com/i )
         {
             $website_url = "no_web" ;
@@ -508,6 +500,7 @@ while( $input_line = <INFILE> )
 
 #--------------------------------------------------
 #  Exclude high-frequency business names.
+#  Ignore punctuation when doing this check.
 
         $lowercase_business_name = lc( $business_name ) ;
         $lowercase_business_name =~ s/&#39;//g ;
@@ -564,15 +557,9 @@ while( $input_line = <INFILE> )
                 print OUT_FILE $info ;
             } else
             {
-                print OUT_SPECIAL_FILE $info ;
-            }
-            if ( $location_info =~ /links_([^ ]+)/ )
-            {
-                $links_line = $1 ;
-                $links_line =~ s/_$// ;
-                $links_line =~ s/_/\n/g ;
-                print OUT_LINKSFILE $links_line . "\n" ;
+                print OUT_FILE_PROMO_TYPE $info ;
             }
         }
     }
 }
+

@@ -2,7 +2,7 @@
 #       osm_get_midpoints_for_way_info.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2016 by Richard Fobes at SolutionsCreative.com
+#  (c) Copyright 2014-2022 by Richard Fobes at NewsHereNow.com
 
 
 #--------------------------------------------------
@@ -37,21 +37,25 @@ close( INFILE ) ;
 #--------------------------------------------------
 #  Open the output files.
 
-$path_and_filename_for_output = "output_biz_info_ready_to_split.txt" ;
+$path_and_filename_for_output = "output_biz_or_city_info_ready_to_split.txt" ;
 open OUTFILE , ">" . $path_and_filename_for_output ;
 
-$path_and_filename_for_output_skipped = "output_biz_info_skipped.txt" ;
+$path_and_filename_for_output_skipped = "output_biz_or_city_info_skipped.txt" ;
 open OUTSKIP , ">" . $path_and_filename_for_output_skipped ;
 
 
 #--------------------------------------------------
-#  Read each line of biz info.
+#  Read each line of biz or city info.
 #  Both node (kept as-is) and way versions are handled.
 
-#  Sample input line:
+#  Sample input lines:
+
 #      b w291415817 links_n2630649886_n2948840766_n2948840750_n2948840752_n2948840757_n2948840777_n2630649886_ Annie_Bloom&#39;s_Books shop_books www.annieblooms.com
 
-$filename_with_way_info = "output_businesses_filtered_all.txt" ;
+#      c w564576390 links_n5439266362_n5439266367_n5439266378_n5439266381_n5439266391_n5439266397_n5439266631_n5439266621_n5439266420_n5439266396_n5439266362_ Kejaksaan_Tinggi_Jawa_Tengah no_label no_alt_name lang_count_0 admin_level_4 no_is_in
+
+$filename_with_way_info = "output_biz_or_city_filtered_all.txt" ;
+
 open( INFILE , "<" . $filename_with_way_info ) ;
 while( $input_line = <INFILE> )
 {

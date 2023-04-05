@@ -2,7 +2,7 @@
 #       osm_split_business_free_listing_versus_promo.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2018 by Richard Fobes at SolutionsCreative.com
+#  (c) Copyright 2018 by Richard Fobes at NewsHereNow.com
 
 
 #  Usage in Linux environment:

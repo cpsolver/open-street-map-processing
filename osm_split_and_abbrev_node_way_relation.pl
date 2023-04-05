@@ -2,33 +2,153 @@
 #       osm_split_and_abbrev_node_way_relation.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2016 by Richard Fobes at SolutionsCreative.com
+#  (c) Copyright 2014-2023 by Richard Fobes at NewsHereNow.com
 
 
 #--------------------------------------------------
 #  Processes XML data file planet-latest.osm.bz from:
 #  https://ftp.osuosl.org/pub/openstreetmap/planet
 #
-#  Usage:
-#  bzcat planet-latest.osm.bz | perl osm_split_and_abbrev_node_way_relation.pl
 #
-#  Note: output to terminal shows node count as progress indicator
-#  In second terminal, run "top" Linux command to monitor CUP & memory usage
+#  For usage, see perl script:  osm_processing_do_all.pl
+#
+#  Notes:
+#  Output to terminal shows progress indicator, so
+#  do not redirect standard output.  To run a shell
+#  script in Ubuntu, open the "Terminal" app and
+#  use "cd" command to change to directory that
+#  contains the data and scripts, then enter "bash"
+#  followed by the full name of the shell script.
+#  In second "Terminal" run "top" Linux command to
+#  monitor CPU & memory usage.  When entering
+#  filenames and directories, use Tab key for
+#  auto-completion.
+#
+#
+#--------------------------------------------------
+#  Define the yes and no constants -- as numbers.
+
+$yes_yes = 1 + 0 ;
+$no_no = 0 + 0 ;
 
 
 #--------------------------------------------------
 #  Specify which data is being extracted.
-#
-#  Code further below can be used or commented-out to
-#  skip, or not skip, node or way or relation data.
 
-$yes_or_no_get_street_info = "no" ;
-$yes_or_no_get_business_info = "yes" ;
-$yes_or_no_get_city_info = "yes" ;
-$yes_or_no_get_linkage_way_info = "yes" ;
+$yes_or_no_get_street_info = $no_no ;
+$yes_or_no_get_business_info = $no_no ;
+$yes_or_no_get_city_info = $no_no ;
+$yes_or_no_get_node_info = $no_no ;
+$yes_or_no_get_way_info = $no_no ;
+$yes_or_no_get_relation_info = $no_no ;
 
-$yes_or_no_testing_only = "no" ;
-$testing_collection_threshold = 10 ;
+open( INFILE , "<" . "yes_or_no_get_street_info.txt" ) ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    print "yes_or_no_get_street_info: " ;
+    if ( $input_line =~ /yes/ )
+    {
+        $yes_or_no_get_street_info = $yes_yes ;
+        print "yes" ;
+    } else
+    {
+        print "no" ;
+    }
+    print "\n" ;
+    last ;
+}
+close( INFILE ) ;
+
+open( INFILE , "<" . "yes_or_no_get_business_info.txt" ) ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    print "yes_or_no_get_business_info: " ;
+    if ( $input_line =~ /yes/ )
+    {
+        $yes_or_no_get_business_info = $yes_yes ;
+        print "yes" ;
+    } else
+    {
+        print "no" ;
+    }
+    print "\n" ;
+    last ;
+}
+close( INFILE ) ;
+
+open( INFILE , "<" . "yes_or_no_get_city_info.txt" ) ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    print "yes_or_no_get_city_info: " ;
+    if ( $input_line =~ /yes/ )
+    {
+        $yes_or_no_get_city_info = $yes_yes ;
+        print "yes" ;
+    } else
+    {
+        print "no" ;
+    }
+    print "\n" ;
+    last ;
+}
+close( INFILE ) ;
+
+open( INFILE , "<" . "yes_or_no_get_node_info.txt" ) ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    print "yes_or_no_get_node_info: " ;
+    if ( $input_line =~ /yes/ )
+    {
+        $yes_or_no_get_node_info = $yes_yes ;
+        print "yes" ;
+    } else
+    {
+        print "no" ;
+    }
+    print "\n" ;
+    last ;
+}
+close( INFILE ) ;
+
+open( INFILE , "<" . "yes_or_no_get_way_info.txt" ) ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    print "yes_or_no_get_way_info: " ;
+    if ( $input_line =~ /yes/ )
+    {
+        $yes_or_no_get_way_info = $yes_yes ;
+        print "yes" ;
+    } else
+    {
+        print "no" ;
+    }
+    print "\n" ;
+    last ;
+}
+close( INFILE ) ;
+
+open( INFILE , "<" . "yes_or_no_get_relation_info.txt" ) ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    print "yes_or_no_get_relation_info: " ;
+    if ( $input_line =~ /yes/ )
+    {
+        $yes_or_no_get_relation_info = $yes_yes ;
+        print "yes" ;
+    } else
+    {
+        print "no" ;
+    }
+    print "\n" ;
+    last ;
+}
+close( INFILE ) ;
 
 
 #--------------------------------------------------
@@ -38,83 +158,49 @@ $testing_collection_threshold = 10 ;
 $slash_or_backslash = "/" ;  # linux
 
 
+#---------------------------------------------------
+#  If requested, get the list of any way IDs of
+#  interest.
+
+$file_name_list_of_way_ids = "input_list_of_special_ways_to_get.txt" ;
+open( INFILE , "<" . $file_name_list_of_way_ids ) ;
+$count_of_ways_needed = 0 ;
+while( $input_line = <INFILE> )
+{
+    chomp( $input_line ) ;
+    if ( ( $input_line =~ /(w[0-9]+)/ ) && ( $yes_or_no_get_way_info == $yes_yes ) )
+    {
+        $node_way_id = $1 ;
+        $need_way_id{ $node_way_id } = "y" ;
+        $count_of_ways_needed ++ ;
+    }
+}
+close( INFILE ) ;
+print "will get info for " . $count_of_ways_needed . " listed way IDs" . "\n" ;
+
+
 #--------------------------------------------------
-#  Specify how many nodes should be stored in
-#  memory before writing them to separate files.
-#  This number must not be small, or else each
-#  file is opened and closed to write just a few
-#  lines of data.
-#
-#  For testing, can use smaller number.
-
-# $trigger_count_node_info_lines_stored_ready_to_write = 1000 ;
-$trigger_count_node_info_lines_stored_ready_to_write = 1000000 ;
-
-
-#--------------------------------------------------
-#  For progress logging purposes, specify the input
-#  file size.
-#  When input_file_byte_size was 648278370000 , file size was 75.2 GB.
-#  Now file size is 81 GB so input_file_byte_size changed to ‭698300000000.
-
-$input_file_byte_size = 698300000000 ;
-
-
-#--------------------------------------------------
-#  Specify file paths.
-
-# $input_file_including_path = '/media/Elements/OpenStreetMapData/OsmUncompressed/osm_planet_uncompressed.xml' ;
-
-# $optional_prefix_path_for_output = '/media/Elements/OpenStreetMapData/output_files_2015octLater/' ;
-
-# $input_file_including_path = "G:\\OpenStreetMapData\\OsmUncompressed\\osm_planet_uncompressed.xml" ;
+#  Specify file path prefix.
 
 $optional_prefix_path_for_output = "" ;
 
-#$optional_prefix_path_for_output = "F:\\CitiesBusinessesIntersectionsPostalcodes\\calc_results\\" ;
-
-$optional_prefix_path_for_output_links_big_file = "" ;
-
-# $optional_prefix_path_for_output_links_big_file = "F:\\CitiesBusinessesIntersectionsPostalcodes\\calc_results\\" ;
-
-$path_and_filename_prefix_for_nodes =  $optional_prefix_path_for_output . 'nodes' . $slash_or_backslash . 'output_nodes_in_category_' ;
-
 
 #--------------------------------------------------
-#  Open the input file.
-
-# NOW USING STDIN!
-
-# open( INFILE , "<" . $input_file_including_path ) ;
-
-
-#--------------------------------------------------
-#  Create the output files.
+#  Create the output log file.
 
 open( OUT_LOG , ">" . $optional_prefix_path_for_output . 'output_log_split_node_way_relation.txt' ) ;
 
-if ( $yes_or_no_get_business_info eq "yes" )
-{
-    open( BIZ_NODE_FILE , ">" . $optional_prefix_path_for_output . 'output_business_node_info.txt' ) ;
-    open( BIZ_WAY_FILE , ">" . $optional_prefix_path_for_output . 'output_business_way_info.txt' ) ;
-    open( BIZ_RELATION_FILE , ">" . $optional_prefix_path_for_output . 'output_business_relation_info.txt' ) ;
-}
 
-if ( $yes_or_no_get_city_info eq "yes" )
-{
-    open( CITY_NODE_FILE , ">" . $optional_prefix_path_for_output . 'output_city_node_info.txt' ) ;
-    open( CITY_WAY_FILE , ">" . $optional_prefix_path_for_output . 'output_city_way_info.txt' ) ;
-    open( CITY_RELATION_FILE , ">" . $optional_prefix_path_for_output . 'output_city_relation_info.txt' ) ;
-}
+#---------------------------------------------------
+#  If any way IDs are specifically requested, open
+#  an output file for writing the links info for
+#  those ways.
+#  The other output files are opened when they are
+#  first needed.
 
-if ( $yes_or_no_get_street_info eq "yes" )
+if ( $count_of_ways_needed > 0 )
 {
-    open( STREET_WAY_FILE , ">" . $optional_prefix_path_for_output . 'output_street_way_info.txt' ) ;
-}
-
-if ( $yes_or_no_get_linkage_way_info eq "yes" )
-{
-    open( OTHER_WAY_FILE , ">" . $optional_prefix_path_for_output_links_big_file . 'output_linkage_way_info.txt' ) ;
+    open( OUT_LINKS , ">" . $optional_prefix_path_for_output . 'output_info_for_listed_ways.txt' ) ;
 }
 
 
@@ -171,6 +257,9 @@ $info_type_from_tag_and_value{ "amenity_biergarten" } = "business" ;
 #  Documented at URL:
 #    http://wiki.openstreetmap.org/wiki/Key:admin_level#admin_level
 #
+#  If the item is a building then it cannot be a
+#  city, and instead is probably something like a
+#  city hall.
 
 $info_type_from_tag{ "population" } = "city" ;
 $info_type_from_tag{ "ISO3166-1:alpha2" } = "city" ;
@@ -197,11 +286,14 @@ $info_type_from_tag_and_value{ "place_quarter" } = "city" ;
 $info_type_from_tag_and_value{ "place_neighbourhood" } = "city" ;
 
 #  place=locality is not a good tag for places with people living there,
-#  but it is sometimes used for that purpose;
-#  those locations will be ignored until the tag is fixed
-$info_type_from_tag_and_value{ "place_locality" } = "ignore" ;
+#  but it is sometimes used for that purpose, so allow:
+#  $info_type_from_tag_and_value{ "place_locality" } = "ignore" ;
 
-$info_type_from_tag_and_value{ "place_island" } = "ignore" ;
+#  An island (such as Staten Island) can be used as a
+#  location, so allow it:
+#  $info_type_from_tag_and_value{ "place_island" } = "ignore" ;
+
+$info_type_from_tag_and_value{ "building_government" } = "ignore" ;
 
 
 #--------------------------------------------------
@@ -209,13 +301,18 @@ $info_type_from_tag_and_value{ "place_island" } = "ignore" ;
 
 $info_type_from_tag{ "highway" } = "street" ;
 $info_type_from_tag{ "motorway" } = "street" ;
-$info_type_from_tag{ "route" } = "street" ;
 $info_type_from_tag{ "tiger:name_type" } = "street" ;
+# $info_type_from_tag{ "route" } = "street" ;
+
+$info_type_from_tag_and_value{ "route_road" } = "street" ;
+
+#  Ignore a "highway_path" because it is more of a
+#  path than a highway:
+$info_type_from_tag_and_value{ "highway_path" } = "ignore" ;
 
 $info_type_from_tag_and_value{ "route_railway" } = "ignore" ;
 $info_type_from_tag_and_value{ "route_train" } = "ignore" ;
 $info_type_from_tag_and_value{ "route_ferry" } = "ignore" ;
-
 $info_type_from_tag_and_value{ "amenity_parking" } = "ignore" ;
 
 #  Other exclusions for "bicycle", "bus", "hiking",
@@ -225,7 +322,7 @@ $info_type_from_tag_and_value{ "amenity_parking" } = "ignore" ;
 #  a road for vehicles.
 #
 #  "mtb" = "mountain-bike"
-#  "piste" is a bobsled route?
+#  "piste" is a bobsled route
 
 
 #--------------------------------------------------
@@ -242,12 +339,13 @@ $linked_ids = "" ;
 $label_at_info = "" ;
 $count_of_foreign_lang_names = 0 ;
 $is_in_tag_info = "" ;
-$skipped_over = "" ;
 
-$category_of_data = "" ;
-$previous_category_of_data = "" ;
-$encountered_transition_from_nodes_to_ways = "no" ;
-$encountered_transition_from_ways_to_relations = "no" ;
+$no_data_category = 0 + 0 ;
+$node_data_category = 1 + 0 ;
+$way_data_category = 2 + 0 ;
+$relation_data_category = 3 + 0 ;
+$category_of_data = $no_data_category ;
+$previous_category_of_data = $no_data_category ;
 
 $node_count = 0 ;
 $way_count = 0 ;
@@ -282,481 +380,220 @@ $nine_digits_of_count[ 11 ] = "99999999999" ;
 
 
 #--------------------------------------------------
-#  Optional code that skips over the node info.
-
-# seek( INFILE , 497655700000 , 0 ) ;
-# $input_line = <INFILE> ;
-
-
-#--------------------------------------------------
-#  Optional code that skips over the way info.
-
-# seek( STDIN , 660724003000 , 0 ) ;
-# $input_line = <INFILE> ;
-
-
-#--------------------------------------------------
-#  Optional code to help find the transition between
-#  node and way info.
-
-# while( $input_line = <INFILE> )
-# {
-#    chomp( $input_line ) ;
-#    print $input_line . "\n" ;
-#    $line_counter ++ ;
-#    if ( $line_counter > 500 )
-#    if ( $input_line =~ /<way/ )
-#    {
-#        $now_at = tell( INFILE ) ;
-#        print "now at " . $now_at . "\n" ;
-#        exit ;
-#    }
-# }
-
-
-#--------------------------------------------------
 #  Read each line in the file.
+#  Replace any tab, newline, or carriage return
+#  with a space.  Then omit adjacent spaces.
+#  Later code assumes there are never two or
+#  more adjacent spaces.
 
 $line_number = 0 ;
 while( $input_line = <STDIN> )
-# while( $input_line = <INFILE> )
 {
     chomp( $input_line ) ;
-    $input_line =~ s/[ \n\r\t]+/ /sg ;
+    $input_line =~ s/[\n\r\t]+/ /sg ;
+    $input_line =~ s/  +/ /sg ;
     $line_number ++ ;
 
 
 #--------------------------------------------------
-#  Uncomment if need to view segment of input file for
-#  debugging purposes.
+#  Uncomment this code if need to view segment of
+#  input file for debugging purposes.
 #
-#  Was used to discover that the following data
-#  mistakenly specified that the official_name for
-#  Canada is "Isle of Man":
+#  This code was used to discover that the
+#  following data mistakenly specified that the
+#  official_name for Canada is "Isle of Man":
 #
 #     <tag k="int_name" v="Canada" />
 #     <tag k="official_name" v="Isle of Man" />
 #     <tag k="ISO3166-1" v="ca" />
 #     <tag k="name" v="Canada" />
+#
+#  Also it was used to find a missing slash at
+#  the end of some node lines such as:
+#
+#     <node id="9483616092" lat="33.7108732" lon="-91.4542551" timestamp="2022-02-06T15:19:39Z" version="1" changeset="117082988" user="1T-money" uid="3715012">
 
-#    if ( ( $input_line =~ /<relation / ) && ( $input_line =~ /1428125/ ) )
+#    if ( $input_line =~ /"9483616/ )
 #    {
-#        print "line number " . $line_number . "\n" ;
-#        print $input_line . "\n" ;
+#        print OUT_LOG "line number " . $line_number . "\n" ;
+#        print OUT_LOG $input_line . "\n" ;
 #        while( $input_line = <INFILE> )
 #        {
 #            chomp( $input_line ) ;
 #            $input_line =~ s/[\n\r\t]/ /sg ;
 #            $input_line =~ s/  +/ /g ;
-#            print $input_line . "\n" ;
-#            if ( $input_line =~ /<\/relation>/ )
+#            print OUT_LOG $input_line . "\n" ;
+#            if ( $input_line =~ /<node/ )
 #            {
-#                exit ;
+#                last ;
 #            }
 #        }
-#    } else
-#    {
-#        next ;
 #    }
+#    next ;
 
 
 #--------------------------------------------------
-#  If needed for debugging, display some specific
-#  lines of the input file.
+#  If the line begins a new node, way, or relation
+#  and the previous node, way, or relation info has
+#  not yet been written, write the collected info.
+#  Also clear the collected info.
+#
+#  This code would not be needed if ALL the OSM
+#  data was in standard XML format!  However,
+#  the ending slash is missing from some OSM node
+#  data!
 
-    # if ( $input_line =~ /<node/ )
-    # {
-        # print $input_line . "\n" ;
-        # $show_line_count ++ ;
-        # if ( $show_line_count > 1000 )
-        # {
-            # exit ;
-        # }
-    # }
+    if ( ( $node_or_way_or_relation_id ne "" ) && ( $input_line =~ /^ ?<((node)|(way)|(relation)) ?[^\/]?> ?$/ ) )
+    {
+        &write_info( ) ;
+    }
 
 
 #--------------------------------------------------
-#  Handle the beginning of a node, way, or relation.
+#  Handle the beginning of a node, way, or
+#  relation.
+#
+#  Reminder:  The OSM data includes an editor's
+#  user ID indicated as "uid=" so the space before
+#  "id=" is important to recognize.
 
     if ( $input_line =~ /^ *<node id="([0-9]+)".* lat="([\-0-9\.]+)".* lon="([\-0-9\.]+)"/ )
     {
-        $node_id = $1 ;
+        $node_id_number_only = $1 ;
         $latitude = $2 ;
         $longitude = $3 ;
-        $category_of_data = "node" ;
-        $node_or_way_or_relation_id = "n" . $node_id ;
+        $node_id = "n" . $node_id_number_only ;
+        $category_of_data = $node_data_category ;
+        $node_or_way_or_relation_id = $node_id ;
+        $node_count ++ ;
+    } elsif ( $input_line =~ /^ *<node id="([0-9]+)"/ )
+    {
+        $node_id_number_only = $1 ;
+        $latitude = "" ;
+        $longitude = "" ;
+        $node_id = "n" . $node_id_number_only ;
+        $category_of_data = $node_data_category ;
+        $node_or_way_or_relation_id = $node_id ;
         $node_count ++ ;
     } elsif ( $input_line =~ /^ *<way id="([0-9]+)"/ )
     {
-        $way_id = $1 ;
-        $category_of_data = "way" ;
-        $node_or_way_or_relation_id = "w" . $way_id ;
+        $way_id_number_only = $1 ;
+        $way_id = "w" . $way_id_number_only ;
+        $category_of_data = $way_data_category ;
+        $node_or_way_or_relation_id = $way_id ;
         $way_count ++ ;
     } elsif ( $input_line =~ /^ *<relation id="([0-9]+)"/ )
     {
-        $relation_id = $1 ;
-        $category_of_data = "relation" ;
-        $node_or_way_or_relation_id = "r" . $relation_id ;
+        $relation_id_number_only = $1 ;
+        $relation_id = "r" . $relation_id_number_only ;
+        $category_of_data = $relation_data_category ;
+        $node_or_way_or_relation_id = $relation_id ;
         $relation_count ++ ;
     } elsif ( $input_line =~ /^ *<relation / )
     {
-        $category_of_data = "relation" ;
-        $relation_id = "???" ;
-        $node_or_way_or_relation_id = "r" . $relation_id ;
+        $relation_id_number_only = "???" ;
+        $relation_id = "r" . $relation_id_number_only ;
+        $category_of_data = $relation_data_category ;
+        $node_or_way_or_relation_id = $relation_id ;
         $relation_count ++ ;
     }
 
 
 #--------------------------------------------------
-#  At the end of all the node info (when the first
-#  way data is encountered), write any street
-#  node info that is waiting to be written.
+#  Get a latitude or longitude that is on a
+#  separate line.
 
-    if ( ( $category_of_data eq "way" ) && ( $count_node_info_lines_stored_ready_to_write > 0 ) )
+    if ( ( $category_of_data == $node_data_category ) && ( $input_line =~ /lat="([\-0-9\.]+)".* lon="([\-0-9\.]+)"/ ) )
     {
-        foreach $category_for_node_number ( keys( %output_lines_for_node_category ) )
+        $latitude = $1 ;
+        $longitude = $2 ;
+    } elsif ( ( $category_of_data == $node_data_category ) && ( $input_line =~ /lat="([\-0-9\.]+)"/ ) )
+    {
+        $latitude = $1 ;
+    } elsif ( ( $category_of_data == $node_data_category ) && ( $input_line =~ /lon="([\-0-9\.]+)"/ ) )
+    {
+        $longitude = $1 ;
+
+
+#--------------------------------------------------
+#  If a subordinate item is a label for the item,
+#  then save that label's item ID.
+
+    } elsif ( ( $category_of_data == $way_data_category ) && ( $input_line =~ /^ *<nd ref="([0-9]+)"/ ) )
+    {
+        $node_id_number_only = $1 ;
+        $node_id = "n" . $node_id_number_only ;
+        if ( $input_line =~ / role="label"/ )
         {
-            $output_lines = $output_lines_for_node_category{ $category_for_node_number } ;
-            open OUT_NODES , ">>" . $path_and_filename_prefix_for_nodes . $category_for_node_number . '.txt' ;
-            print OUT_NODES $output_lines ;
-            close OUT_NODES ;
+            $label_at_info = "label_at_" . $node_id ;
+        } else
+        {
+            $linked_ids .= $node_id . "_" ;
         }
-        %output_lines_for_node_category = ( ) ;
-        $count_node_info_lines_stored_ready_to_write = 0 ;
-    }
-
-
-#--------------------------------------------------
-#  Optional code that ignores all node info.
-
-#    if ( $category_of_data eq "node" )
-#    {
-#        next ;
-#    }
-
-
-#--------------------------------------------------
-#  Optional code that exits when way data reached.
-
-#    if ( $category_of_data eq "way" )
-#    {
-#        exit ;
-#    }
-
-
-#--------------------------------------------------
-#  Optional code that exits when relation data reached.
-
-#    if ( $category_of_data eq "relation" )
-#    {
-#        exit ;
-#    }
 
 
 #--------------------------------------------------
 #  Get info about a link between a way and node,
 #  or between a relation and way, or between
 #  a relation and node.
-#  If the relationship is that the subordinate
-#  item is a label for the item, then save the
-#  item ID differently -- in case this item is
-#  a city, in which case the label is the name(s)
-#  of the city (possibly in different languages).
 
-    if ( ( $category_of_data eq "way" ) && ( $input_line =~ /^ *<nd ref="([0-9]+)"/ ) )
+    } elsif ( $input_line =~ /<member / )
     {
-        $node_id = $1 ;
-        if ( $input_line =~ / role="label"/ )
+        if ( $input_line =~ /<member type="way" ref="([0-9]+)"/ )
         {
-            $label_at_info = "label_at_n" . $node_id ;
-        } else
-        {
-            $linked_ids .= "n" . $node_id . "_" ;
+            $id_number_only = $1 ;
+            $linked_ids .= "w" . $id_number_only . "_" ;
         }
-    } elsif ( ( $category_of_data eq "relation" ) && ( $input_line =~ /^ *<member type="way" ref="([0-9]+)"/ ) )
-    {
-        $way_id = $1 ;
-        $linked_ids .= "w" . $way_id . "_" ;
-    } elsif ( ( $category_of_data eq "relation" ) && ( $input_line =~ /^ *<member type="node" ref="([0-9]+)"/ ) )
-    {
-        $node_id = $1 ;
-        if ( $input_line =~ / role="label"/ )
+        if ( $input_line =~ /<member type="node" ref="([0-9]+)"/ )
         {
-            $label_at_info = "label_at_n" . $node_id ;
-        } else
-        {
-            $linked_ids .= "n" . $node_id . "_" ;
-        }
-
-
-#--------------------------------------------------
-#  At the end of a node, way, or relation, prepare
-#  to write the collected node, way, or relation
-#  information.
-#  Note that some node info is on just a single line.
-
-    } elsif ( ( $input_line =~ /^ *<\/node.*> *$/ ) || ( $input_line =~ /^ *<node.*\/> *$/ ) || ( $input_line =~ /^ *<\/way *>/ ) || ( $input_line =~ /^ *<\/relation *>/ ) )
-    {
-        $overlapping_roles_count = 0 ;
-        if ( $city_tag_info ne "" )
-        {
-            $overlapping_roles_count ++ ;
-        }
-        if ( $street_tag_info ne "" )
-        {
-            $overlapping_roles_count ++ ;
-        }
-        if ( $business_tag_info ne "" )
-        {
-            $overlapping_roles_count ++ ;
-        }
-        if ( $overlapping_roles_count > 1 )
-        {
-#            print $node_or_way_or_relation_id . " has overlapping roles: " . $city_tag_info . "   " . $street_tag_info . "   " . $business_tag_info . "\n" ;
-        }
-
-
-#--------------------------------------------------
-#  If testing, ignore additional items beyond the
-#  requested number of items of each data type.
-#
-#  Remember that "linked_ids" variable is used by
-#  more than just the "other" links data.
-
-        if ( $yes_or_no_testing_only eq "yes" )
-        {
-            if ( $business_tag_info ne "" )
+            $id_number_only = $1 ;
+            if ( $input_line =~ / role="((label)|(admin_centre))"/ )
             {
-                if ( ( ( $category_of_data eq "node" ) && ( $collection_count_biz_node > $testing_collection_threshold ) ) || ( ( $category_of_data eq "way" ) && ( $collection_count_biz_way > $testing_collection_threshold ) ) || ( ( $category_of_data eq "relation" ) && ( $collection_count_biz_relation > $testing_collection_threshold ) ) )
-                {
-                    $business_tag_info = "" ;
-                }
-            } elsif ( $city_tag_info ne "" )
-            {
-                if ( ( ( $category_of_data eq "node" ) && ( $collection_count_city_node > $testing_collection_threshold ) ) || ( ( $category_of_data eq "way" ) && ( $collection_count_city_way > $testing_collection_threshold ) ) || ( ( $category_of_data eq "relation" ) && ( $collection_count_city_relation > $testing_collection_threshold ) ) )
-                {
-                    $city_tag_info = "" ;
-                }
-            } elsif ( $street_tag_info ne "" )
-            {
-                if ( ( $category_of_data eq "way" ) && ( $collection_count_street_way > $testing_collection_threshold ) )
-                {
-                    $street_tag_info = "" ;
-                }
-            } elsif ( ( $linked_ids ne "" ) && ( $category_of_data eq "way" ) && ( $collection_count_linkage > $testing_collection_threshold ) )
-            {
-                $linked_ids = "" ;
-            }
-        }
-
-
-#--------------------------------------------------
-#  Write business information.
-#  Omit items that have names in ALL CAPS.
-
-        if ( $business_tag_info ne "" )
-        {
-            if ( ( $yes_or_no_get_business_info eq "yes" ) && ( $name_info ne "" ) && ( $name_info !~ /^[A-Z_]+$/ ) )
-            {
-                $name = $name_info ;
-                &generate_standardized_name( ) ;
-                $name_info = $name ;
-                if ( $business_web_info eq "" )
-                {
-                    $business_web_info = "no_web" ;
-                }
-                $business_tag_info =~ s/ +$// ;
-                $remaining_info = $name_info . " " . $business_tag_info . " " . $business_web_info ;
-                if ( ( $category_of_data eq "node" ) && ( $latitude ne "" ) )
-                {
-                    &convert_into_loc_format( ) ;
-                    print BIZ_NODE_FILE "b " . $location_loc . " " . $node_or_way_or_relation_id . " " . $remaining_info . "\n" ;
-                    $collection_count_biz_node ++ ;
-                } elsif ( $category_of_data eq "way" )
-                {
-                    print BIZ_WAY_FILE "b " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info. "\n" ;
-                    $collection_count_biz_way ++ ;
-                } elsif ( $category_of_data eq "relation" )
-                {
-                    print BIZ_RELATION_FILE "b " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info. "\n" ;
-                    $collection_count_biz_relation ++ ;
-                }
-            }
-            if ( $overlapping_roles_count <= 1 )
-            {
-                $latitude = "" ;
-            }
-
-
-#--------------------------------------------------
-#  Write city information.
-#
-#  A missing name is not OK, unless there is a
-#  non-empty "label_at_info" value.
-#
-#  Omit items that have names in ALL CAPS.
-#
-#  Countries have an admin level of 2, and should
-#  have an ISO3166-1 value.
-#
-#  If the variable "city_tag_info" is empty,
-#  ignore the info.
-#
-#  The admin level may always be empty
-#  for relations; it may only apply to
-#  node and way info.
-
-        } elsif ( ( $yes_or_no_get_city_info eq "yes" ) && ( $city_tag_info ne "" ) && ( ( ( $name_info ne "" ) && ( $name_info !~ /^[A-Z_]+$/ ) ) || ( $label_at_info ne "" ) ) )
-        {
-            $name = $name_info ;
-            &generate_standardized_name( ) ;
-            $name_info = $name ;
-            if ( $label_at_info eq "" )
-            {
-                $label_at_info = "no_label" ;
-            }
-            $alternate_name_info =~ s/ +$// ;
-            if ( $alternate_name_info eq "" )
-            {
-                $alternate_name_info = "no_alt_name" ;
+                $label_at_info = "label_at_n" . $id_number_only ;
             } else
             {
-                $name = $alternate_name_info ;
-                &generate_standardized_name( ) ;
-                $alternate_name_info = $name ;
-            }
-            if ( $is_in_tag_info eq "" )
-            {
-                $is_in_tag_info = "no_is_in" ;
-            }
-            $is_in_tag_info =~ s/ +$// ;
-            $city_tag_info =~ s/ +$// ;
-            $remaining_info = $name_info . " " . $label_at_info . " " . $alternate_name_info . " lang_count_" . $count_of_foreign_lang_names . " " . $city_tag_info . " " . $is_in_tag_info ;
-            if ( ( $category_of_data eq "node" ) && ( $latitude ne "" ) )
-            {
-                &convert_into_loc_format( ) ;
-                print CITY_NODE_FILE "c " . $location_loc . " " . $node_or_way_or_relation_id . " " . $remaining_info . "\n" ;
-                if ( $overlapping_roles_count <= 1 )
-                {
-                    $latitude = "" ;
-                }
-                $collection_count_city_node ++ ;
-            } elsif ( $category_of_data eq "way" )
-            {
-                print CITY_WAY_FILE "c " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
-                $collection_count_city_way ++ ;
-            } elsif ( $category_of_data eq "relation" )
-            {
-                print CITY_RELATION_FILE "c " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
-                $collection_count_city_relation ++ ;
-            }
-
-
-#--------------------------------------------------
-#  Write (way or relation) street information.
-#
-#  If the entire tag indicates just one ignored
-#  type of info, then the way or relation is
-#  ignored.  If instead, there is a mixure of
-#  info types, then the way or relation is not
-#  ignored.
-#
-#  Ignore street relation info because it is
-#  not relevant for intersections.
-
-        } elsif ( ( $category_of_data eq "way" ) && ( $yes_or_no_get_street_info eq "yes" ) && ( $street_tag_info ne "" ) && ( $name_info ne "" ) )
-        {
-            if ( $street_tag_info !~ /^_route_((bicycle)|(cycleway)|(bus)|(hiking)|(ski)|(piste)|(trail)|(subway)|(mtb))_$/ )
-            {
-                $name = $name_info ;
-                &generate_standardized_name( ) ;
-                $name_info = $name ;
-                $alternate_name_info =~ s/ +$// ;
-                if ( $alternate_name_info eq "" )
-                {
-                    $alternate_name_info = "no_alt_name" ;
-                } else
-                {
-                    $name = $alternate_name_info ;
-                    &generate_standardized_name( ) ;
-                    $alternate_name_info = $name ;
-                }
-                $remaining_info = $name_info . " " . $street_tag_info . " " . $alternate_name_info ;
-                print STREET_WAY_FILE "s " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
-                $collection_count_street_way ++ ;
-            }
-
-
-#--------------------------------------------------
-#  If there is way info that is not of a recognized
-#  type (street or business or city), yet it also is
-#  not of an ignored type, write it.
-#  This information may be part of a relation that
-#  refers to these way items as the linkage to the
-#  nodes that specify locations -- of a building's
-#  corners or a city boundary.
-
-        } elsif ( ( $yes_or_no_get_linkage_way_info = "yes" ) && ( $category_of_data eq "way" ) && ( $linked_ids =~ /[^ ]/ ) )
-        {
-            print OTHER_WAY_FILE "l " . $node_or_way_or_relation_id . " links_" . $linked_ids . "\n" ;
-            $collection_count_linkage ++ ;
-        }
-
-
-#--------------------------------------------------
-#  If needed, write node location information.
-#  The type of node is unknown except that it is
-#  not one of the ignored data types.
-#
-#  This information is split into different files,
-#  with the last three digits of the node ID number
-#  determining which file.
-
-        if ( $yes_or_no_get_street_info eq "yes" )
-        {
-            if ( ( $latitude ne "" ) && ( $node_id ne "" ) )
-            {
-                $category_for_node_number = substr( $node_id , -3 , 3 ) ;
-                &convert_into_loc_format( ) ;
-                $output_lines_for_node_category{ $category_for_node_number } .= "n" . $node_id . " " . $location_loc . "\n" ;
-                $count_node_info_lines_stored_ready_to_write ++ ;
-                $collection_count_node_uncategorized ++ ;
-                if ( $count_node_info_lines_stored_ready_to_write > $trigger_count_node_info_lines_stored_ready_to_write )
-                {
-                    foreach $category_for_node_number ( keys( %output_lines_for_node_category ) )
-                    {
-                        $output_lines = $output_lines_for_node_category{ $category_for_node_number } ;
-                        open OUT_NODES , ">>" . $path_and_filename_prefix_for_nodes . $category_for_node_number . '.txt' ;
-                        print OUT_NODES $output_lines ;
-                        close OUT_NODES ;
-                    }
-                    %output_lines_for_node_category = ( ) ;
-                    $count_node_info_lines_stored_ready_to_write = 0 ;
-                }
+                $linked_ids .= "n" . $id_number_only . "_" ;
             }
         }
+    }
 
 
 #--------------------------------------------------
-#  Show progress.
+#  At the end of a node, way, or relation, write
+#  the collected node, way, or relation
+#  information.  Also clear the collected info.
+#  Allow for the node info to be on just a single
+#  line.
+#
+#  Reminder:  Node and way data usually spans
+#  multiple lines.
+#
+#  Reminder:  Some OSM XML data is missing the
+#  XML-required slash at the end of a node, so
+#  some earlier code has to handle those cases.
+
+    if ( ( $input_line =~ /<\/ ?((node)|(way)|(relation))[^>]*>/ ) || ( $input_line =~ /<((node)|(way)|(relation))[^>]*\/> ?$/ ) )
+    {
+        &write_info( ) ;
+
+
+#--------------------------------------------------
+#  After writing info, possibly show progress.
 
         if ( $progress_counter > 500000 )
         {
-            $now_at = $input_file_byte_size ;
-#            $now_at = tell( INFILE ) ;
-            $percent_complete_tenths = sprintf( "%d" , int( 1000 * ( $now_at / $input_file_byte_size ) ) ) ;
-            if ( $encountered_transition_from_ways_to_relations eq "yes" )
+            if ( $category_of_data == $relation_data_category )
             {
-                $log_info = " r " . " b " . $collection_count_biz_relation . " c " . $collection_count_city_relation ;
-#                $log_info = $percent_complete_tenths . " r " . " b " . $collection_count_biz_relation . " c " . $collection_count_city_relation ;
-            } elsif ( $encountered_transition_from_nodes_to_ways eq "yes" )
+                $log_info = " r " . " b " . $collection_count_biz_relation . " c " . $collection_count_city_relation . " s " . $collection_count_street_relation ;
+            } elsif ( $category_of_data == $way_data_category )
             {
-                $log_info = " w " . " b " . $collection_count_biz_way . " c " . $collection_count_city_way . " s " . $collection_count_street_way . " L " . $collection_count_linkage ;
-#                $log_info = $percent_complete_tenths . " w " . " b " . $collection_count_biz_way . " c " . $collection_count_city_way . " s " . $collection_count_street_way . " L " . $collection_count_linkage ;
+                $log_info = " w " . " b " . $collection_count_biz_way . " c " . $collection_count_city_way . " s " . $collection_count_street_way . " m " . $collection_count_way_matches ;
+            } elsif ( $category_of_data == $node_data_category )
+            {
+                $log_info = " n " . " b " . $collection_count_biz_node . " c " . $collection_count_city_node . " s " . $collection_count_street_node . " m " . $collection_count_node_matches ;
             } else
             {
-                $log_info = " n " . " b " . $collection_count_biz_node . " c " . $collection_count_city_node . " s " . $collection_count_node_uncategorized ;
-#                $log_info = $percent_complete_tenths . " n " . " b " . $collection_count_biz_node . " c " . $collection_count_city_node . " s " . $collection_count_node_uncategorized ;
+                $log_info = " category unknown " . $collection_count_node_uncategorized ;
             }
             print $log_info . "\n" ;
             print OUT_LOG $log_info . "\n" ;
@@ -766,82 +603,63 @@ while( $input_line = <STDIN> )
 
 
 #--------------------------------------------------
-#  Identify transitions, from nodes to ways, and
-#  from ways to relations.
+#  Identify transitions, between nodes and ways and
+#  relations.
 #  Actually, this code identifies the time just after
 #  a transition has occurred, such that one item
 #  in the new category may have been written.
 #  At these transitions close files that no longer
 #  need to be kept open.
+#  Also exit the main loop if the next data type
+#  is not of interest.
+#  If node and relation data are requested without
+#  also requesting way info, ignore the relation
+#  data.
 
-        if ( $category_of_data ne $previous_category_of_data )
+        if ( $category_of_data != $previous_category_of_data )
         {
-            if ( ( $category_of_data eq "way" ) && ( $previous_category_of_data eq "node" ) )
+            print "progressing to next data type " . "\n" ;
+            if ( ( $previous_category_of_data == $node_data_category ) && ( $yes_or_no_get_node_info == $yes_yes ) )
             {
-                $encountered_transition_from_nodes_to_ways = "yes" ;
-                close( BIZ_NODE_FILE ) ;
-                close( CITY_NODE_FILE ) ;
+                if ( $yes_or_no_get_business_info == $yes_yes )
+                {
+                    close( BIZ_NODE_FILE ) ;
+                }
+                if ( $yes_or_no_get_city_info == $yes_yes )
+                {
+                    close( CITY_NODE_FILE ) ;
+                }
             }
-            if ( ( $category_of_data eq "relation" ) && ( $previous_category_of_data eq "way" ) )
+            if ( ( $previous_category_of_data == $way_data_category ) && ( $yes_or_no_get_way_info == $yes_yes ) )
             {
-                $encountered_transition_from_ways_to_relations = "yes" ;
-                close( BIZ_WAY_FILE ) ;
-                close( CITY_WAY_FILE ) ;
-                close( STREET_WAY_FILE ) ;
+                if ( $yes_or_no_get_business_info == $yes_yes )
+                {
+                    close( BIZ_WAY_FILE ) ;
+                }
+                if ( $yes_or_no_get_city_info == $yes_yes )
+                {
+                    close( CITY_WAY_FILE ) ;
+                }
+                if ( $yes_or_no_get_street_info == $yes_yes )
+                {
+                    close( STREET_WAY_FILE ) ;
+                }
+            }
+            if ( ( $category_of_data == $way_data_category ) && ( $yes_or_no_get_way_info == $no_no ) && ( $count_of_ways_needed < 1 ) )
+            {
+                last ;
+            }
+            if ( ( $category_of_data == $relation_data_category ) && ( $yes_or_no_get_relation_info == $no_no ) )
+            {
+                last ;
             }
         }
         $previous_category_of_data = $category_of_data ;
 
 
 #--------------------------------------------------
-#  If testing, skip ahead when reaching the requested
-#  number of items of each data type.
-
-        if ( $yes_or_no_testing_only eq "yes" )
-        {
-            if ( $skipped_over eq "" )
-            {
-#                seek( INFILE , 300000000000 , 0 ) ;
-                $skipped_over = "first_nodes" ;
-            } elsif ( ( $skipped_over eq "first_nodes" ) && ( $category_of_data eq "node" ) && ( ( $yes_or_no_get_business_info ne "yes" ) || ( $collection_count_biz_node >= $testing_collection_threshold ) ) && ( ( $yes_or_no_get_city_info ne "yes" ) || ( $collection_count_city_node >= $testing_collection_threshold ) ) )
-            {
-#                seek( INFILE , 497655700000 , 0 ) ;
-                $skipped_over = "ways" ;
-            } elsif ( ( $skipped_over eq "nodes" ) && ( $category_of_data eq "way" ) && ( ( $yes_or_no_get_business_info ne "yes" ) || ( $collection_count_biz_way >= $testing_collection_threshold ) ) && ( ( $yes_or_no_get_city_info ne "yes" ) || ( $collection_count_city_way >= $testing_collection_threshold ) ) && ( ( $yes_or_no_get_street_info ne "yes" ) || ( $collection_count_street_way >= $testing_collection_threshold ) ) )
-            {
-#                seek( INFILE , 660724003000 , 0 ) ;
-                $skipped_over = "ways" ;
-            } elsif ( ( $skipped_over eq "ways" ) && ( $category_of_data eq "relation" ) && ( ( $yes_or_no_get_business_info ne "yes" ) || ( $collection_count_biz_relation >= $testing_collection_threshold ) ) && ( ( $yes_or_no_get_city_info ne "yes" ) || ( $collection_count_city_relation >= $testing_collection_threshold ) ) )
-            {
-                exit ;
-            }
-        }
-
-
-#--------------------------------------------------
-#  Reset values for the next node, way, or relation.
-
-        $latitude = "" ;
-        $name_info = "" ;
-        $alternate_name_info = "" ;
-        $city_tag_info = "" ;
-        $street_tag_info = "" ;
-        $business_tag_info = "" ;
-        $business_web_info = "" ;
-        $linked_ids = "" ;
-        $label_at_info = "" ;
-        $count_of_foreign_lang_names = 0 ;
-        $is_in_tag_info = "" ;
-
-        $category_of_data = "" ;
-        $node_id = "" ;
-        $way_id = "" ;
-        $relation_id = "" ;
-        $node_or_way_or_relation_id = "" ;
-
-
-#--------------------------------------------------
-#  Get tag and value information.
+#  If not at the end of a node, way, or relation,
+#  get any tag and value information.
 #  Handle data of interest for either node, way,
 #  or relation type.
 #
@@ -850,69 +668,55 @@ while( $input_line = <STDIN> )
 #  Maritime boundaries are not of interest.
 #  A "southbound" node is a bus stop, not a street entity,
 #  so it is not of interest.
+#
+#  When looking at relation data, a route type of
+#  "road" is of interest, but all other route
+#  types -- e.g. route_bicycle -- are not of
+#  interest.
 
     } elsif ( $input_line =~ /<tag k="([^"]+)" v="([^"]+)"/ )
     {
         $tag = $1 ;
         $value = $2 ;
         $tag_and_value = $tag . "_" . $value ;
-        if ( ( $tag_and_value eq "maritime_yes" ) || ( ( $category_of_data eq "node" ) && ( $value =~ /((north)|(south)|(east)|(west))bound/ ) ) )
+        if ( ( $tag_and_value eq "maritime_yes" ) || ( ( $category_of_data == $node_data_category ) && ( $value =~ /((north)|(south)|(east)|(west))bound/ ) ) )
         {
-            $node_id = "" ;
-            $way_id = "" ;
-            $latitude = "" ;
-            $category_of_data = "" ;
+            $city_tag_info = "" ;
+            $street_tag_info = "" ;
         } elsif ( ( ( $tag eq "route" ) || ( $tag eq "highway" ) ) && ( exists( $route_type_of_no_interest{ $value } ) ) )
         {
-            $node_id = "" ;
-            $way_id = "" ;
-            $relation_id = "" ;
-            $category_of_data = "" ;
+            $street_tag_info = "" ;
         } elsif ( $tag eq "admin_level" )
         {
-            if ( $yes_or_no_get_city_info eq "yes" )
+            if ( $yes_or_no_get_city_info == $yes_yes )
             {
                 $city_tag_info .= $tag_and_value . " " ;
-            } else
-            {
-                $latitude = "" ;
             }
         } elsif ( exists( $info_type_from_tag_and_value{ $tag_and_value } ) )
         {
             if ( $info_type_from_tag_and_value{ $tag_and_value } eq "business" )
             {
-                if ( $yes_or_no_get_business_info eq "yes" )
+                if ( $yes_or_no_get_business_info == $yes_yes )
                 {
                     $business_tag_info .= $tag_and_value . " " ;
-                } else
-                {
-                    $latitude = "" ;
                 }
             } elsif ( $info_type_from_tag_and_value{ $tag_and_value } eq "city" )
             {
-                if ( $yes_or_no_get_city_info eq "yes" )
+                if ( $yes_or_no_get_city_info == $yes_yes )
                 {
                     $city_tag_info .= $tag_and_value . " " ;
-                } else
-                {
-                    $latitude = "" ;
                 }
             } elsif ( $info_type_from_tag_and_value{ $tag_and_value } eq "street" )
             {
-                if ( $yes_or_no_get_street_info eq "yes" )
+                if ( $yes_or_no_get_street_info == $yes_yes )
                 {
                     $street_tag_info .= $tag_and_value . " " ;
-                } else
-                {
-                    $latitude = "" ;
                 }
             } elsif ( $info_type_from_tag_and_value{ $tag_and_value } eq "ignore" )
             {
-                $node_id = "" ;
-                $way_id = "" ;
-                $relation_id = "" ;
-                $latitude = "" ;
-                $category_of_data = "" ;
+                $business_tag_info = "" ;
+                $city_tag_info = "" ;
+                $street_tag_info = "" ;
             }
         } elsif ( exists( $info_type_from_tag{ $tag } ) )
         {
@@ -927,16 +731,13 @@ while( $input_line = <STDIN> )
             }
             if ( $info_type_from_tag{ $tag } eq "business" )
             {
-                if ( $yes_or_no_get_business_info eq "yes" )
+                if ( $yes_or_no_get_business_info == $yes_yes )
                 {
                     $business_tag_info .= $tag . "_" . $value_without_spaces . " " ;
-                } else
-                {
-                    $latitude = "" ;
                 }
             } elsif ( $info_type_from_tag{ $tag } eq "city" )
             {
-                if ( ( $yes_or_no_get_city_info eq "yes" ) && ( $value_without_spaces ne "" ) )
+                if ( ( $yes_or_no_get_city_info == $yes_yes ) && ( $value_without_spaces ne "" ) )
                 {
                     if ( ( $tag eq "population" ) && ( $value !~ /^[0-9]+$/ ) )
                     {
@@ -945,26 +746,21 @@ while( $input_line = <STDIN> )
                     {
                         $city_tag_info .= $tag . "_" . $value_without_spaces . " " ;
                     }
-                } else
-                {
-                    $latitude = "" ;
                 }
+            } elsif ( ( $category_of_data == $relation_data_category ) && ( $tag eq "route" ) && ( $tag_and_value ne "route_road" ) )
+            {
+                $street_tag_info = "" ;
             } elsif ( $info_type_from_tag{ $tag } eq "street" )
             {
-                if ( $yes_or_no_get_street_info eq "yes" )
+                if ( $yes_or_no_get_street_info == $yes_yes )
                 {
                     $street_tag_info .= $tag . "_" . $value_without_spaces . " " ;
-                } else
-                {
-                    $latitude = "" ;
                 }
             } elsif ( $info_type_from_tag{ $tag } eq "ignore" )
             {
-                $node_id = "" ;
-                $way_id = "" ;
-                $relation_id = "" ;
-                $latitude = "" ;
-                $category_of_data = "" ;
+                $business_tag_info = "" ;
+                $city_tag_info = "" ;
+                $street_tag_info = "" ;
             }
         } elsif ( $tag eq "name" )
         {
@@ -997,7 +793,7 @@ while( $input_line = <STDIN> )
             $value =~ s/ $// ;
             $value =~ s/ /_/g ;
             $alternate_name_info .= $tag . "_" . $value . " " ;
-        } elsif ( ( $tag eq "website" ) && ( $yes_or_no_get_business_info eq "yes" ) )
+        } elsif ( ( $tag eq "website" ) && ( $yes_or_no_get_business_info == $yes_yes ) )
         {
 #  allow for http and https
             $value =~ s/https?:\/\/// ;
@@ -1009,7 +805,7 @@ while( $input_line = <STDIN> )
             {
                 $business_web_info = $value ;
             }
-        } elsif ( ( $tag =~ /^is_in:/ ) && ( $yes_or_no_get_city_info eq "yes" ) && ( $tag !~ /^is_in:((continent)|(city))/ ) && ( $value ne "Canada" ) && ( $value ne "USA" ) && ( $value ne "United States of America" ) )
+        } elsif ( ( $tag =~ /^is_in:/ ) && ( $yes_or_no_get_city_info == $yes_yes ) && ( $tag !~ /^is_in:((continent)|(city))/ ) && ( $value ne "Canada" ) && ( $value ne "USA" ) && ( $value ne "United States of America" ) )
         {
             $value =~ s/:/ /g ;
             $value =~ s/\(/ /g ;
@@ -1019,17 +815,10 @@ while( $input_line = <STDIN> )
             $value =~ s/ $// ;
             $value =~ s/ /_/g ;
             $is_in_tag_info .= $tag . "_" . $value . " " ;
-        } elsif ( ( $yes_or_no_get_city_info eq "yes" ) && ( $tag =~ /^ISO3166/ ) & ( $value =~ /^[a-z][a-z]$/i ) )
+        } elsif ( ( $yes_or_no_get_city_info == $yes_yes ) && ( $tag =~ /^ISO3166/ ) && ( $value =~ /^[a-z][a-z]$/i ) )
         {
             $value = lc( $value ) ;
             $city_tag_info .= "country_code_" . $value . " " ;
-        } elsif ( $tag eq "amenity" )
-        {
-            $node_id = "" ;
-            $way_id = "" ;
-            $relation_id = "" ;
-            $latitude = "" ;
-            $category_of_data = "" ;
         }
     }
 
@@ -1041,18 +830,257 @@ while( $input_line = <STDIN> )
 
 
 #--------------------------------------------------
-#  Just in case there is any node info that is
-#  waiting to be written, write it to the output files.
+#  If there is an item waiting to be written,
+#  write it.
 
-if ( $count_node_info_lines_stored_ready_to_write > 0 )
+&write_info( ) ;
+
+
+#--------------------------------------------------
+#  All done.
+
+exit ;
+
+
+#--------------------------------------------------
+#--------------------------------------------------
+#--------------------------------------------------
+#--------------------------------------------------
+#
+#  Subroutine:
+#
+#  write_info
+#
+#--------------------------------------------------
+#  Write the info for one node, way, or relation.
+
+#--------------------------------------------------
+
+sub write_info
 {
-    foreach $category_for_node_number ( keys( %output_lines_for_node_category ) )
+
+
+#--------------------------------------------------
+#  Check whether the current way ID matches one of
+#  the way IDs specifically being requested.  If
+#  there is a match, write the linkage information
+#  for that way.
+
+    if ( ( $count_of_ways_needed > 0 ) && ( $category_of_data == $way_data_category ) )
     {
-        $output_lines = $output_lines_for_node_category{ $category_for_node_number } ;
-        open OUT_NODES , ">>" . $path_and_filename_prefix_for_nodes . $category_for_node_number . '.txt' ;
-        print OUT_NODES $output_lines ;
-        close OUT_NODES ;
+        if ( exists( $need_way_id{ $node_or_way_or_relation_id } ) )
+        {
+            print OUT_LINKS $node_or_way_or_relation_id . " links_" . $linked_ids . "\n" ;
+            $collection_count_way_matches ++ ;
+        }
     }
+
+
+#--------------------------------------------------
+#  Generate a standardized version of the name.
+#  If there is no name, create a placeholder.
+
+    if ( $name_info ne "" )
+    {
+        $name = $name_info ;
+        &generate_standardized_name( ) ;
+        $name_info = $name ;
+    } else
+    {
+        $name_info = "???" ;
+    }
+
+
+#--------------------------------------------------
+#  Write business information.
+
+    if ( ( $yes_or_no_get_business_info == $yes_yes ) && ( $business_tag_info ne "" ) )
+    {
+        if ( $business_web_info eq "" )
+        {
+            $business_web_info = "no_web" ;
+        }
+        $business_tag_info =~ s/ +$// ;
+        $remaining_info = $name_info . " " . $business_tag_info . " " . $business_web_info ;
+        if ( ( $category_of_data == $node_data_category ) && ( $latitude ne "" ) && ( $longitude ne "" ) )
+        {
+            &convert_into_loc_format( ) ;
+            if ( $yes_or_no_opened_biz_node_file != $yes_yes )
+            {
+                open( BIZ_NODE_FILE , ">" . $optional_prefix_path_for_output . 'output_business_node_info.txt' ) ;
+            $yes_or_no_opened_biz_node_file = $yes_yes ;
+            }
+            print BIZ_NODE_FILE "b " . $location_loc . " " . $node_or_way_or_relation_id . " " . $remaining_info . "\n" ;
+            $collection_count_biz_node ++ ;
+        } elsif ( $category_of_data == $way_data_category )
+        {
+            if ( $yes_or_no_opened_biz_way_file != $yes_yes )
+            {
+                open( BIZ_WAY_FILE , ">" . $optional_prefix_path_for_output . 'output_business_way_info.txt' ) ;
+                $yes_or_no_opened_biz_way_file = $yes_yes ;
+            }
+            print BIZ_WAY_FILE "b " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
+            $collection_count_biz_way ++ ;
+        } elsif ( $category_of_data == $relation_data_category )
+        {
+            if ( $yes_or_no_opened_biz_relation_file != $yes_yes )
+            {
+                open( BIZ_RELATION_FILE , ">" . $optional_prefix_path_for_output . 'output_business_relation_info.txt' ) ;
+                $yes_or_no_opened_biz_relation_file = $yes_yes ;
+            }
+            print BIZ_RELATION_FILE "b " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
+            $collection_count_biz_relation ++ ;
+        }
+    }
+
+
+#--------------------------------------------------
+#  Write city information.
+#
+#  If the variable "city_tag_info" is empty,
+#  ignore the info.
+#
+#  A missing name is not OK, unless there is a
+#  non-empty "label_at_info" value.
+#
+#  Countries have an admin level of 2, and should
+#  have an ISO3166-1 value.
+#
+#  The admin level may always be empty
+#  for relations; it may only apply to
+#  node and way info.
+
+    if ( ( $yes_or_no_get_city_info == $yes_yes ) && ( $city_tag_info ne "" ) )
+    {
+        if ( $label_at_info eq "" )
+        {
+            $label_at_info = "no_label" ;
+        }
+        $alternate_name_info =~ s/ +$// ;
+        if ( $alternate_name_info eq "" )
+        {
+            $alternate_name_info = "no_alt_name" ;
+        } else
+        {
+            $name = $alternate_name_info ;
+            &generate_standardized_name( ) ;
+            $alternate_name_info = $name ;
+        }
+        if ( $is_in_tag_info eq "" )
+        {
+            $is_in_tag_info = "no_is_in" ;
+        }
+        $is_in_tag_info =~ s/ +$// ;
+        $city_tag_info =~ s/ +$// ;
+        $remaining_info = $name_info . " " . $label_at_info . " " . $alternate_name_info . " lang_count_" . $count_of_foreign_lang_names . " " . $city_tag_info . " " . $is_in_tag_info ;
+        if ( ( $category_of_data == $node_data_category ) && ( $latitude ne "" ) && ( $longitude ne "" ) )
+        {
+            &convert_into_loc_format( ) ;
+            if ( $yes_or_no_opened_city_node_file != $yes_yes )
+            {
+                open( CITY_NODE_FILE , ">" . $optional_prefix_path_for_output . 'output_city_node_info.txt' ) ;
+                $yes_or_no_opened_city_node_file = $yes_yes ;
+            }
+            print CITY_NODE_FILE "c " . $location_loc . " " . $node_or_way_or_relation_id . " " . $remaining_info . "\n" ;
+            $collection_count_city_node ++ ;
+        } elsif ( $category_of_data == $way_data_category )
+        {
+            if ( $yes_or_no_opened_city_way_file != $yes_yes )
+            {
+                open( CITY_WAY_FILE , ">" . $optional_prefix_path_for_output . 'output_city_way_info.txt' ) ;
+                $yes_or_no_opened_city_way_file = $yes_yes ;
+            }
+            print CITY_WAY_FILE "c " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
+            $collection_count_city_way ++ ;
+        } elsif ( $category_of_data == $relation_data_category )
+        {
+            if ( $yes_or_no_opened_city_relation_file != $yes_yes )
+            {
+                open( CITY_RELATION_FILE , ">" . $optional_prefix_path_for_output . 'output_city_relation_info.txt' ) ;
+                $yes_or_no_opened_city_relation_file = $yes_yes ;
+            }
+            print CITY_RELATION_FILE "c " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
+            $collection_count_city_relation ++ ;
+        }
+    }
+
+
+#--------------------------------------------------
+#  Write street information, which can be ways or
+#  relations.  Nodes along a street are not
+#  handled in this script because a different
+#  script must get the latitude and longitude of
+#  EVERY node and supply the needed ones to the
+#  script that merges that data with the street
+#  ways and street relations.  If the route is
+#  designated as being for bicycles, hiking,
+#  buses, etc., do not write the info.
+
+    if ( ( $yes_or_no_get_street_info == $yes_yes ) && ( $category_of_data == $node_data_category ) )
+    {
+        if ( ( $street_tag_info ne "" ) && ( $street_tag_info !~ /^_route_((bicycle)|(cycleway)|(bus)|(hiking)|(ski)|(piste)|(trail)|(subway)|(mtb))_$/ ) )
+        {
+            $alternate_name_info =~ s/ +$// ;
+            if ( $alternate_name_info eq "" )
+            {
+                $alternate_name_info = "no_alt_name" ;
+            } else
+            {
+                $name = $alternate_name_info ;
+                &generate_standardized_name( ) ;
+                $alternate_name_info = $name ;
+            }
+            $remaining_info = $name_info . " " . $street_tag_info . " " . $alternate_name_info ;
+            if ( $category_of_data == $way_data_category )
+            {
+                if ( $yes_or_no_opened_street_way_file != $yes_yes )
+                {
+                    open( STREET_WAY_FILE , ">" . $optional_prefix_path_for_output . 'output_street_way_info.txt' ) ;
+                    $yes_or_no_opened_street_way_file = $yes_yes ;
+                }
+                print STREET_WAY_FILE "s " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
+                $collection_count_street_way ++ ;
+            } elsif ( $category_of_data == $relation_data_category )
+            {
+                if ( $yes_or_no_opened_street_relation_file != $yes_yes )
+                {
+                    open( STREET_RELATION_FILE , ">" . $optional_prefix_path_for_output . 'output_street_relation_info.txt' ) ;
+                    $yes_or_no_opened_street_relation_file = $yes_yes ;
+                }
+                print STREET_RELATION_FILE "s " . $node_or_way_or_relation_id . " links_" . $linked_ids . " " . $remaining_info . "\n" ;
+                $collection_count_street_relation ++ ;
+            }
+        }
+    }
+
+
+#--------------------------------------------------
+#  Reset values for the next node, way, or
+#  relation.
+
+    $node_id_number_only = "" ; 
+    $node_id = "" ;
+    $way_id_number_only = "" ;
+    $way_id = "" ;
+    $relation_id_number_only = "" ;
+    $relation_id = "" ;
+    $node_or_way_or_relation_id = "" ;
+    $latitude = "" ;
+    $name_info = "" ;
+    $alternate_name_info = "" ;
+    $city_tag_info = "" ;
+    $street_tag_info = "" ;
+    $business_tag_info = "" ;
+    $business_web_info = "" ;
+    $linked_ids = "" ;
+    $label_at_info = "" ;
+    $count_of_foreign_lang_names = 0 ;
+    $is_in_tag_info = "" ;
+
+
+#--------------------------------------------------
+#  End of subroutine.
+
 }
 
 
@@ -1188,24 +1216,24 @@ sub generate_standardized_name
 #  for spaces.
 
     @octet_number_at_position = unpack( "C*" , $name ) ;
-    $yes_or_no_within_ampersand_encoded_character = "no" ;
+    $yes_or_no_within_ampersand_encoded_character = $no_no ;
     $pointer = -1 ;
     $name = "" ;
     while ( $pointer <= $#octet_number_at_position )
     {
         $pointer ++ ;
         $octet_number = $octet_number_at_position[ $pointer ] ;
-        if ( $yes_or_no_within_ampersand_encoded_character eq "yes" )
+        if ( $yes_or_no_within_ampersand_encoded_character == $yes_yes )
         {
             $name .= chr( $octet_number ) ;
             if ( $octet_number == ord( ";" ) )
             {
-                $yes_or_no_within_ampersand_encoded_character = "no" ;
+                $yes_or_no_within_ampersand_encoded_character = $no_no ;
             }
         } elsif ( ( $octet_number == ord( '&' ) ) && ( $octet_number_at_position[ $pointer + 1 ] == ord( '#' ) ) )
         {
             $name .= chr( $octet_number ) ;
-            $yes_or_no_within_ampersand_encoded_character = "yes" ;
+            $yes_or_no_within_ampersand_encoded_character = $yes_yes ;
         } elsif ( $octet_number == ord( " " ) )
         {
             $name .= "_" ;

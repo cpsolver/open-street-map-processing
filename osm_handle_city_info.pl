@@ -2,7 +2,7 @@
 #       osm_handle_city_info.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2015 by Richard Fobes at SolutionsCreative.com
+#  (c) Copyright 2014-2015 by Richard Fobes at NewsHereNow.com
 
 
 #--------------------------------------------------
@@ -65,8 +65,8 @@ $country_name_for_country_code{ "es" } = "Spain" ;
 
 
 #--------------------------------------------------
-#  Lookup codes from previous executions of this
-#  script.
+#  Inserted lookup codes from previous executions
+#  of this script.
 #
 #  They are needed here because the lookup
 #  association might occur (in the data) after a
