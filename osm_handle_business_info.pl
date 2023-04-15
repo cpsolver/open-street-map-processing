@@ -2,7 +2,7 @@
 #       osm_handle_business_info.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2018 by Richard Fobes at NewsHereNow.com
+#  (c) Copyright 2014-2018 by Richard Fobes at SolutionsCreative.com
 
 
 #  Usage in Linux environment:
@@ -517,7 +517,13 @@ while( $input_line = <INFILE> )
 
 
 #--------------------------------------------------
-#  Allow "Ace Hardware" businesses.
+#  Allow "Ace Hardware" businesses because many of
+#  them are family-owned businesses.  (They buy
+#  products through the Ace co-op because
+#  otherwise there are no other wholesale hardware
+#  businesses.)   Do NOT include True Value
+#  hardware stores because most of those stores
+#  are franchise businesses.
 #  Ensure that "Horace Hardware" will not match.
 
         if ( ( $business_name =~ /^ace_hardware/i ) || ( $business_name =~ /[^a-z]ace_hardware/i ) )
@@ -551,7 +557,7 @@ while( $input_line = <INFILE> )
             {
                 $business_type = $business_type_short_for_business_type{ $business_type } ;
             }
-            $info = "b " . $location_info . " " . $business_name . " " . $business_type . $website_url_with_leading_space_if_not_empty . "\n" ;
+            $info = "b " . $location_info . " " . $business_id . " " . $business_name . " " . $business_type . $website_url_with_leading_space_if_not_empty . "\n" ;
             if ( exists( $yes_if_default_business_type{ $business_type } ) )
             {
                 print OUT_FILE $info ;
