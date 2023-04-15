@@ -2,7 +2,7 @@
 #       osm_split_city_info_by_rank.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014 by Richard Fobes at NewsHereNow.com
+#  (c) Copyright 2014 by Richard Fobes at SolutionsCreative.com
 
 
 #--------------------------------------------------

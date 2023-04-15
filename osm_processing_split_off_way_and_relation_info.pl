@@ -2,6 +2,8 @@
 #
 #       osm_processing_split_off_way_and_relation_info.pl
 #
+#  (c) Copyright 2023 by Richard Fobes at SolutionsCreative.com
+#
 #  This Perl script runs Linux commands that read
 #  the planet database file and split off the way
 #  data and the relation data into separate files,

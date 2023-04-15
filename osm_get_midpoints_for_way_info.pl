@@ -2,7 +2,7 @@
 #       osm_get_midpoints_for_way_info.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2022 by Richard Fobes at NewsHereNow.com
+#  (c) Copyright 2014-2022 by Richard Fobes at SolutionsCreative.com
 
 
 #--------------------------------------------------

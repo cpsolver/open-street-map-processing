@@ -2,7 +2,7 @@
 #       osm_split_and_abbrev_node_way_relation.pl
 #--------------------------------------------------
 
-#  (c) Copyright 2014-2023 by Richard Fobes at NewsHereNow.com
+#  (c) Copyright 2014-2023 by Richard Fobes at SolutionsCreative.com
 
 
 #--------------------------------------------------
