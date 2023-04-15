@@ -1,0 +1,22 @@
+line number 35019164
+ <changeset id="9483616" created_at="2011-10-06T08:10:26Z" closed_at="2011-10-06T08:10:56Z" open="false" user="gpstracks" uid="188429" min_lat="46.2726113" min_lon="13.1538763" max_lat="46.5032216" max_lon="13.7312690" num_changes="130" comments_count="0">
+line number 552324132
+ <changeset id="94836160" created_at="2020-11-26T11:30:34Z" closed_at="2020-11-26T11:30:36Z" open="false" user="mundlk" uid="10205154" min_lat="52.4594364" min_lon="1.2302272" max_lat="52.4606170" max_lon="1.2317109" num_changes="6" comments_count="0">
+line number 552324140
+ <changeset id="94836161" created_at="2020-11-26T11:30:34Z" closed_at="2020-11-26T11:30:34Z" open="false" user="N Antonovich" uid="9668049" min_lat="56.2146242" min_lon="30.6503447" max_lat="56.2150999" max_lon="30.6512117" num_changes="20" comments_count="0">
+line number 552324148
+ <changeset id="94836162" created_at="2020-11-26T11:30:34Z" closed_at="2020-11-26T11:30:35Z" open="false" user="Misa_zumba" uid="8774347" min_lat="-10.6891812" min_lon="-76.2667519" max_lat="-10.6880080" max_lon="-76.2664910" num_changes="19" comments_count="0">
+line number 552324153
+ <changeset id="94836163" created_at="2020-11-26T11:30:35Z" closed_at="2020-11-26T11:30:35Z" open="false" user="Eliana LC" uid="10824641" min_lat="-1.2861642" min_lon="36.7527308" max_lat="-1.2859886" max_lon="36.7529132" num_changes="10" comments_count="0">
+line number 552324162
+ <changeset id="94836164" created_at="2020-11-26T11:30:35Z" closed_at="2020-11-26T11:30:37Z" open="false" user="JuanDeFuca" uid="10811183" min_lat="51.2028177" min_lon="30.5288226" max_lat="51.2068263" max_lon="30.5327439" num_changes="97" comments_count="0">
+line number 552324168
+ <changeset id="94836165" created_at="2020-11-26T11:30:37Z" closed_at="2020-11-26T11:30:38Z" open="false" user="Plitvice22" uid="10461182" min_lat="-22.0181266" min_lon="-46.6039503" max_lat="-22.0162356" max_lon="-46.6011192" num_changes="17" comments_count="0">
+line number 552324174
+ <changeset id="94836166" created_at="2020-11-26T11:30:37Z" closed_at="2020-11-26T11:30:38Z" open="false" user="Nick Horton" uid="12208305" min_lat="-23.0965494" min_lon="26.1596105" max_lat="-23.0922425" max_lon="26.1627016" num_changes="80" comments_count="0">
+line number 552324183
+ <changeset id="94836167" created_at="2020-11-26T11:30:38Z" closed_at="2020-11-26T11:30:40Z" open="false" user="manitec" uid="10145715" min_lat="35.3055260" min_lon="-81.1833890" max_lat="35.3153770" max_lon="-81.1745320" num_changes="20" comments_count="0">
+line number 552324191
+ <changeset id="94836168" created_at="2020-11-26T11:30:38Z" closed_at="2020-11-26T11:30:40Z" open="false" user="nampeb" uid="11676225" min_lat="35.1316279" min_lon="-81.0706070" max_lat="35.1363177" max_lon="-81.0645592" num_changes="17" comments_count="0">
+line number 552324199
+ <changeset id="94836169" created_at="2020-11-26T11:30:38Z" closed_at="2020-11-26T11:30:41Z" open="false" user="ZocaloBlanco" uid="10278890" min_lat="43.2348710" min_lon="76.8396795" max_lat="43.2385950" max_lon="76.8412949" num_changes="9" comments_count="0">
