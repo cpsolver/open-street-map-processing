@@ -6,16 +6,14 @@
 #
 #  This Perl script runs other Perl scripts that
 #  process the Open Street Map data to get the
-#  info for businesses, street intersections,
-#  and/or cities.
+#  info for businesses and cities.
 #
 #  Before running this script check the settings
 #  in the code to verify it is currently set up
 #  to get the info you need, and does not waste
 #  time getting info you do not need.  For
 #  example, business info should be updated often
-#  but street intersections and cities seldom
-#  change
+#  but cities seldom change
 #
 #  Usage:
 #
@@ -57,28 +55,25 @@
 #  at the end.
 
 @filenames_needed = (
-'no_content.txt' ,
-'text_yes.txt' ,
-'text_no.txt' ,
 'planet-latest.osm.bz2' ,
 'osm_get_node_lats_lons_and_separate_info.pl' ,
 'osm_filter_ways_relations_only.pl' ,
 'osm_split_and_abbrev_node_way_relation.pl' ,
-'split_on_server.pl' ,
 'osm_get_prefixed_pairs_from_way_info.pl' ,
 'osm_get_prefixed_pairs_from_relation_info.pl' ,
 'osm_merge_lats_lons_with_way_relation_ids.pl' ,
 'osm_get_lat_lon_min_max.pl' ,
 'osm_put_centers_into_city_or_biz_info.pl' ,
-'osm_split_city_info_by_rank.pl' ,
-'osm_join_cities_by_rank.pl' ,
 'osm_handle_city_info.pl' ,
+'split_on_server.pl' ,
 'remove_column_one.pl' ,
 'remove_column_two.pl' ,
 'remove_column_three.pl' ,
 'generate_map_density_squares.pl' ,
 'map_image_begin.txt' ,
 'map_image_end.txt' ,
+'text_yes.txt' ,
+'text_no.txt' ,
 'no_content.txt' ) ;
 
 foreach $filename ( @filenames_needed )
@@ -189,8 +184,8 @@ system( 'cat text_no.txt > yes_or_no_get_way_info.txt' ) ;
 
 
 #-------------------------------------------------
-#  Get the "relation" info for businesses, cities,
-#  and streets.
+#  Get the "relation" info for businesses and
+#  cities.
 #
 #  Reminder:  If testing is needed, can insert
 #  "| head -n 50000000 |" into the line that runs
@@ -953,7 +948,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
 # system( 'perl osm_handle_city_info.pl < output_city_info_all_nodes_ways_relations.txt' ) ;
 
-system( 'head -v output_processed_city_info.txt >> output_log_all_processing.txt' ) ;
+system( 'head -n 20 -v output_processed_city_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -v output_processed_country_codes.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -966,22 +961,18 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  importance, putting more important cities first
 #  so that a search for "paris" finds
 #  Paris France before Paris Texas.  Then remove
-#  the sort rankings in the first column.
+#  the sort rankings in the first column, and
+#  then remove duplicate city names.
 
 system( 'head -v output_processed_city_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
-
-
-
-# todo: use osm_split_city_info_by_rank.pl and osm_join_cities_by_rank.pl
-
 
 # conlts:
 # system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
 # conlts:
 # system( 'tail -n 1 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1,1n output_processed_city_info.txt -o output_sorted_processed_city_info.txt' ) ;
+# system( 'sort ' . $option_t_space . ' -k1,1nr output_processed_city_info.txt -o output_sorted_processed_city_info.txt' ) ;
 
 system( 'head -v output_sorted_processed_city_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -989,7 +980,15 @@ system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl remove_column_one.pl < output_sorted_processed_city_info.txt > output_city_info_ready_to_split.txt' ) ;
+# system( 'perl remove_column_one.pl < output_sorted_processed_city_info.txt > output_city_info_with_duplicates.txt' ) ;
+
+system( 'head -v output_city_info_with_duplicates.txt >> output_log_all_processing.txt' ) ;
+system( 'tail -n 3 output_log_all_processing.txt' ) ;
+system( 'head -n 3 osm_remove_duplicate_cities.pl >> output_log_all_processing.txt' ) ;
+system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+# conlts:
+# system( 'perl osm_remove_duplicate_cities.pl < output_city_info_with_duplicates.txt > output_city_info_ready_to_split.txt' ) ;
 
 system( 'head -v output_city_info_ready_to_split.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -1122,13 +1121,13 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  is to compress the data, upload it to the
 #  server, then uncompress it.
 
-print "\n\n" . "Do next:  Use the cd command to enter the new folders and execute the following command (including the period at the end), with substitutions as needed:" . "\n" ;
+print "\n\n" . "Do next:  Use the cd command to enter the new folders and execute the following command (including the period at the end), with 'city' instead of 'business' as needed:" . "\n" ;
 
 print "  zip -r -q uploadable_business_info_zipped.zip ." . "\n" ;
 
 print "\n" . "Then upload the created zip files to the server into new folders with the same names and unzip each file using the following command" . "\n" ;
 
-print "  unzip -r uploadable_info_zipped.zip" . "\n" ;
+print "  unzip uploadable_business_info_zipped.zip" . "\n" ;
 
 
 #-------------------------------------------------

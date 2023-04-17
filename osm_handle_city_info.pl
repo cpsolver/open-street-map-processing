@@ -349,6 +349,24 @@ open( COUNTRY_FILE , ">" . $output_filename_country_codes ) ;
 
 
 #--------------------------------------------------
+#  Handle special cases.
+#  These are inserted at the top where they override
+#  later info with the same searchable city name.
+
+print OUTFILE "999 philly PA US 10399527237 90248464737 n5518033962 Philadelphia" . "\n" ;
+print OUTFILE "999 portland OR US 10455202471 08773258050 n1666626393 Portland" . "\n" ;
+print OUTFILE "999 sf CA US 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
+print OUTFILE "999 la CA US 10340536781 08817572974 n1738808199 Los_Angeles" . "\n" ;
+print OUTFILE "999 st._louis MO US 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 st._louis_mo MO US 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 saint_louis_mo MO US 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 ny NY US 10407305991 09260134187 n61785451 New_York" . "\n" ;
+print OUTFILE "999 nyc NY US 10407305991 09260134187 n61785451 New_York" . "\n" ;
+print OUTFILE "999 dc DC US 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 washington DC US 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+
+
+#--------------------------------------------------
 #  Read each line in the file.
 
 $line_count = 1 ;
@@ -791,7 +809,7 @@ while( $input_line = <STDIN> )
         {
         	next ;
         }
-        $info_except_rank_and_city_name = $state_or_province_code . " " . $country_code . " " . $latitude_integer . " " . $longitude_integer . " " . $node_or_way_or_relation_id . " " . $displayed_name ;
+        $info_except_rank_and_city_name = uc( $state_or_province_code ) . " " . uc( $country_code ) . " " . $latitude_integer . " " . $longitude_integer . " " . $node_or_way_or_relation_id . " " . $displayed_name ;
         print OUTFILE $rank_as_text . " " . $lowercase_alternate_name . " " . $info_except_rank_and_city_name . "\n" ;
         if ( ( ( $country_code eq "us" ) || ( $country_code eq "ca" ) ) && ( $state_or_province_code ne "??" ) )
         {
