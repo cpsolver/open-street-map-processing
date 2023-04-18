@@ -946,7 +946,7 @@ system( 'head -n 3 osm_handle_city_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_handle_city_info.pl < output_city_info_all_nodes_ways_relations.txt' ) ;
+ system( 'perl osm_handle_city_info.pl < output_city_info_all_nodes_ways_relations.txt' ) ;
 
 system( 'head -n 20 -v output_processed_city_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -968,11 +968,11 @@ system( 'head -v output_processed_city_info.txt >> output_log_all_processing.txt
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
+ system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 1 output_log_all_processing.txt' ) ;
+ system( 'tail -n 1 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1,1nr output_processed_city_info.txt -o output_sorted_processed_city_info.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k1,1nr output_processed_city_info.txt -o output_sorted_processed_city_info.txt' ) ;
 
 system( 'head -v output_sorted_processed_city_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -980,7 +980,7 @@ system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl remove_column_one.pl < output_sorted_processed_city_info.txt > output_city_info_with_duplicates.txt' ) ;
+ system( 'perl remove_column_one.pl < output_sorted_processed_city_info.txt > output_city_info_with_duplicates.txt' ) ;
 
 system( 'head -v output_city_info_with_duplicates.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -988,7 +988,7 @@ system( 'head -n 3 osm_remove_duplicate_cities.pl >> output_log_all_processing.t
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_remove_duplicate_cities.pl < output_city_info_with_duplicates.txt > output_city_info_ready_to_split.txt' ) ;
+ system( 'perl osm_remove_duplicate_cities.pl < output_city_info_with_duplicates.txt > output_city_info_ready_to_split.txt' ) ;
 
 system( 'head -v output_city_info_ready_to_split.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -1090,6 +1090,24 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
+#  Optional:  Use non-OSM postal code data to
+#  supply state and province abbreviations to the
+#  city info.
+#
+#  The comments in the script
+#  "convert_postal_code_database.pl" explain
+#  where to get the postal code data.
+
+system( 'echo OPTIONAL POSTAL CODE PROCESSING >> output_log_all_processing.txt' ) ;
+system( 'tail -n 1 output_log_all_processing.txt' ) ;
+system( 'cat output_city_info_ready_to_split.txt > output_city_info_ready_to_split_before_postal_processing.txt' ) ;
+system( 'perl convert_tab_delimited_to_quoted_csv.pl < PostalCodesAllCountriesLatest.txt > output_postal_code_info_csv_format.txt' ) ;
+system( 'perl convert_postal_code_database.pl < output_postal_code_info_csv_format.txt' ) ;
+system( 'perl merge_city_info_from_postal_into_osm.pl < output_city_info_ready_to_split_before_postal_processing.txt > output_city_info_with_state_province_codes.txt' ) ;
+system( 'cat output_city_info_with_state_province_codes.txt > output_city_info_ready_to_split.txt' ) ;
+
+
+#-------------------------------------------------
 #  Split the processed city file into multiple
 #  files and put those files into a new folder.
 
@@ -1100,12 +1118,12 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # do NOT change the "rm" command without careful testing!
 # conlts:
-# system( 'rm -rf cities_new' ) ;
+ system( 'rm -rf cities_new' ) ;
 
 # conlts:
-# system( 'perl split_on_server.pl < output_city_info_ready_to_split.txt' ) ;
+ system( 'perl split_on_server.pl < output_city_info_ready_to_split.txt' ) ;
 
-system( 'head -v cities_new/cities_category_cmb.txt >> output_log_all_processing.txt' ) ;
+system( 'head -v cities_new/cities_category_prt.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 

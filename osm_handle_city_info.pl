@@ -54,11 +54,11 @@
 #  056 &#1053;&#1086;&#1074;&#1086;&#1089;&#1080;&#1073;&#1080;&#1088;&#1089;&#1082; ?? ?? 10550288307 10829226887 n54 &#1053;&#1086;&#1074;&#1086;&#1089;&#1080;&#1073;&#1080;&#1088;&#1089;&#1082;
 #  011 clinton ?? ?? 10407644228 09260076081 n666 Hell&#39;s_Kitchen
 #  011 hell&#39;s_kitchen ?? ?? 10407644228 09260076081 n666 Hell&#39;s_Kitchen
-#  059 london ?? gb 10515073359 09998723499 n107775 London
+#  059 london ?? GB 10515073359 09998723499 n107775 London
 #  005 woolverstone ?? ?? 10520027574 10011820034 n132591 Woolverstone
 #  005 chelmondiston ?? ?? 10519899040 10012087457 n132593 Chelmondiston
-#  005 south_hanningfield ?? gb 10516503583 10005181949 n132634 South_Hanningfield
-#  005 west_hanningfield ?? gb 10516709118 10005001963 n132635 West_Hanningfield
+#  005 south_hanningfield ?? GB 10516503583 10005181949 n132634 South_Hanningfield
+#  005 west_hanningfield ?? GB 10516709118 10005001963 n132635 West_Hanningfield
 #  005 netheravon ?? ?? 10512385525 09982064777 n134366 Netheravon
 
 
@@ -350,20 +350,34 @@ open( COUNTRY_FILE , ">" . $output_filename_country_codes ) ;
 
 #--------------------------------------------------
 #  Handle special cases.
-#  These are inserted at the top where they override
-#  later info with the same searchable city name.
+#  These are inserted at the top ranking level so
+#  they will override later info with the same
+#  searchable city name.
 
-print OUTFILE "999 philly PA US 10399527237 90248464737 n5518033962 Philadelphia" . "\n" ;
-print OUTFILE "999 portland OR US 10455202471 08773258050 n1666626393 Portland" . "\n" ;
-print OUTFILE "999 sf CA US 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
-print OUTFILE "999 la CA US 10340536781 08817572974 n1738808199 Los_Angeles" . "\n" ;
-print OUTFILE "999 st._louis MO US 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
-print OUTFILE "999 st._louis_mo MO US 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
-print OUTFILE "999 saint_louis_mo MO US 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
-print OUTFILE "999 ny NY US 10407305991 09260134187 n61785451 New_York" . "\n" ;
-print OUTFILE "999 nyc NY US 10407305991 09260134187 n61785451 New_York" . "\n" ;
-print OUTFILE "999 dc DC US 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
-print OUTFILE "999 washington DC US 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 portland or us 10455202471 08773258050 n1666626393 Portland" . "\n" ;
+print OUTFILE "999 pdx or us 10455202471 08773258050 n1666626393 Portland" . "\n" ;
+print OUTFILE "011 portland wi us 10437688581 09091418126 n151458990 Portland" . "\n" ;
+print OUTFILE "700 portland ?? nz 09642030343 11743267053 n1956278617 Portland" . "\n" ;
+print OUTFILE "500 vancouver bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
+print OUTFILE "500 vancouver_bc bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
+print OUTFILE "999 philly pa us 10399527237 90248464737 n5518033962 Philadelphia" . "\n" ;
+print OUTFILE "999 phl pa us 10399527237 90248464737 n5518033962 Philadelphia" . "\n" ;
+print OUTFILE "999 sf ca us 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
+print OUTFILE "999 sfo ca us 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
+print OUTFILE "999 la ca us 10340536781 08817572974 n1738808199 Los_Angeles" . "\n" ;
+print OUTFILE "999 lax ca us 10340536781 08817572974 n1738808199 Los_Angeles" . "\n" ;
+print OUTFILE "999 st._louis mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 st._louis_mo mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 saint_louis_mo mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 stl mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
+print OUTFILE "999 ny ny us 10407305991 09260134187 n61785451 New_York" . "\n" ;
+print OUTFILE "999 nyc ny us 10407305991 09260134187 n61785451 New_York" . "\n" ;
+print OUTFILE "999 dc dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 dca dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 iad dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 washington dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "900 salt_lake_city ut us 10407596198 08881132029 n150935219 Salt_Lake_City" . "\n" ;
+print OUTFILE "900 slc ut us 10407596198 08881132029 n150935219 Salt_Lake_City" . "\n" ;
 
 
 #--------------------------------------------------
@@ -809,11 +823,13 @@ while( $input_line = <STDIN> )
         {
         	next ;
         }
-        $info_except_rank_and_city_name = uc( $state_or_province_code ) . " " . uc( $country_code ) . " " . $latitude_integer . " " . $longitude_integer . " " . $node_or_way_or_relation_id . " " . $displayed_name ;
-        print OUTFILE $rank_as_text . " " . $lowercase_alternate_name . " " . $info_except_rank_and_city_name . "\n" ;
+        $uppercase_state_or_province_code = uc( $state_or_province_code ) ;
+        $uppercase_country_code = uc( $country_code ) ;
+        $info_combined = $uppercase_state_or_province_code . " " . $uppercase_country_code . " " . $latitude_integer . " " . $longitude_integer . " " . $node_or_way_or_relation_id . " " . $displayed_name ;
+        print OUTFILE $rank_as_text . " " . $lowercase_alternate_name . " " . $info_combined . "\n" ;
         if ( ( ( $country_code eq "us" ) || ( $country_code eq "ca" ) ) && ( $state_or_province_code ne "??" ) )
         {
-            print OUTFILE $rank_as_text . " " . $lowercase_alternate_name . "_" . $state_or_province_code . " " . $info_except_rank_and_city_name . "\n" ;
+            print OUTFILE $rank_as_text . " " . $lowercase_alternate_name . "_" . $state_or_province_code . " " . $info_combined . "\n" ;
         }
     }
 
