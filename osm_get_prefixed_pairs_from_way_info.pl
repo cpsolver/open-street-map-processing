@@ -3,7 +3,18 @@
 #--------------------------------------------------
 
 #  (c) Copyright 2023 by Richard Fobes at SolutionsCreative.com
-
+#  Permission to copy and use and modify this
+#  software is hereby given to individuals and to
+#  businesses with ten or fewer employees if this
+#  copyright notice is included in all copies
+#  and modified copies.
+#  All other rights are reserved.
+#  Businesses with more than ten employees are
+#  encouraged to contract with small businesses
+#  to supply the service of running this software
+#  if they also arrange to make donations to
+#  support the Open Street Map project.
+#
 #  Usage:
 #
 #  perl osm_get_prefixed_pairs_from_way_info.pl < output_way_info.txt > output_prefixed_node_way_pairs.txt

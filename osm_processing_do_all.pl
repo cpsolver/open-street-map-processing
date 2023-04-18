@@ -3,6 +3,17 @@
 #       osm_processing_do_all.pl
 #
 #  (c) Copyright 2023 by Richard Fobes at SolutionsCreative.com
+#  Permission to copy and use and modify this
+#  software is hereby given to individuals and to
+#  businesses with ten or fewer employees if this
+#  copyright notice is included in all copies
+#  and modified copies.
+#  All other rights are reserved.
+#  Businesses with more than ten employees are
+#  encouraged to contract with small businesses
+#  to supply the service of running this software
+#  if they also arrange to make donations to
+#  support the Open Street Map project.
 #
 #  This Perl script runs other Perl scripts that
 #  process the Open Street Map data to get the
