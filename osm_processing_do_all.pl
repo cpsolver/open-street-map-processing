@@ -14,6 +14,17 @@
 #  to supply the service of running this software
 #  if they also arrange to make donations to
 #  support the Open Street Map project.
+#  Disclaimer of Warranty:  THERE IS NO WARRANTY
+#  FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES
+#  THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY
+#  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING,
+#  BUT NOT LIMITED TO, THE FITNESS FOR A
+#  PARTICULAR PURPOSE.
+#  Limitation of Liability:  IN NO EVENT WILL THE
+#  COPYRIGHT HOLDER BE LIABLE TO ANYONE FOR
+#  DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+#  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING
+#  OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
 #
 #  This Perl script runs other Perl scripts that
 #  process the Open Street Map data to get the
@@ -30,7 +41,7 @@
 #
 #  perl osm_processing_do_all.pl
 #
-#  For convenience, put the above command into
+#  As an alternative, put the above command into
 #  a batch file such as "do_osm_processing.sh"
 #  and from the terminal execute the following
 #  command:
@@ -161,7 +172,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 #  Reminder:  The following full version runs for a few days!
 # conlts:
-# system( 'bzcat planet-latest.osm.bz2 | perl osm_get_node_lats_lons_and_separate_info.pl | bzip2 > planet_ways_relations_only.bz2' ) ;
+ system( 'bzcat planet-latest.osm.bz2 | perl osm_get_node_lats_lons_and_separate_info.pl | bzip2 > planet_ways_relations_only.bz2' ) ;
 
 
 system( 'head -v output_log_from_get_lats_lons_separate.txt >> output_log_all_processing.txt' ) ;
@@ -174,11 +185,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  file.
 
 # conlts:
-# system( 'bzcat planet_ways_relations_only.bz2 | head -n 50000 > output_sample_of_ways_info.txt' ) ;
+ system( 'bzcat planet_ways_relations_only.bz2 | head -n 50000 > output_sample_of_ways_info.txt' ) ;
 # conlts:
-# system( 'head -n 3 output_sample_of_ways_info.txt >> output_log_all_processing.txt' ) ;
+ system( 'head -n 3 output_sample_of_ways_info.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -191,7 +202,7 @@ system( 'cat text_yes.txt > yes_or_no_get_relation_info.txt' ) ;
 system( 'cat text_no.txt > yes_or_no_get_way_info.txt' ) ;
 
 # conlts:
-# system( 'bzcat planet_ways_relations_only.bz2 | perl osm_filter_ways_relations_only.pl | bzip2 > planet_relations_only.bz2' ) ;
+ system( 'bzcat planet_ways_relations_only.bz2 | perl osm_filter_ways_relations_only.pl | bzip2 > planet_relations_only.bz2' ) ;
 
 
 #-------------------------------------------------
@@ -211,7 +222,7 @@ system( 'cat text_no.txt > yes_or_no_get_way_info.txt' ) ;
 #  Reminder:  This step runs for about an hour.
 
 # conlts:
-# system( 'bzcat planet_relations_only.bz2 | head -n 50000 > output_sample_of_relations_info.txt' ) ;
+ system( 'bzcat planet_relations_only.bz2 | head -n 50000 > output_sample_of_relations_info.txt' ) ;
 
 system( 'head -n 3 output_sample_of_relations_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -226,7 +237,7 @@ system( 'head -n 3 osm_split_and_abbrev_node_way_relation.pl >> output_log_all_p
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'bzcat planet_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
+ system( 'bzcat planet_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
 
 system( 'head -v output_business_relation_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -243,11 +254,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 $grep_string_quoted = "'r3048270'" ;
 
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_city_relation_info.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_city_relation_info.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -265,19 +276,19 @@ system( 'head -n 3 osm_get_just_needed_nodes_and_ways_from_relation_info.pl >> o
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_get_just_needed_nodes_and_ways_from_relation_info.pl < output_business_relation_info.txt > output_business_relation_info_without_extra_ways.txt' ) ;
+ system( 'perl osm_get_just_needed_nodes_and_ways_from_relation_info.pl < output_business_relation_info.txt > output_business_relation_info_without_extra_ways.txt' ) ;
 
 system( 'head -v output_business_relation_info_without_extra_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_node_relation_pairs.txt > output_needed_nodes_relations_in_biz_relations.txt' ) ;
+ system( 'cat output_node_relation_pairs.txt > output_needed_nodes_relations_in_biz_relations.txt' ) ;
 
 system( 'head -v output_needed_nodes_relations_in_biz_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_way_relation_pairs.txt > output_needed_ways_relations_in_biz_relations.txt' ) ;
+ system( 'cat output_way_relation_pairs.txt > output_needed_ways_relations_in_biz_relations.txt' ) ;
 
 system( 'head -v output_needed_ways_relations_in_biz_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -286,19 +297,19 @@ system( 'head -n 3 osm_get_just_needed_nodes_and_ways_from_relation_info.pl >> o
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_get_just_needed_nodes_and_ways_from_relation_info.pl < output_city_relation_info.txt > output_city_relation_info_without_extra_ways.txt' ) ;
+ system( 'perl osm_get_just_needed_nodes_and_ways_from_relation_info.pl < output_city_relation_info.txt > output_city_relation_info_without_extra_ways.txt' ) ;
 
 system( 'head -v output_city_relation_info_without_extra_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_node_relation_pairs.txt > output_needed_nodes_relations_in_city_relations.txt' ) ;
+ system( 'cat output_node_relation_pairs.txt > output_needed_nodes_relations_in_city_relations.txt' ) ;
 
 system( 'head -v output_needed_nodes_relations_in_city_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_way_relation_pairs.txt > output_needed_ways_relations_in_city_relations.txt' ) ;
+ system( 'cat output_way_relation_pairs.txt > output_needed_ways_relations_in_city_relations.txt' ) ;
 
 system( 'head -v output_needed_ways_relations_in_city_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -313,20 +324,20 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 $grep_string_quoted = "'r3048270'" ;
 
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_city_relation_info_without_extra_ways.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_city_relation_info_without_extra_ways.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'w228173529'" ;
 
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_needed_ways_relations_in_city_relations.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_needed_ways_relations_in_city_relations.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -343,7 +354,7 @@ system( 'head -n 3 remove_column_two.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl remove_column_two.pl < output_needed_ways_relations_in_biz_relations.txt > output_needed_ways_in_biz_and_city_relations.txt' ) ;
+ system( 'perl remove_column_two.pl < output_needed_ways_relations_in_biz_relations.txt > output_needed_ways_in_biz_and_city_relations.txt' ) ;
 
 system( 'head -v output_needed_ways_in_biz_and_city_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -352,7 +363,7 @@ system( 'head -n 3 remove_column_two.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl remove_column_two.pl < output_needed_ways_relations_in_city_relations.txt >> output_needed_ways_in_biz_and_city_relations.txt' ) ;
+ system( 'perl remove_column_two.pl < output_needed_ways_relations_in_city_relations.txt >> output_needed_ways_in_biz_and_city_relations.txt' ) ;
 
 system( 'tail -v output_needed_ways_in_biz_and_city_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -365,11 +376,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 $grep_string_quoted = "'w228173529'" ;
 
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_needed_ways_in_biz_and_city_relations.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_needed_ways_in_biz_and_city_relations.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -386,7 +397,7 @@ $grep_string_quoted = "'w228173529'" ;
 #  Reminder:  This step runs for about two days.
 
 # conlts:
-# system( 'cat output_needed_ways_in_biz_and_city_relations.txt > input_list_of_special_ways_to_get.txt' ) ;
+ system( 'cat output_needed_ways_in_biz_and_city_relations.txt > input_list_of_special_ways_to_get.txt' ) ;
 
 system( 'head -v input_list_of_special_ways_to_get.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -400,18 +411,18 @@ system( 'head -n 3 osm_split_and_abbrev_node_way_relation.pl >> output_log_all_p
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'bzcat planet_ways_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
+ system( 'bzcat planet_ways_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
 
 # conlts:
-# system( 'cat output_business_way_info.txt > output_biz_way_info_tagged_as_biz.txt' ) ;
+ system( 'cat output_business_way_info.txt > output_biz_way_info_tagged_as_biz.txt' ) ;
 system( 'head -v output_biz_way_info_tagged_as_biz.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_city_way_info.txt > output_city_way_info_tagged_as_city.txt' ) ;
+ system( 'cat output_city_way_info.txt > output_city_way_info_tagged_as_city.txt' ) ;
 system( 'head -v output_city_way_info_tagged_as_city.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_info_for_listed_ways.txt > output_way_info_for_listed_biz_and_city_ids_in_relations.txt' ) ;
+ system( 'cat output_info_for_listed_ways.txt > output_way_info_for_listed_biz_and_city_ids_in_relations.txt' ) ;
 system( 'head -v output_way_info_for_listed_biz_and_city_ids_in_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -437,11 +448,11 @@ $grep_string_quoted = "'w228173529'" ;
 #  is used.
 
 # conlts:
-# system( 'rm output_business_way_info.txt' ) ;
+ system( 'rm output_business_way_info.txt' ) ;
 # conlts:
-# system( 'rm output_city_way_info.txt' ) ;
+ system( 'rm output_city_way_info.txt' ) ;
 # conlts:
-# system( 'rm output_info_for_listed_ways.txt' ) ;
+ system( 'rm output_info_for_listed_ways.txt' ) ;
 
 
 #-------------------------------------------------
@@ -456,7 +467,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_get_prefixed_pairs_from_relation_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_get_prefixed_pairs_from_relation_info.pl < output_business_relation_info_without_extra_ways.txt > output_prefixed_pairs_from_business_relations.txt' ) ;
+ system( 'perl osm_get_prefixed_pairs_from_relation_info.pl < output_business_relation_info_without_extra_ways.txt > output_prefixed_pairs_from_business_relations.txt' ) ;
 system( 'head -v output_prefixed_pairs_from_business_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -465,7 +476,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_get_prefixed_pairs_from_relation_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_get_prefixed_pairs_from_relation_info.pl < output_city_relation_info_without_extra_ways.txt > output_prefixed_pairs_from_city_relations.txt' ) ;
+ system( 'perl osm_get_prefixed_pairs_from_relation_info.pl < output_city_relation_info_without_extra_ways.txt > output_prefixed_pairs_from_city_relations.txt' ) ;
 system( 'head -v output_prefixed_pairs_from_city_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -484,7 +495,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_get_prefixed_pairs_from_node_way_pairs_for_relation_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_get_prefixed_pairs_from_node_way_pairs_for_relation_info.pl < output_way_info_for_listed_biz_and_city_ids_in_relations.txt > output_prefixed_node_way_pairs_for_relation_info.txt' ) ;
+ system( 'perl osm_get_prefixed_pairs_from_node_way_pairs_for_relation_info.pl < output_way_info_for_listed_biz_and_city_ids_in_relations.txt > output_prefixed_node_way_pairs_for_relation_info.txt' ) ;
 system( 'head -v output_prefixed_node_way_pairs_for_relation_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -529,7 +540,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_get_prefixed_pairs_from_way_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_get_prefixed_pairs_from_way_info.pl < output_biz_way_info_tagged_as_biz.txt > output_prefixed_pairs_from_business_ways.txt' ) ;
+ system( 'perl osm_get_prefixed_pairs_from_way_info.pl < output_biz_way_info_tagged_as_biz.txt > output_prefixed_pairs_from_business_ways.txt' ) ;
 system( 'head -v output_prefixed_pairs_from_business_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -538,7 +549,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_get_prefixed_pairs_from_way_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_get_prefixed_pairs_from_way_info.pl < output_city_way_info_tagged_as_city.txt > output_prefixed_pairs_from_city_ways.txt' ) ;
+ system( 'perl osm_get_prefixed_pairs_from_way_info.pl < output_city_way_info_tagged_as_city.txt > output_prefixed_pairs_from_city_ways.txt' ) ;
 system( 'head -v output_prefixed_pairs_from_city_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -565,17 +576,17 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  Kinnarp is village relation without a label
 
 # conlts:
-# system( 'echo COMBINING FILES >> output_log_all_processing.txt' ) ;
+ system( 'echo COMBINING FILES >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_prefixed_pairs_from_business_relations.txt > output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
+ system( 'cat output_prefixed_pairs_from_business_relations.txt > output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
 # conlts:
-# system( 'cat output_prefixed_pairs_from_city_relations.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
+ system( 'cat output_prefixed_pairs_from_city_relations.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
 # conlts:
-# system( 'cat output_prefixed_pairs_from_business_ways.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
+ system( 'cat output_prefixed_pairs_from_business_ways.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
 # conlts:
-# system( 'cat output_prefixed_pairs_from_city_ways.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
+ system( 'cat output_prefixed_pairs_from_city_ways.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
 # conlts:
-# system( 'cat output_prefixed_node_way_pairs_for_relation_info.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
+ system( 'cat output_prefixed_node_way_pairs_for_relation_info.txt >> output_prefixed_node_and_way_or_relation_pairs_all.txt' ) ;
 
 
 #-------------------------------------------------
@@ -583,11 +594,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  ending two digits are grouped together.
 
 # conlts:
-# system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
+ system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 1 output_log_all_processing.txt' ) ;
+ system( 'tail -n 1 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1,1n output_prefixed_node_and_way_or_relation_pairs_all.txt -o output_sorted_node_and_way_or_relation_pairs.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k1,1n output_prefixed_node_and_way_or_relation_pairs_all.txt -o output_sorted_node_and_way_or_relation_pairs.txt' ) ;
 system( 'head -v output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'tail -v output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
@@ -601,19 +612,19 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'w228173529'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'n5518033962'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -645,16 +656,16 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'w228173529'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 system( 'head -n 3 osm_merge_lats_lons_with_way_relation_ids.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_merge_lats_lons_with_way_relation_ids.pl' ) ;
+ system( 'perl osm_merge_lats_lons_with_way_relation_ids.pl' ) ;
 system( 'head -v output_outline_ways_relations_with_lats_lons.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -664,11 +675,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'w228173529'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_outline_ways_relations_with_lats_lons.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_outline_ways_relations_with_lats_lons.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -678,28 +689,28 @@ $grep_string_quoted = "'w228173529'" ;
 system( 'head -n 3 remove_column_three.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl remove_column_three.pl < output_outline_ways_relations_with_lats_lons.txt > output_way_or_relation_with_latitude.txt' ) ;
+ system( 'perl remove_column_three.pl < output_outline_ways_relations_with_lats_lons.txt > output_way_or_relation_with_latitude.txt' ) ;
 system( 'head -v output_way_or_relation_with_latitude.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 system( 'head -n 3 remove_column_two.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl remove_column_two.pl < output_outline_ways_relations_with_lats_lons.txt > output_way_or_relation_with_longitude.txt' ) ;
+ system( 'perl remove_column_two.pl < output_outline_ways_relations_with_lats_lons.txt > output_way_or_relation_with_longitude.txt' ) ;
 system( 'head -v output_way_or_relation_with_longitude.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
 system( 'tail -n 1 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1.2,1n -k2,2n output_way_or_relation_with_latitude.txt -o output_sorted_way_or_relation_with_latitude.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k1.2,1n -k2,2n output_way_or_relation_with_latitude.txt -o output_sorted_way_or_relation_with_latitude.txt' ) ;
 system( 'head -v output_sorted_way_or_relation_with_latitude.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 system( 'echo SORTING FILE >> output_log_all_processing.txt' ) ;
 system( 'tail -n 1 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1.2,1n -k2,2n output_way_or_relation_with_longitude.txt -o output_sorted_way_or_relation_with_longitude.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k1.2,1n -k2,2n output_way_or_relation_with_longitude.txt -o output_sorted_way_or_relation_with_longitude.txt' ) ;
 system( 'head -v output_sorted_way_or_relation_with_longitude.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -711,19 +722,19 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'w228173529'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_sorted_way_or_relation_with_latitude.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_sorted_way_or_relation_with_latitude.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'r111194'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_sorted_way_or_relation_with_latitude.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_sorted_way_or_relation_with_latitude.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -732,7 +743,7 @@ $grep_string_quoted = "'r111194'" ;
 system( 'head -n 3 osm_get_lat_lon_min_max.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl osm_get_lat_lon_min_max.pl' ) ;
+ system( 'perl osm_get_lat_lon_min_max.pl' ) ;
 system( 'head -v output_bounding_boxes_for_ways_and_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -742,11 +753,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 $grep_string_quoted = "'w228173529'" ;
 # conlts:
-# system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'grep ' . $grep_string_quoted . ' output_bounding_boxes_for_ways_and_relations.txt >> output_log_all_processing.txt' ) ;
+ system( 'grep ' . $grep_string_quoted . ' output_bounding_boxes_for_ways_and_relations.txt >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'tail -n 3 output_log_all_processing.txt' ) ;
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -759,15 +770,15 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_put_centers_into_city_or_biz_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_business_relation_info_without_extra_ways.txt > output_city_or_biz_info_needing_centers.txt' ) ;
+ system( 'cat output_business_relation_info_without_extra_ways.txt > output_city_or_biz_info_needing_centers.txt' ) ;
 # conlts:
-# system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
+ system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
 # conlts:
-# system( 'cat output_city_or_biz_info_with_centers.txt > output_biz_relation_info_with_centers.txt' ) ;
+ system( 'cat output_city_or_biz_info_with_centers.txt > output_biz_relation_info_with_centers.txt' ) ;
 system( 'head -v output_biz_relation_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_biz_relations.txt' ) ;
+ system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_biz_relations.txt' ) ;
 system( 'head -v output_log_put_centers_unrecognized_for_biz_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -776,15 +787,15 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_put_centers_into_city_or_biz_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_biz_way_info_tagged_as_biz.txt > output_city_or_biz_info_needing_centers.txt' ) ;
+ system( 'cat output_biz_way_info_tagged_as_biz.txt > output_city_or_biz_info_needing_centers.txt' ) ;
 # conlts:
-# system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
+ system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
 # conlts:
-# system( 'cat output_city_or_biz_info_with_centers.txt > output_biz_way_info_with_centers.txt' ) ;
+ system( 'cat output_city_or_biz_info_with_centers.txt > output_biz_way_info_with_centers.txt' ) ;
 system( 'head -v output_biz_way_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_biz_ways.txt' ) ;
+ system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_biz_ways.txt' ) ;
 system( 'head -v output_log_put_centers_unrecognized_for_biz_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -793,11 +804,11 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_put_centers_into_city_or_biz_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_city_relation_info_without_extra_ways.txt > output_city_or_biz_info_needing_centers.txt' ) ;
+ system( 'cat output_city_relation_info_without_extra_ways.txt > output_city_or_biz_info_needing_centers.txt' ) ;
 # conlts:
-# system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
+ system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
 # conlts:
-# system( 'cat output_city_or_biz_info_with_centers.txt > output_city_relation_info_with_centers.txt' ) ;
+ system( 'cat output_city_or_biz_info_with_centers.txt > output_city_relation_info_with_centers.txt' ) ;
 system( 'head -v output_city_relation_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
@@ -810,15 +821,15 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 osm_put_centers_into_city_or_biz_info.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_city_way_info_tagged_as_city.txt > output_city_or_biz_info_needing_centers.txt' ) ;
+ system( 'cat output_city_way_info_tagged_as_city.txt > output_city_or_biz_info_needing_centers.txt' ) ;
 # conlts:
-# system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
+ system( 'perl osm_put_centers_into_city_or_biz_info.pl' ) ;
 # conlts:
-# system( 'cat output_city_or_biz_info_with_centers.txt > output_city_way_info_with_centers.txt' ) ;
+ system( 'cat output_city_or_biz_info_with_centers.txt > output_city_way_info_with_centers.txt' ) ;
 system( 'head -v output_city_way_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_city_ways.txt' ) ;
+ system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_city_ways.txt' ) ;
 system( 'head -v output_log_put_centers_unrecognized_for_city_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -850,15 +861,15 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 # conlts:
-# system( 'bzcat planet-latest.osm.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
+ system( 'bzcat planet-latest.osm.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
 
 
 # conlts:
-# system( 'cat output_business_node_info.txt > output_biz_node_info_with_prefix_b.txt' ) ;
+ system( 'cat output_business_node_info.txt > output_biz_node_info_with_prefix_b.txt' ) ;
 system( 'head -v output_biz_node_info_with_prefix_b.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_city_node_info.txt > output_city_node_info_with_prefix_c.txt' ) ;
+ system( 'cat output_city_node_info.txt > output_city_node_info_with_prefix_c.txt' ) ;
 system( 'head -v output_city_node_info_with_prefix_c.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -872,7 +883,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl remove_column_one.pl < output_biz_node_info_with_prefix_b.txt > output_biz_node_info_with_centers.txt' ) ;
+ system( 'perl remove_column_one.pl < output_biz_node_info_with_prefix_b.txt > output_biz_node_info_with_centers.txt' ) ;
 system( 'head -v output_biz_node_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -886,7 +897,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl remove_column_one.pl < output_city_node_info_with_prefix_c.txt > output_city_node_info_with_centers.txt' ) ;
+ system( 'perl remove_column_one.pl < output_city_node_info_with_prefix_c.txt > output_city_node_info_with_centers.txt' ) ;
 system( 'head -v output_city_node_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -907,11 +918,11 @@ system( 'head -v output_biz_node_info_with_centers.txt >> output_log_all_process
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_biz_relation_info_with_centers.txt > output_business_info_all_nodes_ways_relations.txt' ) ;
+ system( 'cat output_biz_relation_info_with_centers.txt > output_business_info_all_nodes_ways_relations.txt' ) ;
 # conlts:
-# system( 'cat output_biz_way_info_with_centers.txt >> output_business_info_all_nodes_ways_relations.txt' ) ;
+ system( 'cat output_biz_way_info_with_centers.txt >> output_business_info_all_nodes_ways_relations.txt' ) ;
 # conlts:
-# system( 'cat output_biz_node_info_with_centers.txt >> output_business_info_all_nodes_ways_relations.txt' ) ;
+ system( 'cat output_biz_node_info_with_centers.txt >> output_business_info_all_nodes_ways_relations.txt' ) ;
 
 system( 'head -v output_business_info_all_nodes_ways_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -919,7 +930,7 @@ system( 'head -n 3 osm_handle_business_info.pl >> output_log_all_processing.txt'
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_handle_business_info.pl > output_log_osm_handle_business_info.txt' ) ;
+ system( 'perl osm_handle_business_info.pl > output_log_osm_handle_business_info.txt' ) ;
 
 system( 'head -v output_businesses_filtered.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -945,11 +956,11 @@ system( 'head -v output_city_relation_info_with_centers.txt >> output_log_all_pr
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_city_node_info_with_centers.txt > output_city_info_all_nodes_ways_relations.txt' ) ;
+ system( 'cat output_city_node_info_with_centers.txt > output_city_info_all_nodes_ways_relations.txt' ) ;
 # conlts:
-# system( 'cat output_city_way_info_with_centers.txt >> output_city_info_all_nodes_ways_relations.txt' ) ;
+ system( 'cat output_city_way_info_with_centers.txt >> output_city_info_all_nodes_ways_relations.txt' ) ;
 # conlts:
-# system( 'cat output_city_relation_info_with_centers.txt >> output_city_info_all_nodes_ways_relations.txt' ) ;
+ system( 'cat output_city_relation_info_with_centers.txt >> output_city_info_all_nodes_ways_relations.txt' ) ;
 
 system( 'head -v output_city_info_all_nodes_ways_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -1013,19 +1024,19 @@ system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # conlts:
-# system( 'perl remove_column_one.pl < output_city_info_ready_to_split.txt | perl remove_column_one.pl | perl remove_column_one.pl > output_density_mapable_lats_lons.txt' ) ;
+ system( 'perl remove_column_one.pl < output_city_info_ready_to_split.txt | perl remove_column_one.pl | perl remove_column_one.pl > output_density_mapable_lats_lons.txt' ) ;
 
 system( 'head -v output_density_mapable_lats_lons.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 generate_map_density_squares.pl >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl generate_map_density_squares.pl < output_density_mapable_lats_lons.txt > output_map_density_squares.txt' ) ;
+ system( 'perl generate_map_density_squares.pl < output_density_mapable_lats_lons.txt > output_map_density_squares.txt' ) ;
 # conlts:
-# system( 'cat map_image_begin.txt > map_full_cities.svg' ) ;
+ system( 'cat map_image_begin.txt > map_full_cities.svg' ) ;
 # conlts:
-# system( 'cat output_map_density_squares.txt >> map_full_cities.svg' ) ;
+ system( 'cat output_map_density_squares.txt >> map_full_cities.svg' ) ;
 # conlts:
-# system( 'cat map_image_end.txt >> map_full_cities.svg' ) ;
+ system( 'cat map_image_end.txt >> map_full_cities.svg' ) ;
 system( 'ls map_full_cities.svg >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -1039,18 +1050,18 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl remove_column_one.pl < output_businesses_filtered.txt > output_density_mapable_lats_lons.txt' ) ;
+ system( 'perl remove_column_one.pl < output_businesses_filtered.txt > output_density_mapable_lats_lons.txt' ) ;
 system( 'head -v output_density_mapable_lats_lons.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 generate_map_density_squares.pl >> output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'perl generate_map_density_squares.pl < output_density_mapable_lats_lons.txt > output_map_density_squares.txt' ) ;
+ system( 'perl generate_map_density_squares.pl < output_density_mapable_lats_lons.txt > output_map_density_squares.txt' ) ;
 # conlts:
-# system( 'cat map_image_begin.txt > map_full_businesses.svg' ) ;
+ system( 'cat map_image_begin.txt > map_full_businesses.svg' ) ;
 # conlts:
-# system( 'cat output_map_density_squares.txt >> map_full_businesses.svg' ) ;
+ system( 'cat output_map_density_squares.txt >> map_full_businesses.svg' ) ;
 # conlts:
-# system( 'cat map_image_end.txt >> map_full_businesses.svg' ) ;
+ system( 'cat map_image_end.txt >> map_full_businesses.svg' ) ;
 system( 'ls -l map_full_businesses.svg >> output_log_businesses_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -1066,17 +1077,17 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # do NOT change the "rm" command without careful testing!
 # conlts:
-# system( 'rm -rf businesses_new' ) ;
+ system( 'rm -rf businesses_new' ) ;
 
 # conlts:
-# system( 'perl split_on_server.pl < output_businesses_filtered.txt' ) ;
+ system( 'perl split_on_server.pl < output_businesses_filtered.txt' ) ;
 
 # do NOT change the "rm" command without careful testing!
 # conlts:
-# system( 'rm -rf businesses_new_filtered' ) ;
+ system( 'rm -rf businesses_new_filtered' ) ;
 
 # conlts:
-# system( 'mv businesses_new businesses_new_filtered' ) ;
+ system( 'mv businesses_new businesses_new_filtered' ) ;
 
 system( 'head -v businesses_new_filtered/lat9_1045/businesses_category_1045_0877.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -1088,13 +1099,13 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 # do NOT change the "rm" command without careful testing!
 # conlts:
-# system( 'rm -rf businesses_new_promo' ) ;
+ system( 'rm -rf businesses_new_promo' ) ;
 
 # conlts:
-# system( 'perl split_on_server.pl < output_businesses_filtered_promo_type.txt' ) ;
+ system( 'perl split_on_server.pl < output_businesses_filtered_promo_type.txt' ) ;
 
 # conlts:
-# system( 'mv businesses_new businesses_new_promo' ) ;
+ system( 'mv businesses_new businesses_new_promo' ) ;
 
 system( 'head -v businesses_new_promo/lat9_1045/businesses_category_1045_0877.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
