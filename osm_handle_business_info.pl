@@ -14,8 +14,18 @@
 #  to supply the service of running this software
 #  if they also arrange to make donations to
 #  support the Open Street Map project.
-
-
+#  Disclaimer of Warranty:  THERE IS NO WARRANTY
+#  FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES
+#  THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY
+#  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING,
+#  BUT NOT LIMITED TO, THE FITNESS FOR A
+#  PARTICULAR PURPOSE.
+#  Limitation of Liability:  IN NO EVENT WILL THE
+#  COPYRIGHT HOLDER BE LIABLE TO ANYONE FOR
+#  DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+#  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING
+#  OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
+#
 #  Usage in Linux environment:
 #  perl osm_handle_business_info.pl > output_log_osm_handle_business_info.txt
 
