@@ -46,6 +46,9 @@ Clarification:  The file named "output_businesses_filtered.txt" includes eating 
 
 Also:  If you will be using the data for applications that require quickly finding businesses in a specific location, then look at the contents of the directory named "businesses_new".  If you will be using the data to quickly find city names, then look at the contents of the directory named "cities_new".
 
+Hint:  Open the SVG (scalable vector graphics) files named "map_full_businesses.svg" and "map_full_cities.svg" in an SVG application such as "Inkscape" to view the locations of businesses and cities as a "heat" map.  This provides visual verification that the resulting data covers the entire planet.
 
-History:
+History
+=======
+
 This software was written by Richard Fobes to supply information to the NewsHereNow.com web app.
