@@ -25,7 +25,8 @@
 #  DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
 #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING
 #  OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
-#
+
+
 #  Usage in Linux environment:
 #  perl osm_handle_business_info.pl > output_log_osm_handle_business_info.txt
 
