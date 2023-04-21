@@ -4,7 +4,7 @@ Open-source software gets single-location restaurants, bakeries, bookstores, etc
 Software license
 ----------------
 
-(c) Copyright 2023 by Richard Fobes at SolutionsCreative.com .  Permission to copy and use and modify this software is hereby given to individuals and to businesses with ten or fewer employees if this copyright notice is included in all copies and modified copies.  All other rights are reserved.  Businesses with more than ten employees are encouraged to contract with small businesses to supply the service of running this software if they also arrange to make donations to support the Open Street Map project.
+(c) Copyright 2023 by Richard Fobes at SolutionsCreative.com .  Permission to copy and use and modify this software is hereby given to individuals and to businesses with ten or fewer employees if this copyright notice is included in all copies and modified copies.  All other rights are reserved.  Businesses with more than ten employees are encouraged to contract with small businesses to supply the service of running this software if there are arrangements for either business to make donations to support the Open Street Map project.
 Disclaimer of Warranty:  THERE IS NO WARRANTY FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE FITNESS FOR A PARTICULAR PURPOSE.  Limitation of Liability:  IN NO EVENT WILL THE COPYRIGHT HOLDER BE LIABLE TO ANYONE FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
 
 Latitude and longitude format
@@ -15,25 +15,27 @@ For faster processing, latitudes and longitudes are converted into, and then han
 Usage instructions:
 ----------------
 
-Step 1:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for a week or more.  The available disk storage capacity should be at least three or four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software could dramatically increase memory usage.
+Step 1:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least three or four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).
 
 Step 2:  Download to that computer the latest version of the Open Street Map "planet" database file, which is named "planet-latest.osm.bz2".  (This can be done using the Firefox browser, in which case it's helpful to view the progress indicator.)  The time required for this download over a somewhat-typical internet connection can be 12 or more hours.
 
-Step 3:  Move the planet database file and all the scripts in this repository into the same directory.
+Important:  Please use an appropriate "mirror" source for getting this huge file.  Also be sure your use of the processed data is permitted, and that the Open Street Map Foundation is (or will be) properly attributed as the source of the data.
+
+Step 3:  Move the planet database file and all the scripts in this repository into the same directory.  (Move the huge file as a single step, without requiring the operating system to first make a copy the file.)
 
 Step 4: View and probably edit the file named "osm_processing_do_all.pl".
 
-Specifically:  Verify that this script is edited so that it runs the needed parts of the process and does not also run unneeded parts of the process.  For example, the full processing gets both businesses and cities, but the city information seldom changes, so you can reduce processing time when you just want to update business information.  To make this change, "comment out" the code that only deals with getting city information.
+Specifically:  This Perl script was developed one piece at a time and has not yet been executed as a single week-long process, so you MUST verify that this script is edited so that it runs the needed parts of the process and does not also run unneeded parts of the process.  As a related point, consider that the full processing gets both businesses and cities, but the city information seldom changes, so you can reduce processing time when you just want to update business information.  To make this change, "comment out" the code that only deals with getting city information.
 
-Hint:  When choosing which lines of code to consider commenting out, focus on the lines that immediately follow a line that contains the acronym "conlts".  The acronym "conlts" is from the words "Comment Out Next Line To Skip".  Most of the other lines of code run quickly and just log useful information to the log file named "output_log_all_processing.txt".
+Hint:  When choosing which lines of code to consider commenting out, focus on the lines that immediately follow a line that contains the acronym "conlts", which is an acronym for the words "Comment Out Next Line To Skip".  Most of the other lines of code run quickly and just log useful information to the log file named "output_log_all_processing.txt".
 
-Hint:  If you are running, or re-running, part of the code because you are testing a change in that part of the code, then you should comment out the parts already done (some of which consume days of processing time), and you can insert the "exit" command to stop execution just after the part you are testing.
+Hint:  If you are running, or re-running, part of the code because you are testing a change in that part of the code, then you should comment out the parts already done (some of which consume days of processing time) so they do not overwrite the already-correct "output" files.  Also remember you can insert the "exit" command to stop execution just after the part you are testing.
 
 Step 5: Open a command-line terminal, use the "cd" ("change directory") command to navigate to the directory that contains the files, then run the following command:
 
 perl osm_processing_do_all.pl
 
-Unless you have edited this Perl script to run just a part of it, this script will run 24 hours a day for a week or more!
+Unless you have edited this Perl script to run just a part of it, this script will run 24 hours a day for a week or more!  So make sure you carefully followed the instructions in Step 4.
 
 Step 6: Periodically monitor progress to verify that the processing is getting the information you want or expect.  To do this monitoring, watch the sizes of the files being created, and perhaps sometimes copy the file "output_log_all_processing.txt" and view its contents.
 
