@@ -12,8 +12,9 @@
 #  Businesses with more than ten employees are
 #  encouraged to contract with small businesses
 #  to supply the service of running this software
-#  if they also arrange to make donations to
-#  support the Open Street Map project.
+#  if there are arrangements for either business
+#  to make donations to support the Open Street
+#  Map project.
 #  Disclaimer of Warranty:  THERE IS NO WARRANTY
 #  FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES
 #  THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY
@@ -28,6 +29,7 @@
 
 
 #  Usage in Linux environment:
+#
 #  perl osm_handle_business_info.pl > output_log_osm_handle_business_info.txt
 
 
