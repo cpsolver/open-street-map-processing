@@ -12,8 +12,9 @@
 #  Businesses with more than ten employees are
 #  encouraged to contract with small businesses
 #  to supply the service of running this software
-#  if they also arrange to make donations to
-#  support the Open Street Map project.
+#  if there are arrangements for either business
+#  to make donations to support the Open Street
+#  Map project.
 #  Disclaimer of Warranty:  THERE IS NO WARRANTY
 #  FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES
 #  THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY
@@ -1146,6 +1147,29 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
  system( 'perl split_on_server.pl < output_city_info_ready_to_split.txt' ) ;
 
 system( 'head -v cities_new/cities_category_prt.txt >> output_log_all_processing.txt' ) ;
+system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+
+#-------------------------------------------------
+#  Create versions of the result files that use
+#  standard decimal signed numbers for latitude
+#  and longitude.
+
+system( 'head -n 3 osm_convert_lats_lons_to_decimal.pl >> output_log_all_processing.txt' ) ;
+system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+# conlts:
+ system( 'perl osm_convert_lats_lons_to_decimal.pl < output_city_info_ready_to_split.txt > output_city_info_ready_to_split_decimal.txt' ) ;
+# conlts:
+ system( 'perl osm_convert_lats_lons_to_decimal.pl < output_businesses_filtered.txt > output_businesses_filtered_decimal.txt' ) ;
+# conlts:
+ system( 'perl osm_convert_lats_lons_to_decimal.pl < output_businesses_filtered_promo_type.txt > output_businesses_filtered_promo_type_decimal.txt' ) ;
+
+system( 'head -v output_city_info_ready_to_split_decimal.txt >> output_log_all_processing.txt' ) ;
+system( 'tail -n 3 output_log_all_processing.txt' ) ;
+system( 'head -v output_businesses_filtered_decimal.txt >> output_log_all_processing.txt' ) ;
+system( 'tail -n 3 output_log_all_processing.txt' ) ;
+system( 'head -v output_businesses_filtered_promo_type_decimal.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
