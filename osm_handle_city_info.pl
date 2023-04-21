@@ -12,8 +12,9 @@
 #  Businesses with more than ten employees are
 #  encouraged to contract with small businesses
 #  to supply the service of running this software
-#  if they also arrange to make donations to
-#  support the Open Street Map project.
+#  if there are arrangements for either business
+#  to make donations to support the Open Street
+#  Map project.
 #  Disclaimer of Warranty:  THERE IS NO WARRANTY
 #  FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES
 #  THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY
@@ -381,8 +382,8 @@ print OUTFILE "011 portland wi us 10437688581 09091418126 n151458990 Portland" .
 print OUTFILE "700 portland ?? nz 09642030343 11743267053 n1956278617 Portland" . "\n" ;
 print OUTFILE "500 vancouver bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
 print OUTFILE "500 vancouver_bc bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
-print OUTFILE "999 philly pa us 10399527237 90248464737 n5518033962 Philadelphia" . "\n" ;
-print OUTFILE "999 phl pa us 10399527237 90248464737 n5518033962 Philadelphia" . "\n" ;
+print OUTFILE "999 philly pa us 10399527237 09248364737 n5518033962 Philadelphia" . "\n" ;
+print OUTFILE "999 phl pa us 10399527237 09248364737 n5518033962 Philadelphia" . "\n" ;
 print OUTFILE "999 sf ca us 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
 print OUTFILE "999 sfo ca us 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
 print OUTFILE "999 la ca us 10340536781 08817572974 n1738808199 Los_Angeles" . "\n" ;
@@ -391,12 +392,12 @@ print OUTFILE "999 st._louis mo us 10386272733 09098021110 n151786910 St._Louis"
 print OUTFILE "999 st._louis_mo mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
 print OUTFILE "999 saint_louis_mo mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
 print OUTFILE "999 stl mo us 10386272733 09098021110 n151786910 St._Louis" . "\n" ;
-print OUTFILE "999 ny ny us 10407305991 09260134187 n61785451 New_York" . "\n" ;
-print OUTFILE "999 nyc ny us 10407305991 09260134187 n61785451 New_York" . "\n" ;
-print OUTFILE "999 dc dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
-print OUTFILE "999 dca dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
-print OUTFILE "999 iad dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
-print OUTFILE "999 washington dc us 10388950368 99229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 ny ny us 10407127281 09259939847 n61785451 New_York" . "\n" ;
+print OUTFILE "999 nyc ny us 10407127281 09259939847 n61785451 New_York" . "\n" ;
+print OUTFILE "999 dc dc us 10388950368 09229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 dca dc us 10388950368 09229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 iad dc us 10388950368 09229634572 n158368533 Washington_DC" . "\n" ;
+print OUTFILE "999 washington dc us 10388950368 09229634572 n158368533 Washington_DC" . "\n" ;
 print OUTFILE "900 salt_lake_city ut us 10407596198 08881132029 n150935219 Salt_Lake_City" . "\n" ;
 print OUTFILE "900 slc ut us 10407596198 08881132029 n150935219 Salt_Lake_City" . "\n" ;
 
