@@ -15,7 +15,7 @@ For faster processing, latitudes and longitudes are converted into, and then han
 Usage instructions:
 ----------------
 
-Step 1:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least three or four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).
+Step 1:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).
 
 Step 2:  Download to that computer the latest version of the Open Street Map "planet" database file, which is named "planet-latest.osm.bz2".  (This can be done using the Firefox browser, in which case it's helpful to view the progress indicator.)  The time required for this download over a somewhat-typical internet connection can be 12 or more hours.
 
