@@ -46,8 +46,15 @@
 
 
 #--------------------------------------------------
-#  Sample input test lines.
+#  Input format:
+#
+# 0922_1167 w946168160 Pegasus_Ice_Road
+# 0922_1167 w946168160 w946426208 1258149 0369450
+# 0922_1166 w133797089 w946168160 0696981 6881908
+# 0922_1166 w124904767 w946168160 1114362 9490084
 
+#  Sample input test lines:
+#
 # 1063_1070 w4973733 w4973735 4255414 4169558
 # 1063_1070 w4973733 Street_Name
 # 1063_1070 w4973735 Street_Name_Something
@@ -94,6 +101,23 @@ open( OUT_LOG_FILE , '>' , $output_filename ) ;
 #  Open the input file that contains the
 #  intersection info and region-specific street
 #  name info.
+
+
+# bug from earlier script, both street names not in this region:
+
+
+#
+#  Input format:
+# 0920_0916 w142307953 w142307954 2200226 6840922
+# 0920_0916 w142307954 Elephant_Head_Road
+# 0920_0916 w142307954 w142307953 2200226 6840922
+# 0920_0917 w1115464624 Union_Glacier_Camp_Road
+# 0920_0917 w1115464624 w142307953 2480943 2441468
+# 0920_0917 w1115464624 w142307956 2315676 4200065
+# 0920_0917 w142307953 Union_Glacier_Camp_Road
+# 0920_0917 w142307953 w1115464624 2480943 2441468
+# 0920_0917 w142307956 Track_to_Peak_942
+# 0920_0917 w142307956 w1115464624 2315676 4200065
 
 $input_filename = 'temp_merged_sorted_intersections_and_street_names.txt' ;
 print "input filename: " . $input_filename . "\n" ;
@@ -217,18 +241,18 @@ sub filter_out_joins
                     print OUT_FILE $line_numbered[ $line_number ] . "\n" ;
                 } else
                 {
-                    print OUT_LOG_FILE $street_name_for_street_id{ $first_street_id } . "  " . $first_street_id . "\n" . $street_name_for_street_id{ $second_street_id } . "  " . $second_street_id . "\n\n" ;
+#                    print OUT_LOG_FILE $street_name_for_street_id{ $first_street_id } . "  " . $first_street_id . "\n" . $street_name_for_street_id{ $second_street_id } . "  " . $second_street_id . "\n\n" ;
                     $removal_count_join ++ ;
                 }
             } else
             {
                 if ( not( exists( $street_name_for_street_id{ $first_street_id } ) ) )
                 {
-                    print OUT_LOG_FILE "missing name for street ID " . $first_street_id . "\n\n" ;
+                    print OUT_LOG_FILE "missing name for street ID " . $first_street_id . "\n" ;
                 }
-                if ( not( exists( $street_name_for_street_id{ $second_street_id } ) ) )
+                if ( ( $first_street_id ne $second_street_id ) && ( not( exists( $street_name_for_street_id{ $second_street_id } ) ) ) )
                 {
-                    print OUT_LOG_FILE "missing name for street ID " . $second_street_id . "\n\n" ;
+                    print OUT_LOG_FILE "missing name for street ID " . $second_street_id . "\n" ;
                 }
                 $removal_count_missing_name ++ ;
             }

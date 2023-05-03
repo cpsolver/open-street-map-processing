@@ -72,25 +72,15 @@ $yes_valid_line_type{ "4" } = $yes_yes ;
 #--------------------------------------------------
 #  Currently the code in this section is not active.
 #
-#  Important:  These adjustments reduce some areas
-#  of the globe/Earth to use only older way IDs.
-#  This limits the number of intersections in areas
-#  such as Asia and India where fewer users are
-#  currently located.  Later the full
-#  data for the entire globe should be used.
-#  When that happens, eliminate this adjustment
-#  that reduces server storage requirements.  Do
-#  NOT just change these numbers!  Fully eliminate
-#  the use of the
-#  "yes_need_full_coverage_in_region_id"
-#  associative array.
+#  Important:  These adjustments can be used to
+#  omit (ignore) intersections in some areas
+#  of the globe/Earth.
 #
-#  Specify which regions of the globe need full
+#  Specify which regions of the globe get full
 #  data coverage.  Include North America,
 #  Europe, Japan, South Korea, Australia,
-#  New Zealand.  Other regions will get their
-#  data truncated to data that already existed
-#  when the way ID numbers reached 5,000,000.
+#  New Zealand.  Other regions will not be
+#  included.
 
 #  North America:
 $latitude_region_number_begin[ 1 ] = 1000 ;
@@ -131,10 +121,10 @@ $longitude_region_number_end[ 5 ] = 1137 ;
 #             $region_id = sprintf( "%04d" , $latitude_region_number ) . "_" . sprintf( "%04d" , $longitude_region_number ) ;
 #             if ( $which_region <= 4 )
 #             {
-#                 $yes_need_full_coverage_in_region_id{ $region_id } = "y" ;
+#                 $yes_include_region_id{ $region_id } = "y" ;
 #             } else
 #             {
-#                 delete( $yes_need_full_coverage_in_region_id{ $region_id } ) ;
+#                 delete( $yes_include_region_id{ $region_id } ) ;
 #             }
 #         }
 #     }
@@ -212,28 +202,33 @@ while( $input_line = <IN_FILE> )
 #  Currently this section is not used because the
 #  earlier related section of code is skipped.
 #
-#  If this region is not getting full coverage, and
-#  if the street ID is an older way ID number, or
-#  older region ID number, ignore this street and
-#  repeat the loop.  This approach yields only
-#  older, less-recent, data for areas with expected
-#  fewer users.
-#
-#  Currently the cutoff for older street IDs is at
-#  way ID number 4,999,999.
-#  Relation ID numbers can overlap with way ID
-#  numbers, but there are far fewer street 
-#  relations than street ways, so don't bother
-#  using a different cutoff point for relation ID
-#  numbers.
+#  If this region is being excluded, ignore this
+#  street and repeat the loop.
 
-#    if ( not( exists( $yes_need_full_coverage_in_region_id{ $region_id } ) ) )
+#    if ( not( exists( $yes_include_region_id{ $region_id } ) ) )
 #    {
-#        if ( ( length( $street_id ) > 7 ) || ( $street_id =~ /^[5-9][0-9][0-9][0-9][0-9][0-9][0-9]$/ ) )
-#        {
-#            next ;
-#        }
+#        next ;
 #    }
+
+
+#--------------------------------------------------
+#  If this combination of street ID and region
+#  are the same as the previous line, repeat the
+#  loop without writing the same info again.
+
+    if ( ( $region_id eq $previous_region_id ) && ( $street_id eq $previous_street_id ) )
+    {
+        next ;
+    }
+    $previous_region_id = $region_id ;
+    $previous_street_id = $street_id ;
+
+
+#--------------------------------------------------
+#  Write the street ID and street name and the
+#  region this intersection is in.
+
+    print OUT_REGION_STREET $region_id . " " . $way_or_relation_type . $street_id . " " . $street_name . "\n" ;
 
 
 #--------------------------------------------------
@@ -285,13 +280,6 @@ while( $input_line = <IN_FILE> )
             }
         }
     }
-
-
-#--------------------------------------------------
-#  Write the street IDs and street names of streets
-#  that are in that region.
-
-   print OUT_REGION_STREET $region_id . " " . $way_or_relation_type . $street_id . " " . $street_name . "\n" ;
 
 
 #--------------------------------------------------
