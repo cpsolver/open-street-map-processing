@@ -39,7 +39,7 @@ Unless you have edited this Perl script to run just a part of it, this script wi
 
 Step 6: Periodically monitor progress to verify that the processing is getting the information you want or expect.  To do this monitoring, watch the sizes of the files being created, and perhaps sometimes copy the file "output_log_all_processing.txt" and view its contents.
 
-Hint:  During processing, if you try to view even a small text file in the text editor, the text editor is likely to become unresponsive, sometimes for minutes.  Instead, open a separate terminal and using Linux commands such as "head" and "tail" and "grep" to view portions of the file.
+Hint:  During processing, if you try to view even a small text file in the text editor, the text editor is likely to become unresponsive, sometimes for minutes.  Instead, open a separate terminal and use Linux commands such as "head" and "tail" and "grep" to view portions of the file.
 
 Hint:  Use the Linux "top" command running in a separate terminal to monitor resource usage such as CPU time and memory usage.  This command consumes much less processing time than the GUI version.
 
