@@ -36,7 +36,7 @@
 
 #--------------------------------------------------
 #  Gets intersections from the file
-#  "output_merged_intersections_and_street_names.txt"
+#  "output_merged_sorted_intersections_and_street_names.txt"
 #  and checks street names.  If both street names
 #  are the same, the intersection is removed because
 #  the node is a join point for two segments of the
@@ -48,13 +48,24 @@
 #--------------------------------------------------
 #  Input format:
 #
-# 0922_1167 w946168160 Pegasus_Ice_Road
-# 0922_1167 w946168160 w946426208 1258149 0369450
-# 0922_1166 w133797089 w946168160 0696981 6881908
-# 0922_1166 w124904767 w946168160 1114362 9490084
+#  Notice that street ID pairs appear twice
+#  because that was needed for sorting, but now
+#  the version with the bigger ID number first
+#  will be removed.
+
+#  Input format:
+# 0920_0916 w142307953 Union_Glacier_Camp_Road
+# 0920_0916 w142307953 w142307954 2200226 6840922
+# 0920_0916 w142307954 Elephant_Head_Road
+# 0920_0916 w142307954 w142307953 2200226 6840922
+# 0920_0917 w1115464624 Union_Glacier_Camp_Road
+# 0920_0917 w1115464624 w142307953 2480943 2441468
+# 0920_0917 w1115464624 w142307956 2315676 4200065
+# 0920_0917 w142307953 Union_Glacier_Camp_Road
+# 0920_0917 w142307953 w1115464624 2480943 2441468
+# 0920_0917 w142307956 Track_to_Peak_942
 
 #  Sample input test lines:
-#
 # 1063_1070 w4973733 w4973735 4255414 4169558
 # 1063_1070 w4973733 Street_Name
 # 1063_1070 w4973735 Street_Name_Something
@@ -102,24 +113,7 @@ open( OUT_LOG_FILE , '>' , $output_filename ) ;
 #  intersection info and region-specific street
 #  name info.
 
-
-# bug from earlier script, both street names not in this region:
-
-
-#
-#  Input format:
-# 0920_0916 w142307953 w142307954 2200226 6840922
-# 0920_0916 w142307954 Elephant_Head_Road
-# 0920_0916 w142307954 w142307953 2200226 6840922
-# 0920_0917 w1115464624 Union_Glacier_Camp_Road
-# 0920_0917 w1115464624 w142307953 2480943 2441468
-# 0920_0917 w1115464624 w142307956 2315676 4200065
-# 0920_0917 w142307953 Union_Glacier_Camp_Road
-# 0920_0917 w142307953 w1115464624 2480943 2441468
-# 0920_0917 w142307956 Track_to_Peak_942
-# 0920_0917 w142307956 w1115464624 2315676 4200065
-
-$input_filename = 'temp_merged_sorted_intersections_and_street_names.txt' ;
+$input_filename = 'output_merged_sorted_intersections_and_street_names.txt' ;
 print "input filename: " . $input_filename . "\n" ;
 open( IN_FILE , '<' , $input_filename ) ;
 
@@ -220,6 +214,10 @@ close( OUT_FILE ) ;
 #
 #  Only write the intersection lines in which the
 #  two street names are known but do not match.
+#  Also remove the lines in which the first street
+#  ID number is larger than the second street ID
+#  because those are duplications that need to be
+#  removed.
 
 sub filter_out_joins
 {
@@ -230,10 +228,18 @@ sub filter_out_joins
     }
     for ( $line_number = 1 ; $line_number <= $number_of_lines_in_region ; $line_number ++ )
     {
-        if ( $line_numbered[ $line_number ] =~ /^[0-9]+[ _][0-9]+ +([wr][0-9]+) +([wr][0-9]+) +[ 0-9]+/ )
+        if ( $line_numbered[ $line_number ] =~ /^[0-9]+[ _][0-9]+ +([wr])([0-9]+) +([wr])([0-9]+) +[ 0-9]+/ )
         {
-            $first_street_id = $1 ;
-            $second_street_id = $2 ;
+            $first_way_or_relation_letter = $1 ;
+            $first_street_id_number_only = $2 ;
+            $second_way_or_relation_letter = $3 ;
+            $second_street_id_number_only = $4 ;
+            $first_street_id = $first_way_or_relation_letter . $first_street_id_number_only ;
+            $second_street_id = $second_way_or_relation_letter . $second_street_id_number_only ;
+            if ( ( $first_street_id_number_only + 0 ) > ( $second_street_id_number_only + 0 ) )
+            {
+                next ;
+            }
             if ( ( exists( $street_name_for_street_id{ $first_street_id } ) ) && ( exists( $street_name_for_street_id{ $second_street_id } ) ) )
             {
                 if ( $street_name_for_street_id{ $first_street_id } ne $street_name_for_street_id{ $second_street_id } )
@@ -249,12 +255,13 @@ sub filter_out_joins
                 if ( not( exists( $street_name_for_street_id{ $first_street_id } ) ) )
                 {
                     print OUT_LOG_FILE "missing name for street ID " . $first_street_id . "\n" ;
+                    $removal_count_missing_name ++ ;
                 }
-                if ( ( $first_street_id ne $second_street_id ) && ( not( exists( $street_name_for_street_id{ $second_street_id } ) ) ) )
+                if ( ( $second_street_id ne $first_street_id ) && ( not( exists( $street_name_for_street_id{ $second_street_id } ) ) ) )
                 {
                     print OUT_LOG_FILE "missing name for street ID " . $second_street_id . "\n" ;
+                    $removal_count_missing_name ++ ;
                 }
-                $removal_count_missing_name ++ ;
             }
         }
     }
@@ -265,4 +272,3 @@ sub filter_out_joins
 
 #--------------------------------------------------
 #  End of code.
-
