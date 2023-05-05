@@ -129,7 +129,7 @@ print "started writing the file output_log_intersection_processing.txt" . "\n" ;
 #  "if it does not exist".
 
 # conlts:
-# system( 'mkdir -p ./street_node_way_pairs >> output_log_intersection_processing.txt' ) ;
+ system( 'mkdir -p ./street_node_way_pairs >> output_log_intersection_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -151,10 +151,10 @@ system( 'cat text_no.txt > yes_or_no_get_way_info.txt' ) ;
 system( 'cat text_yes.txt > yes_or_no_get_relation_info.txt' ) ;
 
 # conlts:
-# system( 'bzcat planet_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
+ system( 'bzcat planet_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
 
 # conlts:
-# system( 'cat output_street_relation_info.txt > output_street_relation_info_tagged_as_street.txt' ) ;
+ system( 'cat output_street_relation_info.txt > output_street_relation_info_tagged_as_street.txt' ) ;
 
 system( 'head -v output_street_relation_info_tagged_as_street.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -168,7 +168,7 @@ system( 'head -n 3 osm_get_way_ids_from_relation_info.pl >> output_log_intersect
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_get_way_ids_from_relation_info.pl < output_street_relation_info_tagged_as_street.txt > output_way_ids_from_street_relation_links.txt' ) ;
+ system( 'perl osm_get_way_ids_from_relation_info.pl < output_street_relation_info_tagged_as_street.txt > output_way_ids_from_street_relation_links.txt' ) ;
 
 system( 'head -v output_way_ids_from_street_relation_links.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -198,10 +198,10 @@ system( 'cat text_no.txt > yes_or_no_get_relation_info.txt' ) ;
 system( 'head -n 3 osm_split_and_abbrev_node_way_relation.pl >> output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'bzcat planet_ways_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
+ system( 'bzcat planet_ways_relations_only.bz2 | perl osm_split_and_abbrev_node_way_relation.pl' ) ;
 
 # conlts:
-# system( 'cat output_street_way_info.txt > output_street_way_info_tagged_as_street.txt' ) ;
+ system( 'cat output_street_way_info.txt > output_street_way_info_tagged_as_street.txt' ) ;
 system( 'head -v output_street_way_info_tagged_as_street.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
@@ -218,7 +218,7 @@ system( 'head -n 3 osm_get_street_node_way_pairs.pl >> output_log_intersection_p
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_get_street_node_way_pairs.pl' ) ;
+ system( 'perl osm_get_street_node_way_pairs.pl' ) ;
 
 system( 'head -v street_node_way_pairs/node_way_pairs_in_group_00.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -243,19 +243,19 @@ system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 #  This step takes about 6 hours.
 
 # conlts:
-# system( 'rm output_intersections_with_lats_lons_group_?.txt' ) ;
+ system( 'rm output_intersections_with_lats_lons_group_?.txt' ) ;
 
 system( 'head -n 3 osm_find_intersections_and_merge_lats_lons.pl >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_find_intersections_and_merge_lats_lons.pl' ) ;
+ system( 'perl osm_find_intersections_and_merge_lats_lons.pl' ) ;
 
 system( 'head -v output_intersections_with_lats_lons_group_0.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_join_intersection_info_files.pl' ) ;
+ system( 'perl osm_join_intersection_info_files.pl' ) ;
 
 system( 'head -v output_joined_intersection_info_before_exclusions.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -288,10 +288,10 @@ system( 'tail -n 1 output_log_intersection_processing.txt' ) ;
 $grep_regular_expression = '(&#40;)|(&#41;)|(&#59;)|([0-9]&#58;[0-9])|( highway_path)|( highway_bus_stop)|( \?\?+ )' ;
 
 # conlts:
-# system( 'grep -P ' . "'" . $grep_regular_expression . "'" . ' output_street_relation_info_tagged_as_street.txt > output_street_ids_to_exclude.txt' ) ;
+ system( 'grep -P ' . "'" . $grep_regular_expression . "'" . ' output_street_relation_info_tagged_as_street.txt > output_street_ids_to_exclude.txt' ) ;
 
 # conlts:
-# system( 'grep -P ' . "'" . $grep_regular_expression . "'" . ' output_street_way_info_tagged_as_street.txt >> output_street_ids_to_exclude.txt' ) ;
+ system( 'grep -P ' . "'" . $grep_regular_expression . "'" . ' output_street_way_info_tagged_as_street.txt >> output_street_ids_to_exclude.txt' ) ;
 
 system( 'head -v output_street_ids_to_exclude.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -314,7 +314,7 @@ system( 'head -n 3 osm_exclude_intersections_with_listed_street_ids.pl >> output
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_exclude_intersections_with_listed_street_ids.pl' ) ;
+ system( 'perl osm_exclude_intersections_with_listed_street_ids.pl' ) ;
 
 system( 'head -v output_street_intersections_after_exclusions.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -336,7 +336,7 @@ system( 'head -n 3 osm_prepare_street_info_for_sorting.pl >> output_log_intersec
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_prepare_street_info_for_sorting.pl' ) ;
+ system( 'perl osm_prepare_street_info_for_sorting.pl' ) ;
 
 system( 'head -v output_sortable_relation_ids_and_names.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -369,17 +369,17 @@ system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 #  the line is different.
 
 # conlts:
-# system( 'cat output_sortable_relation_ids_and_names.txt > output_regions_names_merged_by_street_id.txt' ) ;
+ system( 'cat output_sortable_relation_ids_and_names.txt > output_regions_names_merged_by_street_id.txt' ) ;
 # conlts:
-# system( 'cat output_sortable_way_ids_and_names.txt >> output_regions_names_merged_by_street_id.txt' ) ;
+ system( 'cat output_sortable_way_ids_and_names.txt >> output_regions_names_merged_by_street_id.txt' ) ;
 # conlts:
-# system( 'perl remove_duplicate_adjacent_lines.pl < output_sortable_street_ids_and_region_ids.txt >> output_regions_names_merged_by_street_id.txt' ) ;
+ system( 'perl remove_duplicate_adjacent_lines.pl < output_sortable_street_ids_and_region_ids.txt >> output_regions_names_merged_by_street_id.txt' ) ;
 
 system( 'echo SORTING FILE >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 1 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1.2,1n -k2,2n output_regions_names_merged_by_street_id.txt -o output_regions_names_sorted_by_street_id.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k1.2,1n -k2,2n output_regions_names_merged_by_street_id.txt -o output_regions_names_sorted_by_street_id.txt' ) ;
 
 system( 'head -v output_regions_names_sorted_by_street_id.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -396,7 +396,7 @@ system( 'head -n 3 osm_handle_sorted_street_names.pl >> output_log_intersection_
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_handle_sorted_street_names.pl' ) ;
+ system( 'perl osm_handle_sorted_street_names.pl' ) ;
 
 system( 'head -v output_sortable_street_names.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -414,7 +414,7 @@ system( 'echo SORTING FILE >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 1 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k2,2 output_sortable_street_names.txt -o output_uploadable_street_names.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k2,2 output_sortable_street_names.txt -o output_uploadable_street_names.txt' ) ;
 
 system( 'head -v output_uploadable_street_names.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -427,7 +427,7 @@ system( 'echo SORTING FILE >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 1 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'sort ' . $option_t_space . ' -k1,1 -k2,2 -k3,3 output_sortable_street_words.txt -o output_sorted_street_words.txt' ) ;
+ system( 'sort ' . $option_t_space . ' -k1,1 -k2,2 -k3,3 output_sortable_street_words.txt -o output_sorted_street_words.txt' ) ;
 
 system( 'head -v output_sorted_street_words.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -442,7 +442,7 @@ system( 'head -n 3 osm_generate_uploadable_street_words.pl >> output_log_interse
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_generate_uploadable_street_words.pl' ) ;
+ system( 'perl osm_generate_uploadable_street_words.pl' ) ;
 
 system( 'head -v output_uploadable_street_words.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -463,7 +463,7 @@ system( 'head -n 3 osm_swap_street_ids_in_intersection_data.pl >> output_log_int
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_swap_street_ids_in_intersection_data.pl < output_street_intersections_after_exclusions.txt > temp_output_intersections_with_swapped_ids.txt' ) ;
+ system( 'perl osm_swap_street_ids_in_intersection_data.pl < output_street_intersections_after_exclusions.txt > temp_output_intersections_with_swapped_ids.txt' ) ;
 
 system( 'head -v temp_output_intersections_with_swapped_ids.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -472,9 +472,9 @@ system( 'echo SORTING FILE >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 1 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'cat output_sortable_regions_streets.txt temp_output_intersections_with_swapped_ids.txt > temp_merged_intersections_and_street_names.txt' ) ;
+ system( 'cat output_sortable_regions_streets.txt temp_output_intersections_with_swapped_ids.txt > temp_merged_intersections_and_street_names.txt' ) ;
 # conlts:
-# system( 'sort -k1,1 temp_merged_intersections_and_street_names.txt -o output_merged_sorted_intersections_and_street_names.txt' ) ;
+ system( 'sort -k1,1 temp_merged_intersections_and_street_names.txt -o output_merged_sorted_intersections_and_street_names.txt' ) ;
 
 system( 'head -v output_merged_sorted_intersections_and_street_names.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -482,7 +482,7 @@ system( 'head -n 3 osm_eliminate_non_intersection_street_joins.pl >> output_log_
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_eliminate_non_intersection_street_joins.pl' ) ;
+ system( 'perl osm_eliminate_non_intersection_street_joins.pl' ) ;
 
 system( 'head -v output_uploadable_street_intersections.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -512,7 +512,7 @@ system( 'head -n 3 osm_generate_mapable_intersection_lats_lons.pl >> output_log_
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_generate_mapable_intersection_lats_lons.pl < output_uploadable_street_intersections.txt > output_density_mapable_lats_lons.txt' ) ;
+ system( 'perl osm_generate_mapable_intersection_lats_lons.pl < output_uploadable_street_intersections.txt > output_density_mapable_lats_lons.txt' ) ;
 
 system( 'head -v output_density_mapable_lats_lons.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -520,13 +520,13 @@ system( 'head -n 3 generate_map_density_squares.pl >> output_log_intersection_pr
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl generate_map_density_squares.pl < output_density_mapable_lats_lons.txt > output_map_density_squares.txt' ) ;
+ system( 'perl generate_map_density_squares.pl < output_density_mapable_lats_lons.txt > output_map_density_squares.txt' ) ;
 # conlts:
-# system( 'cat map_image_begin.txt > map_full_intersections.svg' ) ;
+ system( 'cat map_image_begin.txt > map_full_intersections.svg' ) ;
 # conlts:
-# system( 'cat output_map_density_squares.txt >> map_full_intersections.svg' ) ;
+ system( 'cat output_map_density_squares.txt >> map_full_intersections.svg' ) ;
 # conlts:
-# system( 'cat map_image_end.txt >> map_full_intersections.svg' ) ;
+ system( 'cat map_image_end.txt >> map_full_intersections.svg' ) ;
 
 system( 'ls -l map_full_intersections.svg >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -541,9 +541,9 @@ system( 'head -n 3 split_on_server.pl >> output_log_intersection_processing.txt'
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'rm street_names_new/pattern_*/street_names_category_*.txt' ) ;
+ system( 'rm street_names_new/pattern_*/street_names_category_*.txt' ) ;
 # conlts:
-# system( 'perl split_on_server.pl < output_uploadable_street_names.txt' ) ;
+ system( 'perl split_on_server.pl < output_uploadable_street_names.txt' ) ;
 
 system( 'head -v street_names_new/pattern_14/street_names_category_6214.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -558,9 +558,9 @@ system( 'head -n 3 split_on_server.pl >> output_log_intersection_processing.txt'
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'rm street_words_new/lat9_*/street_words_category_*.txt' ) ;
+ system( 'rm street_words_new/lat9_*/street_words_category_*.txt' ) ;
 # conlts:
-# system( 'perl split_on_server.pl < output_uploadable_street_words.txt' ) ;
+ system( 'perl split_on_server.pl < output_uploadable_street_words.txt' ) ;
 
 system( 'head -v street_words_new/lat9_1045/street_words_category_1045_0877.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -577,9 +577,9 @@ system( 'head -n 3 split_on_server.pl >> output_log_intersection_processing.txt'
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'rm intersections_new/lat9_*/intersections_category_*.txt' ) ;
+ system( 'rm intersections_new/lat9_*/intersections_category_*.txt' ) ;
 # conlts:
-# system( 'perl split_on_server.pl < output_uploadable_street_intersections.txt' ) ;
+ system( 'perl split_on_server.pl < output_uploadable_street_intersections.txt' ) ;
 
 system( 'head -v intersections_new/lat9_1045/intersections_category_1045_0877.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -596,7 +596,7 @@ system( 'head -n 3 osm_prepare_to_convert_intersection_lats_lons_to_decimal.pl >
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_prepare_to_convert_intersection_lats_lons_to_decimal.pl < output_uploadable_street_intersections.txt > output_pre_converted_for_intersections_decimal.txt' ) ;
+ system( 'perl osm_prepare_to_convert_intersection_lats_lons_to_decimal.pl < output_uploadable_street_intersections.txt > output_pre_converted_for_intersections_decimal.txt' ) ;
 
 system( 'head -v output_pre_converted_for_intersections_decimal.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
@@ -604,7 +604,7 @@ system( 'head -n 3 osm_convert_lats_lons_to_decimal.pl >> output_log_intersectio
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
 
 # conlts:
-# system( 'perl osm_convert_lats_lons_to_decimal.pl < output_pre_converted_for_intersections_decimal.txt > output_uploadable_street_intersections_decimal.txt' ) ;
+ system( 'perl osm_convert_lats_lons_to_decimal.pl < output_pre_converted_for_intersections_decimal.txt > output_uploadable_street_intersections_decimal.txt' ) ;
 
 system( 'head -v output_uploadable_street_intersections_decimal.txt >> output_log_intersection_processing.txt' ) ;
 system( 'tail -n 3 output_log_intersection_processing.txt' ) ;
