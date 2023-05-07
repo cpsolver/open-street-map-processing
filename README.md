@@ -10,48 +10,48 @@ Disclaimer of Warranty:  THERE IS NO WARRANTY FOR THIS SOFTWARE. THE COPYRIGHT H
 Latitude and longitude format
 -------------
 
-For faster processing, latitudes and longitudes are converted into, and then handled as, positive integers, without a decimal point and without any minus sign.  To convert any such integer back into a signed decimal number, if the first digit is "1" then remove the "1" and insert a decimal point to the left of the right-most eight digits, or else if the first digit is "0" then add a minus sign and convert each digit to its "nines complement" value.  The "nines complement" conversion changes each "9" to "0", each "8" to "1", each "7" to "2", etc. down to each "2" to "7", each "1" to "8", and each "0" to "9".  Using this convention causes the numbers to have smooth transitions at the equator (10000000000) and zero meridian (10000000000).  Specifically the next point in the negative direction is "09999999999".  Note that these conversions are text-based so they do not involve converting to or from software-based "integers".
+For faster processing, latitudes and longitudes are converted into, and then handled as, positive integers, without a decimal point and without any minus sign.  To convert any such integer back into a signed decimal number, if the first digit is <i>1</i> then remove the <i>1</i> and insert a decimal point to the left of the right-most eight digits, or else if the first digit is <i>0</i> then add a minus sign and convert each digit to its "nines complement" value.  The "nines complement" conversion changes each <i>9</i> to <i>0</i>, each <i>8</i> to <i>1</i>, each <i>7</i> to <i>2</i>, etc. down to each <i>2</i> to <i>7</i>, each <i>1</i> to <i>8</i>, and each <i>0</i> to <i>9</i>.  Using this convention causes the numbers to have smooth transitions at the equator (10000000000) and zero meridian (10000000000).  Specifically the next point in the negative direction is <i>09999999999</i>.  Note that these conversions are text-based so they do not involve converting to or from software-based "integers".
 
 Usage instructions:
 ----------------
 
-Step 1:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).
+<b>Step 1</b>:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).
 
-Step 2:  Download to that computer the latest version of the Open Street Map "planet" database file, which is named "planet-latest.osm.bz2".  (This can be done using the Firefox browser, in which case it's helpful to view the progress indicator.)  The time required for this download over a somewhat-typical internet connection can be 12 or more hours.
+<b>Step 2</b>:  Download to that computer the latest version of the Open Street Map "planet" database file, which is named <i>planet-latest.osm.bz2</i>.  (This can be done using the Firefox browser, in which case it's helpful to view the progress indicator.)  The time required for this download over a somewhat-typical internet connection can be 12 or more hours.
 
 Important:  Please use an appropriate "mirror" source for getting this huge file.  Also be sure your use of the processed data is permitted, and that the Open Street Map Foundation is (or will be) properly attributed as the source of the data.
 
-Step 3:  Move the planet database file and all the scripts in this repository into the same directory.  (Move the huge file as a single step, without requiring the operating system to first make a copy the file.)
+<b>Step 3</b>:  Move the planet database file and all the scripts in this repository into the same directory.  (Move the huge file as a single step, without requiring the operating system to first make a copy the file.)
 
-Step 4: View and probably edit the file named "osm_processing_do_all.pl".
+<b>Step 4</b>: View and probably edit the file named <i>osm_processing_do_all.pl</i>.
 
 Specifically:  This Perl script was developed one piece at a time and has not yet been executed as a single week-long process, so you MUST verify that this script is edited so that it runs the needed parts of the process and does not also run unneeded parts of the process.  As a related point, consider that the full processing gets both businesses and cities, but the city information seldom changes, so you can reduce processing time when you just want to update business information.  To make this change, "comment out" the code that only deals with getting city information.
 
-Hint:  When choosing which lines of code to consider commenting out, focus on the lines that immediately follow a line that contains the acronym "conlts", which is an acronym for the words "Comment Out Next Line To Skip".  Most of the other lines of code run quickly and just log useful information to the log file named "output_log_all_processing.txt".
+Hint:  When choosing which lines of code to consider commenting out, focus on the lines that immediately follow a line that contains the acronym "conlts", which is an acronym for the words "Comment Out Next Line To Skip".  Most of the other lines of code run quickly and just log useful information to the log file named <i>output_log_all_processing.txt</i>.
 
-Hint:  If you are running, or re-running, part of the code because you are testing a change in that part of the code, then you should comment out the parts already done (some of which consume days of processing time) so they do not overwrite the already-correct "output" files.  Also remember you can insert the "exit" command to stop execution just after the part you are testing.
+Hint:  If you are running, or re-running, part of the code because you are testing a change in that part of the code, then you should comment out the parts already done (some of which consume days of processing time) so they do not overwrite the already-correct "output" files.  Also remember you can insert the <i>exit</i> command to stop execution just after the part you are testing.
 
-Step 5: Open a command-line terminal, use the "cd" ("change directory") command to navigate to the directory that contains the files, then run the following command:
+<b>Step 5</b>: Open a command-line terminal, use the <i>cd</i> ("change directory") command to navigate to the directory that contains the files, then run the following command:
 
 perl osm_processing_do_all.pl
 
 Unless you have edited this Perl script to run just a part of it, this script will run 24 hours a day for a week or more!  So make sure you carefully followed the instructions in Step 4.
 
-Step 6: Periodically monitor progress to verify that the processing is getting the information you want or expect.  To do this monitoring, watch the sizes of the files being created, and perhaps sometimes copy the file "output_log_all_processing.txt" and view its contents.
+<b>Step 6</b>: Periodically monitor progress to verify that the processing is getting the information you want or expect.  To do this monitoring, watch the sizes of the files being created, and perhaps sometimes copy the file <i>output_log_all_processing.txt</i> and view its contents.
 
-Hint:  During processing, if you try to view even a small text file in the text editor, the text editor is likely to become unresponsive, sometimes for minutes.  Instead, open a separate terminal and use Linux commands such as "head" and "tail" and "grep" to view portions of the file.
+Hint:  During processing, if you try to view even a small text file in the text editor, the text editor is likely to become unresponsive, sometimes for minutes.  Instead, open a separate terminal and use Linux commands such as <i>head</i> and <i>tail</i> and <i>grep</i> to view portions of the file.
 
-Hint:  Use the Linux "top" command running in a separate terminal to monitor resource usage such as CPU time and memory usage.  This command consumes much less processing time than the GUI version.
+Hint:  Use the Linux <i>top</i> command running in a separate terminal to monitor resource usage such as CPU time and memory usage.  This command consumes much less processing time than the GUI version.
 
-Step 7:  When the processing is done the file named "output_city_info_ready_to_split_decimal.txt" contains all the city info, the file named "output_businesses_filtered_decimal.txt" contains the single-location businesses of specific types that interest most people, and the file named "output_businesses_filtered_promo_type_decimal.txt" contains single-location businesses that are likely to want to advertise alongside the businesses of greater interest.  The latitude and longitude numbers in these files use standard decimal notation.  The files with similar names but without the word "decimal" at the end specify the latitudes and longitudes as positive-only integer numbers, which are useful for faster processing in some situations.
+<b>Step 7</b>:  When the processing is done the file named <i>output_city_info_ready_to_split_decimal.txt</i> contains all the city info, the file named <i>output_businesses_filtered_decimal.txt</i> contains the single-location businesses of specific types that interest most people, and the file named <i>output_businesses_filtered_promo_type_decimal.txt</i> contains single-location businesses that are likely to want to advertise alongside the businesses of greater interest.  The latitude and longitude numbers in these files use standard decimal notation.  The files with similar names but without the word <i>decimal</i> at the end specify the latitudes and longitudes as positive-only integer numbers, which are useful for faster processing in some situations.
 
-Clarification:  The file named "output_businesses_filtered_decimal.txt" includes eating places such as restaurants, bakeries, cafes, delis, and tea shops.  It also includes independent bookstores that compete against Amazon, and many family-owned hardware stores that compete against Home Depot.  The file named "output_businesses_filtered_promo_type_decimal.txt" includes dentists, veterinarians, and other businesses that are of interest to only some people.
+Clarification:  The file named <i>output_businesses_filtered_decimal.txt</i> includes eating places such as restaurants, bakeries, cafes, delis, and tea shops.  It also includes independent bookstores that compete against Amazon, and many family-owned hardware stores that compete against Home Depot.  The file named <i>output_businesses_filtered_promo_type_decimal.txt</i> includes dentists, veterinarians, and other businesses that are of interest to only some people.
 
-Hint:  Open the SVG (scalable vector graphics) files named "map_full_businesses.svg" and "map_full_cities.svg" in an SVG application such as "Inkscape" to view the locations of businesses and cities as a "heat" map.  This provides visual verification that the resulting data covers the entire planet.
+Hint:  Open the SVG (scalable vector graphics) files named <i>map_full_businesses.svg</i> and <i>map_full_cities.svg</i> in an SVG application such as <i>Inkscape</i> to view the locations of businesses and cities as a "heat" map.  This provides visual verification that the resulting data covers the entire planet.
 
-Hint:  If you will be using the data for applications that require quickly finding businesses in a specific location, then look at the contents of the directory named "businesses_new".  If you will be using the data to quickly find city names, then look at the contents of the directory named "cities_new".
+Hint:  If you will be using the data for applications that require quickly finding businesses in a specific location, then look at the contents of the directory named <i>businesses_new</i>.  If you will be using the data to quickly find city names, then look at the contents of the directory named <i>cities_new</i>.
 
-Step 8:  If you want to get named street intersections, run the following command:
+<b>Step 8</b>:  If you want to get named street intersections, run the following command:
 
 perl osm_processing_get_intersections.pl
 
