@@ -1,4 +1,4 @@
-Open-source software gets single-location restaurants, bakeries, bookstores, etc. from Open Street Map planet data
+Open-source software gets single-location restaurants, bakeries, bookstores, etc. from Open Street Map planet data.  Also gets named street intersections, and cities.
 ====================
 
 Software license
@@ -50,6 +50,13 @@ Clarification:  The file named "output_businesses_filtered_decimal.txt" includes
 Hint:  Open the SVG (scalable vector graphics) files named "map_full_businesses.svg" and "map_full_cities.svg" in an SVG application such as "Inkscape" to view the locations of businesses and cities as a "heat" map.  This provides visual verification that the resulting data covers the entire planet.
 
 Hint:  If you will be using the data for applications that require quickly finding businesses in a specific location, then look at the contents of the directory named "businesses_new".  If you will be using the data to quickly find city names, then look at the contents of the directory named "cities_new".
+
+Step 8:  If you want to get named street intersections, run the following command:
+
+perl osm_processing_get_intersections.pl
+
+Clarification:  If you only want to get intersections, run the <i>osm_processing_do_all.pl</i> script up to the point where it generates the data in the folder named <i>lats_lons_in_groups</i> because that data is used by the intersection processing scripts.
+
 
 History
 =======
