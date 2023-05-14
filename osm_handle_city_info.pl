@@ -379,6 +379,7 @@ open( COUNTRY_FILE , ">" . $output_filename_country_codes ) ;
 print OUTFILE "700 portland_wi wi us 10437688581 09091418126 n151458990 Portland" . "\n" ;
 print OUTFILE "600 portland ?? nz 09642030343 11743267053 n1956278617 Portland" . "\n" ;
 print OUTFILE "999 vancouver bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
+print OUTFILE "999 vancouver_bc bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
 print OUTFILE "999 pdx or us 10455202471 08773258050 n1666626393 Portland" . "\n" ;
 print OUTFILE "999 philly pa us 10399527237 09248364737 n5518033962 Philadelphia" . "\n" ;
 print OUTFILE "999 phl pa us 10399527237 09248364737 n5518033962 Philadelphia" . "\n" ;
