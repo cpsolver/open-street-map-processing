@@ -27,6 +27,9 @@
 #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING
 #  OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
 #
+#
+#-------------------------------------------------
+#
 #  This Perl script runs other Perl scripts that
 #  process the Open Street Map data to get the
 #  info for businesses and cities.
@@ -374,7 +377,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  Check for information that previously was
 #  missing.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
@@ -432,7 +435,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  Check for information that previously was
 #  missing.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -505,7 +508,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  Check for information that previously was
 #  missing.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -513,7 +516,7 @@ $grep_string_quoted = "'w228173529'" ;
 # conlts:
  system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
-$grep_string_quoted = "'n785696062'" ;
+$grep_string_quoted = "'n199650439'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -611,7 +614,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  the list of nodes for which latitudes and
 #  longitudes will be found.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -619,7 +622,7 @@ $grep_string_quoted = "'w228173529'" ;
 # conlts:
  system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
-$grep_string_quoted = "'n5518033962'" ;
+$grep_string_quoted = "'n199650439'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -655,7 +658,7 @@ $grep_string_quoted = "'n5518033962'" ;
 system( 'head -v output_sorted_node_and_way_or_relation_pairs.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -674,7 +677,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #-------------------------------------------------
 #  Verify that some sample items were found.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -721,7 +724,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  latitudes and longitudes for the nodes along
 #  that way.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -729,7 +732,7 @@ $grep_string_quoted = "'w228173529'" ;
 # conlts:
  system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
-$grep_string_quoted = "'r111194'" ;
+$grep_string_quoted = "'r181810'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -752,7 +755,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #-------------------------------------------------
 #  Verify specific information for debugging.
 
-$grep_string_quoted = "'w228173529'" ;
+$grep_string_quoted = "'w330751369'" ;
 # conlts:
  system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
 # conlts:
@@ -813,7 +816,7 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -v output_city_relation_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 # conlts:
-# system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_city_relations.txt' ) ;
+ system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_city_relations.txt' ) ;
 system( 'head -v output_log_put_centers_unrecognized_for_city_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
@@ -833,6 +836,18 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
  system( 'cat output_log_put_centers_unrecognized.txt > output_log_put_centers_unrecognized_for_city_ways.txt' ) ;
 system( 'head -v output_log_put_centers_unrecognized_for_city_ways.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+
+#-------------------------------------------------
+#  Verify specific information for debugging.
+
+$grep_string_quoted = "'r181810'" ;
+# conlts:
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'grep ' . $grep_string_quoted . ' output_city_relation_info_with_centers.txt >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -944,10 +959,9 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
-#  Combine and process the info for city
-#  relations, ways and nodes.  Put the relations
-#  last because some relations are groups of
-#  nodes (or ways).
+#  Combine the info for city relations, ways and
+#  nodes.  Put the relations last because some
+#  relations are groups of nodes (or ways).
 
 system( 'head -v output_city_node_info_with_centers.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -962,6 +976,25 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
  system( 'cat output_city_way_info_with_centers.txt >> output_city_info_all_nodes_ways_relations.txt' ) ;
 # conlts:
  system( 'cat output_city_relation_info_with_centers.txt >> output_city_info_all_nodes_ways_relations.txt' ) ;
+
+
+#-------------------------------------------------
+#  Verify specific information for debugging.
+
+$grep_string_quoted = "'r181810'" ;
+# conlts:
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'grep ' . $grep_string_quoted . ' output_city_info_all_nodes_ways_relations.txt >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+
+#-------------------------------------------------
+#  Process the info for city relations, ways and
+#  nodes.  Also insert special entries to force
+#  some special names and abbreviations for some
+#  cities
 
 system( 'head -v output_city_info_all_nodes_ways_relations.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -980,12 +1013,28 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
+#  Verify specific information for debugging.
+
+$grep_string_quoted = "'r181810'" ;
+# conlts:
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'grep ' . $grep_string_quoted . ' output_processed_city_info.txt >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+
+#-------------------------------------------------
 #  Sort the city info by ranking, which measures
 #  importance, putting more important cities first
 #  so that a search for "paris" finds
 #  Paris France before Paris Texas.  Then remove
-#  the sort rankings in the first column, and
-#  then remove duplicate city names.
+#  the sort rankings in the first column.
+#
+#  Do not remove duplicate city names because
+#  they can be used as a neighborhood name within
+#  a big city.  Example:  Hollywood district
+#  within Portland Oregon.
 
 system( 'head -v output_processed_city_info.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
@@ -1002,19 +1051,24 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 system( 'head -n 3 remove_column_one.pl >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
+# The next command must be run again if the later optional postal-code processing overwrites the "output_city_info_ready_to_split" file.
 # conlts:
- system( 'perl remove_column_one.pl < output_sorted_processed_city_info.txt > output_city_info_with_duplicates.txt' ) ;
-
-system( 'head -v output_city_info_with_duplicates.txt >> output_log_all_processing.txt' ) ;
-system( 'tail -n 3 output_log_all_processing.txt' ) ;
-system( 'head -n 3 osm_remove_duplicate_cities.pl >> output_log_all_processing.txt' ) ;
-system( 'tail -n 3 output_log_all_processing.txt' ) ;
-
-# conlts:
- system( 'perl osm_remove_duplicate_cities.pl < output_city_info_with_duplicates.txt > output_city_info_ready_to_split.txt' ) ;
+ system( 'perl remove_column_one.pl < output_sorted_processed_city_info.txt > output_city_info_ready_to_split.txt' ) ;
 
 system( 'head -v output_city_info_ready_to_split.txt >> output_log_all_processing.txt' ) ;
 system( 'tail -n 3 output_log_all_processing.txt' ) ;
+
+
+#-------------------------------------------------
+#  Verify specific information for debugging.
+
+$grep_string_quoted = "'r181810'" ;
+# conlts:
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'grep ' . $grep_string_quoted . ' output_city_info_ready_to_split.txt >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------
@@ -1117,17 +1171,42 @@ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 #  supply state and province abbreviations to the
 #  city info.
 #
+#  To skip this section, comment-out these
+#  lines of code.
+#
 #  The comments in the script
 #  "convert_postal_code_database.pl" explain
 #  where to get the postal code data.
+#
+#  Reminder: The code in this section uses the
+#  same filename --
+#  "output_city_info_ready_to_split" for both
+#  input and output so use care when editing
+#  this section.
 
 system( 'echo OPTIONAL POSTAL CODE PROCESSING >> output_log_all_processing.txt' ) ;
 system( 'tail -n 1 output_log_all_processing.txt' ) ;
 system( 'cat output_city_info_ready_to_split.txt > output_city_info_ready_to_split_before_postal_processing.txt' ) ;
-system( 'perl convert_tab_delimited_to_quoted_csv.pl < PostalCodesAllCountriesLatest.txt > output_postal_code_info_csv_format.txt' ) ;
-system( 'perl convert_postal_code_database.pl < output_postal_code_info_csv_format.txt' ) ;
-system( 'perl merge_city_info_from_postal_into_osm.pl < output_city_info_ready_to_split_before_postal_processing.txt > output_city_info_with_state_province_codes.txt' ) ;
-system( 'cat output_city_info_with_state_province_codes.txt > output_city_info_ready_to_split.txt' ) ;
+# conlts:
+ system( 'perl convert_tab_delimited_to_quoted_csv.pl < PostalCodesAllCountriesLatest.txt > output_postal_code_info_csv_format.txt' ) ;
+# conlts:
+ system( 'perl convert_postal_code_database.pl < output_postal_code_info_csv_format.txt' ) ;
+# conlts:
+ system( 'perl merge_city_info_from_postal_into_osm.pl < output_city_info_ready_to_split_before_postal_processing.txt > output_city_info_with_state_province_codes.txt' ) ;
+# conlts:
+ system( 'cat output_city_info_with_state_province_codes.txt > output_city_info_ready_to_split.txt' ) ;
+
+
+#-------------------------------------------------
+#  Verify specific information for debugging.
+
+$grep_string_quoted = "'kent_oh'" ;
+# conlts:
+ system( 'echo GREP CHECK ' . $grep_string_quoted . ' >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'grep ' . $grep_string_quoted . ' output_city_info_ready_to_split.txt >> output_log_all_processing.txt' ) ;
+# conlts:
+ system( 'tail -n 3 output_log_all_processing.txt' ) ;
 
 
 #-------------------------------------------------

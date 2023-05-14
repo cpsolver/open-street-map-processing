@@ -81,15 +81,17 @@ while ( $input_line = <IN_STATE> ) {
 
 while ( $input_line = <STDIN> ) {
     chomp ( $input_line ) ;
-    if ( $input_line =~ /^([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+) *$/ )
+    $state_abbreviation = "" ;
+    if ( $input_line =~ /^([^ ]+) ([^ ]+) ([^ ]+) ([0-9]+) ([0-9]+) ([^ ]+) ([^ ]+) *$/ )
     {
         $city_name_searchable = $1 ;
         $state_or_province = $2 ;
         $country_code = $3 ;
         $latitude = $4 ;
         $longitude = $5 ;
-        $node_id = $6 ;
+        $city_id = $6 ;
         $displayed_city_name = $7 ;
+        $state_or_province_raw = $state_or_province ;
 
 
 #--------------------------------------------------
@@ -103,11 +105,8 @@ while ( $input_line = <STDIN> ) {
         if ( exists( $state_abbreviation_for_combo{ $combo_city_latitude_longitude } ) )
         {
             $state_abbreviation = $state_abbreviation_for_combo{ $combo_city_latitude_longitude } ;
-#            print $city_name_searchable . "_" . $state_abbreviation . " " . uc( $state_abbreviation ) . " " . "US" . " " . $latitude . " " . $longitude . " " . $node_id . " " . $displayed_city_name . "\n" ;
-
             $country_code = $country_code_for_combo{ $combo_city_latitude_longitude } ;
             $state_or_province = $state_abbreviation ;
-
             $found_combo{ $combo_city_latitude_longitude } = "y" ;
 
 #            $city_name = $combo_city_latitude_longitude ;
@@ -115,6 +114,7 @@ while ( $input_line = <STDIN> ) {
 #            $found_city{ $city_name_searchable . "_" . $state_abbreviation } = "y" ;
         } else
         {
+            $state_abbreviation = "" ;
             $not_found_combo{ $combo_city_latitude_longitude } = "y" ;
         }
 
@@ -124,7 +124,7 @@ while ( $input_line = <STDIN> ) {
 #  state code, ignore it because another entry has
 #  the correct information.
 
-        if ( ( $node_id eq "n158368533" ) && ( $state_or_province eq "??" ) )
+        if ( ( $city_id eq "n158368533" ) && ( $state_or_province eq "??" ) )
         {
             next ;
         }
@@ -156,7 +156,11 @@ while ( $input_line = <STDIN> ) {
 #  Write the orginal city-info line, possibly
 #  with the state/province and country code changed.
 
-        print $city_name_searchable . " " . uc( $state_or_province ) . " " . uc( $country_code ) . " " . $latitude . " " . $longitude . " " . $node_id . " " . $displayed_city_name . "\n" ;
+        print $city_name_searchable . " " . uc( $state_or_province ) . " " . uc( $country_code ) . " " . $latitude . " " . $longitude . " " . $city_id . " " . $displayed_city_name . "\n" ;
+        if ( $state_abbreviation ne "" )
+        {
+            print $city_name_searchable . "_" . lc( $state_abbreviation ) . " " . uc( $state_or_province ) . " " . uc( $country_code ) . " " . $latitude . " " . $longitude . " " . $city_id . " " . $displayed_city_name . "\n" ;
+        }
 
 
 #--------------------------------------------------
