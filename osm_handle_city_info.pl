@@ -376,11 +376,15 @@ open( COUNTRY_FILE , ">" . $output_filename_country_codes ) ;
 #  they will override later info with the same
 #  searchable city name.
 
+print OUTFILE "999 portland or us 10455202471 08773258059 n1666626393 Portland" . "\n" ;
+print OUTFILE "999 portland_or or us 10455202471 08773258059 n1666626393 Portland" . "\n" ;
+print OUTFILE "999 pdx or us 10455202471 08773258050 n1666626393 Portland" . "\n" ;
+print OUTFILE "800 portland_me me us 10436592687 09297427357 n158867610 Portland" . "\n" ;
 print OUTFILE "700 portland_wi wi us 10437688581 09091418126 n151458990 Portland" . "\n" ;
-print OUTFILE "600 portland ?? nz 09642030343 11743267053 n1956278617 Portland" . "\n" ;
+print OUTFILE "005 portland_nz ?? nz 09642030343 11743267053 n1956278617 Portland" . "\n" ;
+print OUTFILE "005 portland_au vic au 09616364569 11416084910 r3175109 Portland" . "\n" ;
 print OUTFILE "999 vancouver bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
 print OUTFILE "999 vancouver_bc bc ca 10492608724 08768860479 r1852574 Vancouver" . "\n" ;
-print OUTFILE "999 pdx or us 10455202471 08773258050 n1666626393 Portland" . "\n" ;
 print OUTFILE "999 philly pa us 10399527237 09248364737 n5518033962 Philadelphia" . "\n" ;
 print OUTFILE "999 phl pa us 10399527237 09248364737 n5518033962 Philadelphia" . "\n" ;
 print OUTFILE "999 sf ca us 10377792768 08775807295 n26819236 San_Francisco" . "\n" ;
@@ -750,6 +754,45 @@ while( $input_line = <STDIN> )
 
 
 #--------------------------------------------------
+#  Specify a state or province for some cities
+#  named Portland that are not in the postal
+#  database.
+#
+#  Node n151458990 is an intersection-only town in
+#  Wisconsin named Portland.
+#  Node n153708827 is an intersection-only town in
+#  Illinois named Portland.
+#  Node n151516983 is a tiny town in Iowa named
+#  Portland.
+#  Node n1956278617 is a hamlet in Australia named
+#  Portland.
+#  Relation r319344 is a region in Jamaica
+#  named Portland.
+#  There are cities/towns named Portland in
+#  New Zealand and Australia but they are not yet
+#  handled here.
+
+    if ( $non_accented_lowercase_name eq "portland" )
+    {
+        if ( $node_or_way_or_relation_id eq "n151458990" )
+        {
+            $state_or_province_code = "wi" ;
+            $country_code = "us" ;
+        }
+        if ( $node_or_way_or_relation_id eq "n153708827" )
+        {
+            $state_or_province_code = "il" ;
+            $country_code = "us" ;
+        }
+        if ( $node_or_way_or_relation_id eq "n151516983" )
+        {
+            $state_or_province_code = "ia" ;
+            $country_code = "us" ;
+        }
+    }
+
+
+#--------------------------------------------------
 #  Note:
 #  If this data is a duplicate (the name and location
 #  are the same) that is OK, because only the
@@ -789,13 +832,6 @@ while( $input_line = <STDIN> )
         $highest_rank = $rank ;
 #        print "highest rank: " . $highest_rank . "\n" ;
     }
-    if ( $rank > 999 )
-    {
-        $rank = 999 ;
-    } elsif ( $rank < 1 )
-    {
-        $rank = 1 ;
-    }
     if ( $node_or_way_or_relation_id eq "n26819236" )
     {
         $rank = 999 ;
@@ -803,6 +839,23 @@ while( $input_line = <STDIN> )
     if ( $node_or_way_or_relation_id eq "n1336151032" )
     {
         $rank = 998 ;
+    }
+    if ( ( $non_accented_lowercase_name eq "portland" ) && ( $state_or_province_code ne 'or' ) )
+    {
+        if ( $rank < 800 )
+        {
+            $rank = $rank - 30 ;
+        } else
+        {
+        	$rank = 1 ;
+        }
+    }
+    if ( $rank > 999 )
+    {
+        $rank = 999 ;
+    } elsif ( $rank < 1 )
+    {
+        $rank = 1 ;
     }
     $rank_as_text = sprintf( "%03d" , $rank ) ;
     $count_of_items_at_rank_number{ $rank_as_text } ++ ;
