@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1200px" height="650px" id="svgmap">
+<title>Mapped data density</title>
+<desc>Mapped data density</desc>
+<defs>
+<style type="text/css"><![CDATA[
+text { fill: #000000; font-weight: bold }
+]]></style>
+</defs>
+<rect x="0" y="0" width="1200" height="650" style="fill: #b2d2ff;" />
+<rect x="0" y="0" width="1200" height="650" rx="20" ry="20" style="fill: #006aff;" />
+
