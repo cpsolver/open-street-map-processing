@@ -51,11 +51,11 @@ Hint:  Open the SVG (scalable vector graphics) files named <i>map_full_businesse
 
 Hint:  If you will be using the data for applications that require quickly finding businesses in a specific location, then look at the contents of the directory named <i>businesses_new</i>.  If you will be using the data to quickly find city names, then look at the contents of the directory named <i>cities_new</i>.
 
-<b>Step 8</b>:  If you want to get named street intersections, run the following command:
+<b>Step 8</b>:  If you also want to get named street intersections, run the following command:
 
 perl osm_processing_get_intersections.pl
 
-Clarification:  If you only want to get intersections, run the <i>osm_processing_do_all.pl</i> script up to the point where it generates the data in the folder named <i>lats_lons_in_groups</i> because that data is used by the intersection processing scripts.
+Clarification:  If you <i>only</i> want to get street intersections, first run the <i>osm_processing_do_all.pl</i> script up to the point where that script has generated the data in the folder named <i>lats_lons_in_groups</i>.
 
 
 History
