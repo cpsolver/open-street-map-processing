@@ -1,4 +1,4 @@
-<b>BizAt</b> is open-source software that gets single-location restaurants, cafes, bakeries, bookstores, etc., and cities and intersections from the Open Street Map planet database.
+<b>BizAt</b> is open-source software that gets single-location restaurants, cafés, bakeries, bookstores, etc., and cities and intersections from the Open Street Map planet database.
 ====================
 
 Software license
@@ -10,7 +10,7 @@ Disclaimer of Warranty:  THERE IS NO WARRANTY FOR THIS SOFTWARE. THE COPYRIGHT H
 Overview
 --------
 
-**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood businesses at every location worldwide.  The data is extracted from the Open Street Map global database file.
+**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood <b>businesses</b> at every location worldwide.  The data is extracted from the Open Street Map global database file.
 
 The extracted information includes the type of business, its name, the website for the business (if it is known), and the latitude and longitude of the business.  If the business is not a *node* (which has just one latitude and longitude), the midpoint of the business is calculated using all the nodes that are referenced in a *way* or in a combination of *ways* and a *relation*.  (A relation with at least two ways is needed for a restaurant that has a roofless center patio.)
 
@@ -18,11 +18,11 @@ This business info is split into two categories.  One category contains general-
 
 Copies of both categories are split across multiple text files to allow fast access for any location on the planet.  This data is used by the [News Here Now web app](https://www.newsherenow.com).
 
-This software also gets the street names and locations (latitude and longitude) of street intersections.  This intersection data allows a user's exact latitude and longitude to be partially anonymized to the nearest intersection.  This layer of anonymity protects against spyware that could calculate the user's exact location from a list of businesses that include the distance of each business from the requested center location.
+This software also gets the street names and locations (latitude and longitude) of <b>street intersections</b>.  This intersection data allows a user's exact latitude and longitude to be partially anonymized to the nearest intersection.  This layer of anonymity protects against spyware that could calculate the user's exact location from a list of businesses that include the distance of each business from the requested center location.
 
-The software also gets the names and midpoints (or label locations) of villages, cities, states, provinces, and other administrative boundaries.
+The software also gets the names and midpoints (or label locations) of villages, <b>cities</b>, states, provinces, and other administrative boundaries.
 
-Optionally, if the GeoNames postal code data has been downloaded, it is used to associate cities in some nations (US, CA, BR, PT, GB, SE, PL, IN, JP, and AU) with postal codes.
+Optionally, if the <b>GeoNames postal code</b> data has been downloaded, it is used to associate cities in some nations (US, CA, BR, PT, GB, SE, PL, IN, JP, and AU) with postal codes.
 
 
 Latitude and longitude format
@@ -69,7 +69,7 @@ Hint:  Use the Linux <i>top</i> command running in a separate terminal to monito
 
 <b>Step 7</b>:  When the processing is done the file named <i>output_city_info_ready_to_split_decimal.txt</i> contains all the city info, the file named <i>output_businesses_filtered_decimal.txt</i> contains the single-location businesses of specific types that interest most people, and the file named <i>output_businesses_filtered_promo_type_decimal.txt</i> contains single-location businesses that are likely to want to advertise alongside the businesses of greater interest.  The latitude and longitude numbers in these files use standard decimal notation.  The files with similar names but without the word <i>decimal</i> at the end specify the latitudes and longitudes as positive-only integer numbers, which are useful for faster processing in some situations.
 
-Clarification:  The file named <i>output_businesses_filtered_decimal.txt</i> includes eating places such as restaurants, bakeries, cafes, delis, and tea shops.  It also includes independent bookstores that compete against Amazon, and many family-owned hardware stores that compete against Home Depot.  The file named <i>output_businesses_filtered_promo_type_decimal.txt</i> includes dentists, veterinarians, and other businesses that are of interest to only some people.
+Clarification:  The file named <i>output_businesses_filtered_decimal.txt</i> includes eating places such as restaurants, bakeries, cafés, delis, and tea shops.  It also includes independent bookstores that compete against Amazon, and many family-owned hardware stores that compete against Home Depot.  The file named <i>output_businesses_filtered_promo_type_decimal.txt</i> includes dentists, veterinarians, and other businesses that are of interest to only some people.
 
 Hint:  Open the SVG (scalable vector graphics) files named <i>map_full_businesses.svg</i> and <i>map_full_cities.svg</i> in an SVG application such as <i>Inkscape</i> to view the locations of businesses and cities as a "heat" map.  This provides visual verification that the resulting data covers the entire planet.
 
