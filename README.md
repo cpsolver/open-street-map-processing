@@ -10,7 +10,7 @@ Disclaimer of Warranty:  THERE IS NO WARRANTY FOR THIS SOFTWARE. THE COPYRIGHT H
 Overview
 --------
 
-**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood <b>businesses</b> at every location worldwide.  The data is extracted from the Open Street Map global database file.
+**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood <b>businesses</b> at every location worldwide.  The data is extracted from the <b>Open Street Map</b> global database file.
 
 The extracted information includes the type of business, its name, the website for the business (if it is known), and the latitude and longitude of the business.  If the business is not a *node* (which has just one latitude and longitude), the midpoint of the business is calculated using all the nodes that are referenced in a *way* or in a combination of *ways* and a *relation*.  (A relation with at least two ways is needed for a restaurant that has a roofless center patio.)
 
