@@ -7,15 +7,10 @@ Software license
 (c) Copyright 2023 by Richard Fobes at SolutionsCreative.com .  Permission to copy and use and modify this software is hereby given to individuals and to businesses with ten or fewer employees if this copyright notice is included in all copies and modified copies.  All other rights are reserved.  Businesses with more than ten employees are encouraged to contract with small businesses to supply the service of running this software if there are arrangements for either business to make donations to support the Open Street Map project.
 Disclaimer of Warranty:  THERE IS NO WARRANTY FOR THIS SOFTWARE. THE COPYRIGHT HOLDER PROVIDES THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE FITNESS FOR A PARTICULAR PURPOSE.  Limitation of Liability:  IN NO EVENT WILL THE COPYRIGHT HOLDER BE LIABLE TO ANYONE FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
 
-Latitude and longitude format
--------------
-
-For faster processing, latitudes and longitudes are converted into, and then handled as, positive integers, without a decimal point and without any minus sign.  To convert any such integer back into a signed decimal number, if the first digit is <i>1</i> then remove the <i>1</i> and insert a decimal point to the left of the right-most eight digits, or else if the first digit is <i>0</i> then add a minus sign and convert each digit to its "nines complement" value.  The "nines complement" conversion changes each <i>9</i> to <i>0</i>, each <i>8</i> to <i>1</i>, each <i>7</i> to <i>2</i>, etc. down to each <i>2</i> to <i>7</i>, each <i>1</i> to <i>8</i>, and each <i>0</i> to <i>9</i>.  Using this convention causes the numbers to have smooth transitions at the equator (10000000000) and zero meridian (10000000000).  Specifically the next point in the negative direction is <i>09999999999</i>.  Note that these conversions are text-based so they do not involve converting to or from software-based "integers".
-
 Overview
 --------
 
-**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood businesses at every location.  The data is extracted from the Open Street Map global database file.
+**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood businesses at every location worldwide.  The data is extracted from the Open Street Map global database file.
 
 The extracted information includes the type of business, its name, the website for the business (if it is known), and the latitude and longitude of the business.  If the business is not a *node* (which has just one latitude and longitude), the midpoint of the business is calculated using all the nodes that are referenced in a *way* or in a combination of *ways* and a *relation*.  (A relation with at least two ways is needed for a restaurant that has a roofless center patio.)
 
@@ -23,10 +18,17 @@ This business info is split into two categories.  One category contains general-
 
 Copies of both categories are split across multiple text files to allow fast access for any location on the planet.  This data is used by the [News Here Now web app](https://www.newsherenow.com).
 
-Also included in this software are Perl scripts that get the street names and locations (latitude and longitude) of street intersections.  This data allows a user's exact latitude and longitude to be partially anonymized to the nearest intersection.  This layer of anonymity protects against spyware that could calculate the user's exact location from a list of businesses that include the distance of each business from the requested center location.
+This software also gets the street names and locations (latitude and longitude) of street intersections.  This intersection data allows a user's exact latitude and longitude to be partially anonymized to the nearest intersection.  This layer of anonymity protects against spyware that could calculate the user's exact location from a list of businesses that include the distance of each business from the requested center location.
 
-Also included are more Perl scripts that get the names and midpoints (or label locations) of villages, cities, states, provinces, and other administrative boundaries.  If the GeoNames postal code data has been downloaded, it is used to associate cities in some nations (US, CA, BR, PT, GB, SE, PL, IN, JP, and AU) with postal codes.
+The software also gets the names and midpoints (or label locations) of villages, cities, states, provinces, and other administrative boundaries.
 
+Optionally, if the GeoNames postal code data has been downloaded, it is used to associate cities in some nations (US, CA, BR, PT, GB, SE, PL, IN, JP, and AU) with postal codes.
+
+
+Latitude and longitude format
+-------------
+
+For faster processing, latitudes and longitudes are converted into, and then handled as, positive integers, without a decimal point and without any minus sign.  To convert any such integer back into a signed decimal number, if the first digit is <i>1</i> then remove the <i>1</i> and insert a decimal point to the left of the right-most eight digits, or else if the first digit is <i>0</i> then add a minus sign and convert each digit to its "nines complement" value.  The "nines complement" conversion changes each <i>9</i> to <i>0</i>, each <i>8</i> to <i>1</i>, each <i>7</i> to <i>2</i>, etc. down to each <i>2</i> to <i>7</i>, each <i>1</i> to <i>8</i>, and each <i>0</i> to <i>9</i>.  Using this convention causes the numbers to have smooth transitions at the equator (10000000000) and zero meridian (10000000000).  Specifically the next point in the negative direction is <i>09999999999</i>.  Note that these conversions are text-based so they do not involve converting to or from software-based "integers".
 
 Usage instructions:
 ----------------
