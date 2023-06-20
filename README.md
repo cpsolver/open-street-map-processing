@@ -1,4 +1,4 @@
-Open-source software gets single-location restaurants, bakeries, bookstores, etc. from Open Street Map planet data.  Also gets named street intersections, and cities.
+<b>BizAt</b> is open-source software that gets single-location restaurants, cafes, bakeries, bookstores, etc., and cities and intersections from the Open Street Map planet database.
 ====================
 
 Software license
@@ -12,10 +12,30 @@ Latitude and longitude format
 
 For faster processing, latitudes and longitudes are converted into, and then handled as, positive integers, without a decimal point and without any minus sign.  To convert any such integer back into a signed decimal number, if the first digit is <i>1</i> then remove the <i>1</i> and insert a decimal point to the left of the right-most eight digits, or else if the first digit is <i>0</i> then add a minus sign and convert each digit to its "nines complement" value.  The "nines complement" conversion changes each <i>9</i> to <i>0</i>, each <i>8</i> to <i>1</i>, each <i>7</i> to <i>2</i>, etc. down to each <i>2</i> to <i>7</i>, each <i>1</i> to <i>8</i>, and each <i>0</i> to <i>9</i>.  Using this convention causes the numbers to have smooth transitions at the equator (10000000000) and zero meridian (10000000000).  Specifically the next point in the negative direction is <i>09999999999</i>.  Note that these conversions are text-based so they do not involve converting to or from software-based "integers".
 
+Overview
+--------
+
+**BizAt** is a set of standalone (no-dependency) Perl scripts that get information about general-interest neighborhood businesses at every location.  The data is extracted from the Open Street Map global database file.
+
+The extracted information includes the type of business, its name, the website for the business (if it is known), and the latitude and longitude of the business.  If the business is not a *node* (which has just one latitude and longitude), the midpoint of the business is calculated using all the nodes that are referenced in a *way* or in a combination of *ways* and a *relation*.  (A relation with at least two ways is needed for a restaurant that has a roofless center patio.)
+
+This business info is split into two categories.  One category contains general-interest businesses such as restaurants, cafés, bakeries, bookstores, and hardware stores.  The other category contains businesses that are less often searched for, such as dentists, hair salons, auto repair shops, and antique stores.
+
+Copies of both categories are split across multiple text files to allow fast access for any location on the planet.  This data is used by the [News Here Now web app](https://www.newsherenow.com).
+
+Also included in this software are Perl scripts that get the street names and locations (latitude and longitude) of street intersections.  This data allows a user's exact latitude and longitude to be partially anonymized to the nearest intersection.  This layer of anonymity protects against spyware that could calculate the user's exact location from a list of businesses that include the distance of each business from the requested center location.
+
+Also included are more Perl scripts that get the names and midpoints (or label locations) of villages, cities, states, provinces, and other administrative boundaries.  If the GeoNames postal code data has been downloaded, it is used to associate cities in some nations (US, CA, BR, PT, GB, SE, PL, IN, JP, and AU) with postal codes.
+
+
 Usage instructions:
 ----------------
 
-<b>Step 1</b>:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).
+<b>Here's the short version</b>:  Put all the Perl scripts and the Open Street Map planet database file into the same folder on a Linux computer and run the script named <i>osm_processing_do_all.pl</i>, which will run for several days.  Optionally, after that, you can run the script named <i>osm_processing_get_intersections.pl</i> to get street intersections.
+
+<b>Here are the detailed instructions</b>:
+
+<b>Step 1</b>:  Choose a spare computer (which can be an old laptop or old PC) that runs the Linux operating system, and which can run 24 hours a day for more than a week.  The available disk storage capacity should be at least four times the current size of the Open Street Map "planet" database file.  The supplied software does not use unusual amounts of memory, but modifying the software can dramatically increase memory usage (and can dramatically increase disk storage requirements).  A solid state drive (SSD) instead of a hard disk drive (HDD) greatly increases the processing speed because the software reads and writes lots of big files.
 
 <b>Step 2</b>:  Download to that computer the latest version of the Open Street Map "planet" database file, which is named <i>planet-latest.osm.bz2</i>.  (This can be done using the Firefox browser, in which case it's helpful to view the progress indicator.)  The time required for this download over a somewhat-typical internet connection can be 12 or more hours.
 
@@ -35,7 +55,9 @@ Hint:  If you are running, or re-running, part of the code because you are testi
 
 perl osm_processing_do_all.pl
 
-Unless you have edited this Perl script to run just a part of it, this script will run 24 hours a day for a week or more!  So make sure you carefully followed the instructions in Step 4.
+Unless you have edited this Perl script to run just a part of it, this script might run 24 hours a day for a week or more!  So make sure you carefully followed the instructions in Step 4.
+
+None of the Perl scripts require any other software.  Only the Perl interpreter is needed, and it comes pre-installed in most Linux operating systems.
 
 <b>Step 6</b>: Periodically monitor progress to verify that the processing is getting the information you want or expect.  To do this monitoring, watch the sizes of the files being created, and perhaps sometimes copy the file <i>output_log_all_processing.txt</i> and view its contents.
 
@@ -61,4 +83,4 @@ Clarification:  If you <i>only</i> want to get street intersections, first run t
 History
 =======
 
-This software was written by Richard Fobes to supply information to the NewsHereNow.com web app.
+This software was written by Richard Fobes to supply information to the NewsHereNow.com web app.  This software is not part of the News Here Now system.
